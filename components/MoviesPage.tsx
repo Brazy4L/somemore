@@ -1,24 +1,17 @@
 import { useState } from 'react';
 import useSWR from 'swr';
+import GetNewMoviesPage from './GetNewMoviesPage';
 
 export default function MoviesPage() {
   const [page, setPage] = useState(1);
-
-  const fetcher = (url: RequestInfo | URL) =>
-    fetch(url).then((res) => res.json());
-  const { data, error, isLoading } = useSWR(
-    `/api/movies?page=${page}`,
-    fetcher
-  );
-
-  if (error) return <div>Failed to load</div>;
-  if (isLoading) return <div>Loading...</div>;
+  const pages = [];
+  for (let i = 0; i < page; i++) {
+    pages.push(<GetNewMoviesPage page={i + 1} key={i} />);
+  }
 
   return (
     <>
-      {data.results.map((el: { id: number; title: string }) => (
-        <div key={el.id}>{el.title}</div>
-      ))}
+      {pages}
       <button onClick={() => setPage(page + 1)}>LOAD MORE</button>
     </>
   );
