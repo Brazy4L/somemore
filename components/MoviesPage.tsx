@@ -1,3 +1,4 @@
+import styles from '../styles/Movies.module.scss';
 import { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import GetNewMoviesPage from './GetNewMoviesPage';
@@ -21,9 +22,9 @@ export default function MoviesPage() {
   }
 
   return (
-    <>
+    <div className={styles.container}>
       {pages}
-      <div ref={ref}></div>
-    </>
+      <p ref={ref}></p>
+    </div>
   );
 }
