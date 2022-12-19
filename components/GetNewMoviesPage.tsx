@@ -32,8 +32,7 @@ export default function GetNewMoviesPage({
     <>
       {data.results.map(
         (el: { id: number; title: string; poster_path: string }) => (
-          <div key={el.id} className={styles.item}>
-            <div className={styles.title}>{el.title}</div>
+          <div key={el.id}>
             <Image
               width={342}
               height={513}

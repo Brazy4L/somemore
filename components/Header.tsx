@@ -8,13 +8,15 @@ export default function Header() {
         <Link href="/">SomeMore</Link>
       </div>
       <div>
-        <Link href="/movies">Movies</Link>
-      </div>
-      <div>
-        <Link href="/tvshows">TV Shows</Link>
-      </div>
-      <div>
-        <Link href="/about">About</Link>
+        <div>
+          <Link href="/movies">Movies</Link>
+        </div>
+        <div>
+          <Link href="/tvshows">TV Shows</Link>
+        </div>
+        <div>
+          <Link href="/about">About</Link>
+        </div>
       </div>
     </nav>
   );

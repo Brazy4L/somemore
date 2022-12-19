@@ -6,7 +6,7 @@ import GetNewMoviesPage from './GetNewMoviesPage';
 export default function MoviesPage() {
   const [page, setPage] = useState(1);
   const [ref, inView] = useInView({
-    threshold: 1,
+    rootMargin: '2160px',
   });
 
   const pages = [];
@@ -22,9 +22,9 @@ export default function MoviesPage() {
   }
 
   return (
-    <div className={styles.container}>
-      {pages}
+    <>
+      <div className={styles.container}>{pages}</div>
       <p ref={ref}></p>
-    </div>
+    </>
   );
 }
