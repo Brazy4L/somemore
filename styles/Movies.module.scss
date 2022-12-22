@@ -5,7 +5,7 @@
   justify-content: center;
   grid-template-columns: repeat(7, 1fr);
   gap: 0.5rem;
-  padding: 0.5rem 2rem;
+  padding: 0 2rem;
   line-height: 0;
 
   div img {
@@ -38,6 +38,6 @@
 @media only screen and (max-width: 540px) {
   .container {
     grid-template-columns: repeat(3, 1fr);
-    padding: 1rem 0.5rem;
+    padding: 0 0.5rem;
   }
 }

@@ -5,24 +5,72 @@
   background-color: hsl(207, 70%, 65%);
   display: flex;
   align-items: center;
-  gap: 2rem;
   padding: 1rem 2rem;
-  box-shadow: 0px 0px 0px 0.5rem hsl(207, 70%, 5%);
+  border-bottom: 0.5rem solid hsl(207, 70%, 5%);
+}
 
-  div {
-    flex-grow: 1;
-    font-size: 1.5rem;
-    font-weight: 900;
-  }
+.logo {
+  flex-grow: 1;
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin-right: 2rem;
+}
 
-  ul {
-    display: flex;
-    gap: 1rem;
-  }
+.links {
+  display: flex;
+  gap: 1rem;
+}
+
+#menu {
+  display: none;
+}
+
+#menu:checked ~ .menulinkscontainer {
+  display: block;
+}
+
+.burger {
+  display: none;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.burger div {
+  width: 30px;
+  height: 4px;
+  background-color: hsl(0, 0%, 0%);
+  border-radius: 10px;
+}
+
+.menulinkscontainer {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 72px;
+  width: 100%;
+  padding: 2rem 0;
+  margin-top: 0.5rem;
+  background: hsl(207, 70%, 70%);
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+
+.menulinks {
+  display: grid;
+  gap: 10px;
+  justify-items: center;
 }
 
 @media only screen and (max-width: 540px) {
   .container {
     padding: 1rem 0.5rem;
+  }
+
+  .links {
+    display: none;
+  }
+
+  .burger {
+    display: grid;
   }
 }
