@@ -4,6 +4,7 @@ import Link from 'next/link';
 export default function Header() {
   return (
     <nav className={styles.container}>
+      <div className={styles.bg}></div>
       <div className={styles.logo}>
         <Link href="/">SOMEMORE</Link>
       </div>
