@@ -5,19 +5,19 @@ export default function Header() {
   return (
     <nav className={styles.container}>
       <div>
-        <Link href="/">SomeMore</Link>
+        <Link href="/">SOMEMORE</Link>
       </div>
-      <div>
-        <div>
+      <ul>
+        <li>
           <Link href="/movies">Movies</Link>
-        </div>
-        <div>
+        </li>
+        <li>
           <Link href="/tvshows">TV Shows</Link>
-        </div>
-        <div>
+        </li>
+        <li>
           <Link href="/about">About</Link>
-        </div>
-      </div>
+        </li>
+      </ul>
     </nav>
   );
 }

@@ -128,6 +128,14 @@ table {
   border-spacing: 0;
 }
 
+a {
+  text-decoration: none;
+  color: hsl(0, 0%, 0%);
+
+}
+
 html {
   overflow: overlay;
+  background-color: hsl(207, 70%, 5%);
+  font-family: sans-serif;
 }
