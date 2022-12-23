@@ -1,7 +1,7 @@
-import styles from '../styles/Movies.module.scss';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import useSWR from 'swr';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function GetNewMoviesPage({
   page,
@@ -33,12 +33,19 @@ export default function GetNewMoviesPage({
       {data.results.map(
         (el: { id: number; title: string; poster_path: string }) => (
           <div key={el.id}>
-            <Image
-              width={342}
-              height={513}
-              src={`https://image.tmdb.org/t/p/w342${el.poster_path}`}
-              alt=""
-            />
+            <Link
+              href={{
+                pathname: `/movies/${el.id}`,
+                query: { title: el.title },
+              }}
+            >
+              <Image
+                width={342}
+                height={513}
+                src={`https://image.tmdb.org/t/p/w342${el.poster_path}`}
+                alt=""
+              />
+            </Link>
           </div>
         )
       )}
