@@ -26,7 +26,18 @@ export default function GetNewMoviesPage({
   });
 
   if (error) return <div>Failed to load</div>;
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <>
+        {Array(20)
+          .fill(true)
+          .map((_, i) => (
+            <div key={i}>
+              <Image src={'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAEklEQVR42mNMX/OkngEIGDEYAHIAB2ZYiQm7AAAAAElFTkSuQmCC'} height={513} width={342}  alt=""/>
+            </div>
+          ))}
+      </>
+    );
 
   return (
     <>
@@ -44,6 +55,10 @@ export default function GetNewMoviesPage({
                 height={513}
                 src={`https://image.tmdb.org/t/p/w342${el.poster_path}`}
                 alt=""
+                placeholder="blur"
+                blurDataURL={
+                  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAEklEQVR42mNMX/OkngEIGDEYAHIAB2ZYiQm7AAAAAElFTkSuQmCC'
+                }
               />
             </Link>
           </div>
