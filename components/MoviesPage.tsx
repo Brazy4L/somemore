@@ -1,4 +1,4 @@
-import styles from '../styles/Movies.module.scss';
+import styles from '../styles/Movies.module.css';
 import { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import GetNewMoviesPage from './GetNewMoviesPage';

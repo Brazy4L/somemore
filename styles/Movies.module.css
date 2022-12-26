@@ -7,20 +7,19 @@
   gap: 0.5rem;
   padding: 0 2rem;
   line-height: 0;
-
-  a {
-    display: block;
-  }
-
-  img {
-    border-radius: 16px;
-    width: 100%;
-    height: 100%;
-    max-width: 342px;
-    max-height: 513px;
-  }
 }
 
+.container a {
+  display: block;
+}
+
+.container img {
+  border-radius: 16px;
+  width: 100%;
+  height: 100%;
+  max-width: 342px;
+  max-height: 513px;
+}
 
 @media only screen and (max-width: 1370px) {
   .container {

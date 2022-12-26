@@ -1,4 +1,4 @@
-import styles from '../styles/Movie.module.scss';
+import styles from '../styles/Movie.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
