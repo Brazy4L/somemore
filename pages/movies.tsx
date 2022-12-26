@@ -5,7 +5,7 @@ import MoviesPage from '../components/MoviesPage';
 export default function Movies() {
   return (
     <Layout>
-      <BaseHead title="Movies | SomeMore" />
+      <BaseHead title="Movies | SOMEMORE" />
       <MoviesPage />
     </Layout>
   );

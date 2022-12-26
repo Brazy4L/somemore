@@ -4,7 +4,7 @@ import BaseHead from '../components/BaseHead';
 export default function About() {
   return (
     <Layout>
-      <BaseHead title="About | SomeMore" />
+      <BaseHead title="About | SOMEMORE" />
       <div>About</div>
     </Layout>
   );

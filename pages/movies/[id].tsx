@@ -1,14 +1,11 @@
 import Layout from '../../components/Layout';
 import BaseHead from '../../components/BaseHead';
 import MoviePage from '../../components/MoviePage';
-import { useRouter } from 'next/router';
 
-export default function Idmovie() {
-  const { query } = useRouter();
-
+export default function Movie() {
   return (
     <Layout>
-      <BaseHead title={`${query.title} | SomeMore`} />
+      <BaseHead title="..." />
       <MoviePage />
     </Layout>
   );

@@ -3,7 +3,7 @@ import useSWR from 'swr';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function GetNewMoviesPage({
+export default function GetMoviesPage({
   page,
   inView,
   setPage,
@@ -25,6 +25,8 @@ export default function GetNewMoviesPage({
     }
   });
 
+  const toUrl = (item: string) => item.replaceAll(/[ :,]+/g, '-').toLowerCase();
+
   if (error) return <div>Failed to load</div>;
   if (isLoading)
     return (
@@ -33,7 +35,14 @@ export default function GetNewMoviesPage({
           .fill(true)
           .map((_, i) => (
             <div key={i}>
-              <Image src={'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAEklEQVR42mNMX/OkngEIGDEYAHIAB2ZYiQm7AAAAAElFTkSuQmCC'} height={513} width={342}  alt=""/>
+              <Image
+                src={
+                  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAEklEQVR42mNMX/OkngEIGDEYAHIAB2ZYiQm7AAAAAElFTkSuQmCC'
+                }
+                height={513}
+                width={342}
+                alt=""
+              />
             </div>
           ))}
       </>
@@ -47,10 +56,11 @@ export default function GetNewMoviesPage({
             <Link
               href={{
                 pathname: `/movies/${el.id}`,
-                query: { title: el.title },
+                query: `${toUrl(el.title)}`,
               }}
             >
               <Image
+                className="rounded-2xl"
                 width={342}
                 height={513}
                 src={`https://image.tmdb.org/t/p/w342${el.poster_path}`}
