@@ -1,0 +1,50 @@
+.container {
+  display: grid;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.bg {
+  opacity: 0.666;
+}
+
+.bgcontainer {
+  z-index: -10;
+  position: fixed;
+  max-width: 1280px;
+  max-height: 720px;
+  padding-right: 2rem;
+}
+
+.details {
+  
+}
+
+.link {
+  color: #fff;
+}
+.poster {
+  max-width: 300px;
+  max-height: 450px;
+}
+
+@media only screen and (max-width: 540px) {
+  .container {
+    padding: 0 0.5rem;
+  }
+
+  .bgcontainer {
+    padding-right: 0.5rem;
+  }
+}
+
+@media only screen and (max-width: 1337px) {
+  .container {
+  }
+}
