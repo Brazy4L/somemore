@@ -11,18 +11,13 @@ export default function MoviesPage() {
   const pages = [];
   for (let i = 0; i < page; i++) {
     pages.push(
-      <GetMoviesPage
-        key={i}
-        page={i + 1}
-        inView={inView}
-        setPage={setPage}
-      />
+      <GetMoviesPage key={i} page={i + 1} inView={inView} setPage={setPage} />
     );
   }
 
   return (
     <>
-      <div className="mx-auto box-content grid max-w-[1280px] grid-cols-6 justify-center gap-2 px-8 max-[1050px]:grid-cols-5 max-[800px]:grid-cols-4 max-[540px]:grid-cols-3 max-[540px]:px-2">
+      <div className="mx-auto box-content grid max-w-[1280px] grid-cols-3 justify-center gap-2 px-2 min-[540px]:grid-cols-4 min-[540px]:px-8 min-[800px]:grid-cols-5 min-[1050px]:grid-cols-6">
         {pages}
       </div>
       <p ref={ref}></p>
