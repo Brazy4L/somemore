@@ -39,20 +39,29 @@ export default function MoviePage() {
             width={1280}
             height={720}
             src={`https://image.tmdb.org/t/p/w1280${data.backdrop_path}`}
+            placeholder="blur"
+            blurDataURL={
+              'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAEklEQVR42mNMX/OkngEIGDEYAHIAB2ZYiQm7AAAAAElFTkSuQmCC'
+            }
             alt=""
           />
         </div>
-        <Image
-          className="min-[950px]:placeholder-shown:-4 col-start-1 row-start-1 hidden self-center min-[540px]:block"
-          width={780}
-          height={1170}
-          src={`https://image.tmdb.org/t/p/w780${data.poster_path}`}
-          alt=""
-        />
-        <div className="col-span-2 col-start-1 row-start-3 px-2 py-2 text-xl font-bold [text-shadow:_0px_1px_6px_rgb(0_0_0_/_100%)] min-[540px]:row-start-2 min-[540px]:py-0 min-[540px]:text-2xl min-[1300px]:text-4xl">
+        <div className="col-start-1 row-start-1 hidden self-center min-[540px]:ml-3 min-[540px]:block min-[1000px]:ml-12">
+          <Image
+            width={780}
+            height={1170}
+            src={`https://image.tmdb.org/t/p/w780${data.poster_path}`}
+            placeholder="blur"
+            blurDataURL={
+              'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAEklEQVR42mNMX/OkngEIGDEYAHIAB2ZYiQm7AAAAAElFTkSuQmCC'
+            }
+            alt=""
+          />
+        </div>
+        <div className="col-span-2 col-start-1 row-start-3 px-2 py-2 text-xl font-bold [text-shadow:_0px_1px_6px_rgb(0_0_0_/_100%)] min-[540px]:row-start-2 min-[540px]:px-3 min-[540px]:py-0 min-[540px]:text-2xl min-[1000px]:px-12 min-[1300px]:text-4xl">
           {data.title}
         </div>
-        <div className="col-span-2 col-start-1 flex flex-wrap justify-between gap-1 px-2 min-[540px]:row-start-3">
+        <div className="col-span-2 col-start-1 flex flex-wrap justify-between gap-1 px-2 min-[540px]:row-start-3 min-[540px]:px-3 min-[1000px]:px-12">
           <div className="text-slate-300 min-[540px]:[text-shadow:_0px_1px_6px_rgb(0_0_0_/_100%)]">
             Release Date: {getDate(data.release_date)}
           </div>
@@ -86,7 +95,7 @@ export default function MoviePage() {
             </div>
           ))}
         </div>
-        <div className="col-span-2 aspect-video self-center min-[540px]:col-span-1 min-[540px]:col-start-2 min-[540px]:row-start-1">
+        <div className="col-span-2 aspect-video self-center min-[540px]:col-span-1 min-[540px]:col-start-2 min-[540px]:row-start-1 min-[540px]:mr-8 min-[1000px]:mr-32">
           {trailer && (
             <iframe
               className="h-full w-full"
