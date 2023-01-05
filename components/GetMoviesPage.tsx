@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, useEffect } from 'react';
 import useSWR from 'swr';
 import Image from 'next/image';
 import Link from 'next/link';
+import { toUrl } from './utils';
 
 export default function GetMoviesPage({
   page,
@@ -24,8 +25,6 @@ export default function GetMoviesPage({
       setPage(page + 1);
     }
   });
-
-  const toUrl = (item: string) => item.replaceAll(/[ :,]+/g, '-').toLowerCase();
 
   if (error) return <div>Failed to load</div>;
   if (isLoading)

@@ -1,8 +1,10 @@
+import styles from '../styles/MoviePage.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import Head from 'next/head';
+import { toUrl } from './utils';
 
 export default function MoviePage() {
   const { query } = useRouter();
@@ -106,6 +108,60 @@ export default function MoviePage() {
               allowFullScreen
               title="YouTube video player"
             />
+          )}
+        </div>
+        <div className="col-span-2 px-2 font-bold">Similar:</div>
+        <div className="col-span-2 flex gap-4 overflow-y-hidden px-2 min-[1000px]:pb-4">
+          {data.similar.results.map(
+            (el: { id: number; title: string; poster_path: string }) => (
+              <div key={el.id} className="min-w-[305px]">
+                <Link
+                  href={{
+                    pathname: `/movies/${el.id}`,
+                    query: `${toUrl(el.title)}`,
+                  }}
+                >
+                  <Image
+                    className="rounded-2xl"
+                    width={342}
+                    height={513}
+                    src={`https://image.tmdb.org/t/p/w342${el.poster_path}`}
+                    alt=""
+                    placeholder="blur"
+                    blurDataURL={
+                      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAEklEQVR42mNMX/OkngEIGDEYAHIAB2ZYiQm7AAAAAElFTkSuQmCC'
+                    }
+                  />
+                </Link>
+              </div>
+            )
+          )}
+        </div>
+        <div className="col-span-2 px-2 font-bold">Recommendations:</div>
+        <div className="col-span-2 flex gap-4 overflow-y-hidden px-2 min-[1000px]:pb-4">
+          {data.recommendations.results.map(
+            (el: { id: number; title: string; poster_path: string }) => (
+              <div key={el.id} className="min-w-[305px]">
+                <Link
+                  href={{
+                    pathname: `/movies/${el.id}`,
+                    query: `${toUrl(el.title)}`,
+                  }}
+                >
+                  <Image
+                    className="rounded-2xl"
+                    width={342}
+                    height={513}
+                    src={`https://image.tmdb.org/t/p/w342${el.poster_path}`}
+                    alt=""
+                    placeholder="blur"
+                    blurDataURL={
+                      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAEklEQVR42mNMX/OkngEIGDEYAHIAB2ZYiQm7AAAAAElFTkSuQmCC'
+                    }
+                  />
+                </Link>
+              </div>
+            )
           )}
         </div>
       </div>
