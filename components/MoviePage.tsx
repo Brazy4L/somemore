@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import Head from 'next/head';
-import { toUrl } from './utils';
+import { toUrl, getDate } from './utils';
 
 export default function MoviePage() {
   const { query } = useRouter();
@@ -18,13 +18,6 @@ export default function MoviePage() {
   if (error) return <div>Failed to load</div>;
   if (isLoading) return <div>Loading...</div>;
 
-  const getDate = (date: Date) =>
-    new Date(date).toLocaleString('en-us', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
-    });
-
   const trailer = data.videos.results.find((el: { type: string }) => {
     return el.type === 'Trailer';
   });
@@ -34,7 +27,7 @@ export default function MoviePage() {
       <Head>
         <title>{data.title} | SOMEMORE</title>
       </Head>
-      <div className="mx-auto box-content grid max-w-[1280px] grid-cols-[3fr,8fr] gap-4 pb-8 text-slate-50 min-[540px]:bg-[rgba(4,14,22,0.4)]">
+      <div className="mx-auto box-content grid max-w-[1280px] grid-cols-[3fr,8fr] gap-4 pb-8 text-slate-50">
         <div className="-z-20 col-span-2 col-start-1 row-span-3 row-start-1">
           <Image
             className="-z-20 min-[540px]:brightness-[0.5]"
@@ -110,8 +103,48 @@ export default function MoviePage() {
             />
           )}
         </div>
+        <div className="col-span-2 px-2 font-bold">Cast:</div>
+        <div
+          className={`${styles.scrollbar} col-span-2 flex gap-4 overflow-y-hidden px-2 pb-1`}
+        >
+          {data.credits.cast.map(
+            (el: {
+              id: number;
+              name: string;
+              profile_path: string;
+              character: string;
+            }) => (
+              <div key={el.id} className="min-w-[305px]">
+                <Link
+                  href={{
+                    pathname: `/people/${el.id}`,
+                    query: `${toUrl(el.name)}`,
+                  }}
+                >
+                  <Image
+                    className="rounded-2xl"
+                    width={342}
+                    height={513}
+                    src={`https://image.tmdb.org/t/p/w342${el.profile_path}`}
+                    alt=""
+                    placeholder="blur"
+                    blurDataURL={
+                      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAEklEQVR42mNMX/OkngEIGDEYAHIAB2ZYiQm7AAAAAElFTkSuQmCC'
+                    }
+                  />
+                  <div>
+                    <span className="font-bold">{el.name}</span> ({el.character}
+                    )
+                  </div>
+                </Link>
+              </div>
+            )
+          )}
+        </div>
         <div className="col-span-2 px-2 font-bold">Similar:</div>
-        <div className={`${styles.scrollbar} col-span-2 flex gap-4 overflow-y-hidden px-2 pb-1`}>
+        <div
+          className={`${styles.scrollbar} col-span-2 flex gap-4 overflow-y-hidden px-2 pb-1`}
+        >
           {data.similar.results.map(
             (el: { id: number; title: string; poster_path: string }) => (
               <div key={el.id} className="min-w-[305px]">
@@ -138,7 +171,9 @@ export default function MoviePage() {
           )}
         </div>
         <div className="col-span-2 px-2 font-bold">Recommendations:</div>
-        <div className={`${styles.scrollbar} col-span-2 flex gap-4 overflow-y-hidden px-2 pb-1`}>
+        <div
+          className={`${styles.scrollbar} col-span-2 flex gap-4 overflow-y-hidden px-2 pb-1`}
+        >
           {data.recommendations.results.map(
             (el: { id: number; title: string; poster_path: string }) => (
               <div key={el.id} className="min-w-[305px]">
