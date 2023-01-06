@@ -1,4 +1,4 @@
-import styles from '../styles/MoviePage.module.css';
+import styles from '../styles/scrollbar.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -111,7 +111,7 @@ export default function MoviePage() {
           )}
         </div>
         <div className="col-span-2 px-2 font-bold">Similar:</div>
-        <div className="col-span-2 flex gap-4 overflow-y-hidden px-2 min-[1000px]:pb-4">
+        <div className={`${styles.scrollbar} col-span-2 flex gap-4 overflow-y-hidden px-2 pb-1`}>
           {data.similar.results.map(
             (el: { id: number; title: string; poster_path: string }) => (
               <div key={el.id} className="min-w-[305px]">
@@ -138,7 +138,7 @@ export default function MoviePage() {
           )}
         </div>
         <div className="col-span-2 px-2 font-bold">Recommendations:</div>
-        <div className="col-span-2 flex gap-4 overflow-y-hidden px-2 min-[1000px]:pb-4">
+        <div className={`${styles.scrollbar} col-span-2 flex gap-4 overflow-y-hidden px-2 pb-1`}>
           {data.recommendations.results.map(
             (el: { id: number; title: string; poster_path: string }) => (
               <div key={el.id} className="min-w-[305px]">
