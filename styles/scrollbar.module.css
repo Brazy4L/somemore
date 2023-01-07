@@ -1,5 +1,5 @@
 .scrollbar::-webkit-scrollbar {
-  height: 10px;
+  height: 2px;
 }
 
 .scrollbar::-webkit-scrollbar-track {
@@ -12,4 +12,10 @@
 
 .scrollbar::-webkit-scrollbar-thumb:hover {
   background: #2d91e2;
+}
+
+@media only screen and (min-width: 600px) {
+  .scrollbar::-webkit-scrollbar {
+    height: 6px;
+  }
 }

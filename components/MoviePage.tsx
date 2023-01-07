@@ -69,27 +69,6 @@ export default function MoviePage() {
             🔗 IMDb
           </Link>
         </div>
-        <div className="col-span-2 flex flex-wrap justify-center gap-2 px-2 min-[540px]:row-start-4">
-          {data.genres.map((el: { id: number; name: string }) => (
-            <div
-              className="cursor-pointer rounded-full bg-gray-700 p-2 transition-colors hover:bg-gray-600"
-              key={el.id}
-            >
-              {el.name}
-            </div>
-          ))}
-        </div>
-        <div className="col-span-2 px-2">{data.overview}</div>
-        <div className="col-span-2 flex flex-wrap justify-evenly gap-2 px-2 min-[540px]:row-start-6">
-          {data.keywords.keywords.map((el: { id: number; name: string }) => (
-            <div
-              className="cursor-pointer rounded-full bg-gray-700 p-2 transition-colors hover:bg-gray-600"
-              key={el.id}
-            >
-              {el.name}
-            </div>
-          ))}
-        </div>
         <div className="col-span-2 aspect-video self-center min-[540px]:col-span-1 min-[540px]:col-start-2 min-[540px]:row-start-1 min-[540px]:mr-8 min-[1000px]:mr-32">
           {trailer && (
             <iframe
@@ -102,6 +81,31 @@ export default function MoviePage() {
               title="YouTube video player"
             />
           )}
+        </div>
+        <div
+          className={`${styles.scrollbar} col-span-2 flex gap-2 overflow-y-hidden px-2 pb-1`}
+        >
+          {data.genres.map((el: { id: number; name: string }) => (
+            <div
+              className="min-w-fit cursor-pointer rounded-full bg-gray-700 p-2 transition-colors hover:bg-gray-600"
+              key={el.id}
+            >
+              {el.name}
+            </div>
+          ))}
+        </div>
+        <div className="col-span-2 px-2">{data.overview}</div>
+        <div
+          className={`${styles.scrollbar} col-span-2 flex gap-2 overflow-y-hidden px-2 pb-1`}
+        >
+          {data.keywords.keywords.map((el: { id: number; name: string }) => (
+            <div
+              className="min-w-fit cursor-pointer rounded-full bg-gray-700 p-2 transition-colors hover:bg-gray-600"
+              key={el.id}
+            >
+              {el.name}
+            </div>
+          ))}
         </div>
         <div className="col-span-2 px-2 font-bold">Cast:</div>
         <div
@@ -133,8 +137,8 @@ export default function MoviePage() {
                     }
                   />
                   <div>
-                    <span className="font-bold">{el.name}</span> ({el.character}
-                    )
+                    <span className="font-bold">{el.name}</span>{' '}
+                    <span className="text-slate-400">({el.character})</span>
                   </div>
                 </Link>
               </div>
