@@ -1,26 +1,33 @@
 import styles from '../styles/scrollbar.module.css';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import useSWR from 'swr';
 import Head from 'next/head';
+import useSWR from 'swr';
 import { toUrl, getDate } from './utils';
 
 export default function MoviePage() {
   const { query } = useRouter();
+  const [trailer, setTrailer] = useState(null);
   const fetcher = (url: RequestInfo | URL) =>
     fetch(url).then((res) => res.json());
   const { data, error, isLoading } = useSWR(
     `/api/movie?idmovie=${query.id}`,
-    fetcher
+    fetcher,
+    {
+      onSuccess: (data, key, config) => {
+        setTrailer(
+          data.videos.results.find((el: { type: string }) => {
+            return el.type === 'Trailer';
+          })
+        );
+      },
+    }
   );
 
   if (error) return <div>Failed to load</div>;
   if (isLoading) return <div>Loading...</div>;
-
-  const trailer = data.videos.results.find((el: { type: string }) => {
-    return el.type === 'Trailer';
-  });
 
   return (
     <>
