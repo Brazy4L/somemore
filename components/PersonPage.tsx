@@ -9,6 +9,7 @@ import { toUrl, getDate } from './utils';
 export default function PersonPage() {
   const { query } = useRouter();
   const [castCredits, setCastCredits] = useState<Array<any>>([]);
+  const [crewCredits, setCrewCredits] = useState<Array<any>>([]);
   const fetcher = (url: RequestInfo | URL) =>
     fetch(url).then((res) => res.json());
   const { data, error, isLoading } = useSWR(
@@ -26,15 +27,31 @@ export default function PersonPage() {
             ? definedCastCredits.push(el)
             : undefinedCastCredits.push(el);
         });
-
         const sortedDefinedCastCredits = definedCastCredits.sort((a, b) => {
           return (
             +new Date(b.release_date || b.first_air_date) -
             +new Date(a.release_date || a.first_air_date)
           );
         });
-
         setCastCredits(sortedDefinedCastCredits.concat(undefinedCastCredits));
+
+        let undefinedCrewCredits: Array<any> = [];
+        let definedCrewCredits: Array<any> = [];
+        data.combined_credits.crew.filter(function (el: {
+          release_date: string;
+          first_air_date: string;
+        }) {
+          el.release_date || el.first_air_date
+            ? definedCrewCredits.push(el)
+            : undefinedCrewCredits.push(el);
+        });
+        const sortedDefinedCrewCredits = definedCrewCredits.sort((a, b) => {
+          return (
+            +new Date(b.release_date || b.first_air_date) -
+            +new Date(a.release_date || a.first_air_date)
+          );
+        });
+        setCrewCredits(sortedDefinedCrewCredits.concat(undefinedCrewCredits));
       },
     }
   );
@@ -47,7 +64,7 @@ export default function PersonPage() {
   };
 
   const checkGender = (el: number) => {
-    return el === 1 ? 'Actress:' : 2 ? 'Actor:' : null;
+    return el === 1 ? 'Actress' : 2 ? 'Actor' : null;
   };
 
   return (
@@ -118,71 +135,145 @@ export default function PersonPage() {
           </div>
         </div>
         <div className="text-4xl font-bold">Credits:</div>
-        {data.gender && (
-          <div className="text-2xl font-bold">{checkGender(data.gender)}</div>
-        )}
         {castCredits && (
-          <div className="grid">
-            {castCredits.map(
-              (el: {
-                id: number;
-                poster_path: string;
-                release_date: string;
-                title: string;
-                character: string;
-                media_type: string;
-                name: string;
-                first_air_date: string;
-                episode_count: number;
-              }) => (
-                <div key={el.id}>
-                  <div className="p-1">
-                    <Link
-                      className="flex"
-                      href={{
-                        pathname: `/${checkType(el.media_type)}/${el.id}`,
-                        query: `${toUrl(el.title || el.name)}`,
-                      }}
-                    >
-                      <div className="flex flex-shrink-0 items-center">
-                        <Image
-                          className="rounded-2xl"
-                          width={92}
-                          height={138}
-                          src={`https://image.tmdb.org/t/p/w92${el.poster_path}`}
-                          alt=""
-                          placeholder="blur"
-                          blurDataURL={
-                            'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAEklEQVR42mNMX/OkngEIGDEYAHIAB2ZYiQm7AAAAAElFTkSuQmCC'
-                          }
-                        />
-                      </div>
-                      <div className="flex flex-col justify-center pl-4">
-                        {el.title && (
-                          <div className="font-bold">{el.title}</div>
-                        )}
-                        {el.name && <div className="font-bold">{el.name}</div>}
-                        <div className="text-slate-400">{el.character}</div>
-                        <div className="text-slate-400">
-                          {el.media_type}{' '}
-                          {el.episode_count && (
-                            <span>({el.episode_count} episode(s))</span>
+          <>
+            {data.gender && (
+              <div className="text-2xl font-bold">
+                {checkGender(data.gender)}
+              </div>
+            )}
+            <div className="grid">
+              {castCredits.map(
+                (el: {
+                  id: number;
+                  poster_path: string;
+                  release_date: string;
+                  title: string;
+                  character: string;
+                  media_type: string;
+                  name: string;
+                  first_air_date: string;
+                  episode_count: number;
+                }) => (
+                  <div key={el.id}>
+                    <div className="p-1">
+                      <Link
+                        className="flex"
+                        href={{
+                          pathname: `/${checkType(el.media_type)}/${el.id}`,
+                          query: `${toUrl(el.title || el.name)}`,
+                        }}
+                      >
+                        <div className="flex flex-shrink-0 items-center">
+                          <Image
+                            className="rounded-2xl"
+                            width={92}
+                            height={138}
+                            src={`https://image.tmdb.org/t/p/w92${el.poster_path}`}
+                            alt=""
+                            placeholder="blur"
+                            blurDataURL={
+                              'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAEklEQVR42mNMX/OkngEIGDEYAHIAB2ZYiQm7AAAAAElFTkSuQmCC'
+                            }
+                          />
+                        </div>
+                        <div className="flex flex-col justify-center pl-4">
+                          {el.title && (
+                            <div className="font-bold">{el.title}</div>
+                          )}
+                          {el.name && (
+                            <div className="font-bold">{el.name}</div>
+                          )}
+                          <div className="text-slate-400">{el.character}</div>
+                          <div className="text-slate-400">
+                            {el.media_type}{' '}
+                            {el.episode_count && (
+                              <span>({el.episode_count} episode(s))</span>
+                            )}
+                          </div>
+                          {el.release_date && (
+                            <div>{getDate(el.release_date)}</div>
+                          )}
+                          {el.first_air_date && (
+                            <div>{getDate(el.first_air_date)}</div>
                           )}
                         </div>
-                        {el.release_date && (
-                          <div>{getDate(el.release_date)}</div>
-                        )}
-                        {el.first_air_date && (
-                          <div>{getDate(el.first_air_date)}</div>
-                        )}
-                      </div>
-                    </Link>
+                      </Link>
+                    </div>
+                    <div className="h-[2px] w-full rounded-full bg-[#67ace4]"></div>
                   </div>
-                  <div className="h-[2px] w-full rounded-full bg-[#67ace4]"></div>
-                </div>
-              )
-            )}
-          </div>
+                )
+              )}
+            </div>
+          </>
+        )}
+        {crewCredits && (
+          <>
+            <div className="text-2xl font-bold">Filmmaking</div>
+            <div className="grid">
+              {crewCredits.map(
+                (el: {
+                  id: number;
+                  poster_path: string;
+                  release_date: string;
+                  title: string;
+                  job: string;
+                  media_type: string;
+                  name: string;
+                  first_air_date: string;
+                  episode_count: number;
+                }) => (
+                  <div key={el.id}>
+                    <div className="p-1">
+                      <Link
+                        className="flex"
+                        href={{
+                          pathname: `/${checkType(el.media_type)}/${el.id}`,
+                          query: `${toUrl(el.title || el.name)}`,
+                        }}
+                      >
+                        <div className="flex flex-shrink-0 items-center">
+                          <Image
+                            className="rounded-2xl"
+                            width={92}
+                            height={138}
+                            src={`https://image.tmdb.org/t/p/w92${el.poster_path}`}
+                            alt=""
+                            placeholder="blur"
+                            blurDataURL={
+                              'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAEklEQVR42mNMX/OkngEIGDEYAHIAB2ZYiQm7AAAAAElFTkSuQmCC'
+                            }
+                          />
+                        </div>
+                        <div className="flex flex-col justify-center pl-4">
+                          {el.title && (
+                            <div className="font-bold">{el.title}</div>
+                          )}
+                          {el.name && (
+                            <div className="font-bold">{el.name}</div>
+                          )}
+                          <div className="text-slate-400">{el.job}</div>
+                          <div className="text-slate-400">
+                            {el.media_type}{' '}
+                            {el.episode_count && (
+                              <span>({el.episode_count} episode(s))</span>
+                            )}
+                          </div>
+                          {el.release_date && (
+                            <div>{getDate(el.release_date)}</div>
+                          )}
+                          {el.first_air_date && (
+                            <div>{getDate(el.first_air_date)}</div>
+                          )}
+                        </div>
+                      </Link>
+                    </div>
+                    <div className="h-[2px] w-full rounded-full bg-[#67ace4]"></div>
+                  </div>
+                )
+              )}
+            </div>
+          </>
         )}
       </div>
     </>
