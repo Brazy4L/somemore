@@ -7,9 +7,13 @@ import Head from 'next/head';
 import useSWR from 'swr';
 import { toUrl, getDate } from './utils';
 
+interface trailer {
+  key: string;
+}
+
 export default function MoviePage() {
   const { query } = useRouter();
-  const [trailer, setTrailer] = useState(null);
+  const [trailer, setTrailer] = useState<trailer>();
   const fetcher = (url: RequestInfo | URL) =>
     fetch(url).then((res) => res.json());
   const { data, error, isLoading } = useSWR(

@@ -1,42 +1,46 @@
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import useSWR from 'swr';
 import Head from 'next/head';
+import useSWR from 'swr';
 import { toUrl, getDate } from './utils';
 
 export default function PersonPage() {
   const { query } = useRouter();
+  const [castCredits, setCastCredits] = useState<Array<any>>([]);
   const fetcher = (url: RequestInfo | URL) =>
     fetch(url).then((res) => res.json());
   const { data, error, isLoading } = useSWR(
     `/api/person?idperson=${query.id}`,
-    fetcher
+    fetcher,
+    {
+      onSuccess: (data, key, config) => {
+        let undefinedCastCredits: Array<any> = [];
+        let definedCastCredits: Array<any> = [];
+        data.combined_credits.cast.filter(function (el: {
+          release_date: string;
+          first_air_date: string;
+        }) {
+          el.release_date || el.first_air_date
+            ? definedCastCredits.push(el)
+            : undefinedCastCredits.push(el);
+        });
+
+        const sortedDefinedCastCredits = definedCastCredits.sort((a, b) => {
+          return (
+            +new Date(b.release_date || b.first_air_date) -
+            +new Date(a.release_date || a.first_air_date)
+          );
+        });
+
+        setCastCredits(sortedDefinedCastCredits.concat(undefinedCastCredits));
+      },
+    }
   );
 
   if (error) return <div>Failed to load</div>;
   if (isLoading) return <div>Loading...</div>;
-
-  let undefinedCastCredits: Array<any> = [];
-  let definedCastCredits: Array<any> = [];
-
-  data.combined_credits.cast.filter(function (el: {
-    release_date: string;
-    first_air_date: string;
-  }) {
-    el.release_date || el.first_air_date
-      ? definedCastCredits.push(el)
-      : undefinedCastCredits.push(el);
-  });
-
-  const sortedCastCredits = definedCastCredits.sort((a, b) => {
-    return (
-      +new Date(b.release_date || b.first_air_date) -
-      +new Date(a.release_date || a.first_air_date)
-    );
-  });
-
-  const castCredits = sortedCastCredits.concat(undefinedCastCredits);
 
   const checkType = (el: string) => {
     return el === 'movie' ? 'movies' : 'tvshows';
@@ -118,61 +122,66 @@ export default function PersonPage() {
           <div className="text-2xl font-bold">{checkGender(data.gender)}</div>
         )}
         <div className="grid">
-          {castCredits.map(
-            (el: {
-              id: number;
-              poster_path: string;
-              release_date: string;
-              title: string;
-              character: string;
-              media_type: string;
-              name: string;
-              first_air_date: string;
-              episode_count: number;
-            }) => (
-              <div key={el.id}>
-                <div className="p-1">
-                  <Link
-                    className="flex"
-                    href={{
-                      pathname: `/${checkType(el.media_type)}/${el.id}`,
-                      query: `${toUrl(el.title || el.name)}`,
-                    }}
-                  >
-                    <div className="flex flex-shrink-0 items-center">
-                      <Image
-                        className="rounded-2xl"
-                        width={92}
-                        height={138}
-                        src={`https://image.tmdb.org/t/p/w92${el.poster_path}`}
-                        alt=""
-                        placeholder="blur"
-                        blurDataURL={
-                          'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAEklEQVR42mNMX/OkngEIGDEYAHIAB2ZYiQm7AAAAAElFTkSuQmCC'
-                        }
-                      />
-                    </div>
-                    <div className="flex flex-col justify-center pl-4">
-                      {el.title && <div className="font-bold">{el.title}</div>}
-                      {el.name && <div className="font-bold">{el.name}</div>}
-                      <div className="text-slate-400">{el.character}</div>
-                      <div className="text-slate-400">
-                        {el.media_type}{' '}
-                        {el.episode_count && (
-                          <span>({el.episode_count} episode(s))</span>
+          {castCredits &&
+            castCredits.map(
+              (el: {
+                id: number;
+                poster_path: string;
+                release_date: string;
+                title: string;
+                character: string;
+                media_type: string;
+                name: string;
+                first_air_date: string;
+                episode_count: number;
+              }) => (
+                <div key={el.id}>
+                  <div className="p-1">
+                    <Link
+                      className="flex"
+                      href={{
+                        pathname: `/${checkType(el.media_type)}/${el.id}`,
+                        query: `${toUrl(el.title || el.name)}`,
+                      }}
+                    >
+                      <div className="flex flex-shrink-0 items-center">
+                        <Image
+                          className="rounded-2xl"
+                          width={92}
+                          height={138}
+                          src={`https://image.tmdb.org/t/p/w92${el.poster_path}`}
+                          alt=""
+                          placeholder="blur"
+                          blurDataURL={
+                            'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAEklEQVR42mNMX/OkngEIGDEYAHIAB2ZYiQm7AAAAAElFTkSuQmCC'
+                          }
+                        />
+                      </div>
+                      <div className="flex flex-col justify-center pl-4">
+                        {el.title && (
+                          <div className="font-bold">{el.title}</div>
+                        )}
+                        {el.name && <div className="font-bold">{el.name}</div>}
+                        <div className="text-slate-400">{el.character}</div>
+                        <div className="text-slate-400">
+                          {el.media_type}{' '}
+                          {el.episode_count && (
+                            <span>({el.episode_count} episode(s))</span>
+                          )}
+                        </div>
+                        {el.release_date && (
+                          <div>{getDate(el.release_date)}</div>
+                        )}
+                        {el.first_air_date && (
+                          <div>{getDate(el.first_air_date)}</div>
                         )}
                       </div>
-                      {el.release_date && <div>{getDate(el.release_date)}</div>}
-                      {el.first_air_date && (
-                        <div>{getDate(el.first_air_date)}</div>
-                      )}
-                    </div>
-                  </Link>
+                    </Link>
+                  </div>
+                  <div className="h-[2px] w-full rounded-full bg-[#67ace4]"></div>
                 </div>
-                <div className="h-[2px] w-full rounded-full bg-[#67ace4]"></div>
-              </div>
-            )
-          )}
+              )
+            )}
         </div>
       </div>
     </>
