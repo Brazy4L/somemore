@@ -121,9 +121,9 @@ export default function PersonPage() {
         {data.gender && (
           <div className="text-2xl font-bold">{checkGender(data.gender)}</div>
         )}
-        <div className="grid">
-          {castCredits &&
-            castCredits.map(
+        {castCredits && (
+          <div className="grid">
+            {castCredits.map(
               (el: {
                 id: number;
                 poster_path: string;
@@ -182,7 +182,8 @@ export default function PersonPage() {
                 </div>
               )
             )}
-        </div>
+          </div>
+        )}
       </div>
     </>
   );

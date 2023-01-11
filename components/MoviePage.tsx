@@ -93,127 +93,143 @@ export default function MoviePage() {
             />
           )}
         </div>
-        <div
-          className={`${styles.scrollbar} col-span-2 flex gap-2 overflow-y-hidden px-2 pb-1`}
-        >
-          {data.genres.map((el: { id: number; name: string }) => (
-            <div
-              className="min-w-fit cursor-pointer rounded-full bg-gray-700 p-2 transition-colors hover:bg-gray-600"
-              key={el.id}
-            >
-              {el.name}
-            </div>
-          ))}
-        </div>
+        {data.genres && (
+          <div
+            className={`${styles.scrollbar} col-span-2 flex gap-2 overflow-y-hidden px-2 pb-1`}
+          >
+            {data.genres.map((el: { id: number; name: string }) => (
+              <div
+                className="min-w-fit cursor-pointer rounded-full bg-gray-700 p-2 transition-colors hover:bg-gray-600"
+                key={el.id}
+              >
+                {el.name}
+              </div>
+            ))}
+          </div>
+        )}
         <div className="col-span-2 px-2">{data.overview}</div>
-        <div
-          className={`${styles.scrollbar} col-span-2 flex gap-2 overflow-y-hidden px-2 pb-1`}
-        >
-          {data.keywords.keywords.map((el: { id: number; name: string }) => (
+        {data.keywords.keywords && (
+          <div
+            className={`${styles.scrollbar} col-span-2 flex gap-2 overflow-y-hidden px-2 pb-1`}
+          >
+            {data.keywords.keywords.map((el: { id: number; name: string }) => (
+              <div
+                className="min-w-fit cursor-pointer rounded-full bg-gray-700 p-2 transition-colors hover:bg-gray-600"
+                key={el.id}
+              >
+                {el.name}
+              </div>
+            ))}
+          </div>
+        )}
+        {data.credits.cast && (
+          <>
+            <div className="col-span-2 px-2 font-bold">Cast:</div>
             <div
-              className="min-w-fit cursor-pointer rounded-full bg-gray-700 p-2 transition-colors hover:bg-gray-600"
-              key={el.id}
+              className={`${styles.scrollbar} col-span-2 flex gap-4 overflow-y-hidden px-2 pb-1`}
             >
-              {el.name}
-            </div>
-          ))}
-        </div>
-        <div className="col-span-2 px-2 font-bold">Cast:</div>
-        <div
-          className={`${styles.scrollbar} col-span-2 flex gap-4 overflow-y-hidden px-2 pb-1`}
-        >
-          {data.credits.cast.map(
-            (el: {
-              id: number;
-              name: string;
-              profile_path: string;
-              character: string;
-            }) => (
-              <div key={el.id} className="min-w-[305px]">
-                <Link
-                  href={{
-                    pathname: `/people/${el.id}`,
-                    query: `${toUrl(el.name)}`,
-                  }}
-                >
-                  <Image
-                    className="rounded-2xl"
-                    width={342}
-                    height={513}
-                    src={`https://image.tmdb.org/t/p/w342${el.profile_path}`}
-                    alt=""
-                    placeholder="blur"
-                    blurDataURL={
-                      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAEklEQVR42mNMX/OkngEIGDEYAHIAB2ZYiQm7AAAAAElFTkSuQmCC'
-                    }
-                  />
-                  <div>
-                    <span className="font-bold">{el.name}</span>{' '}
-                    <span className="text-slate-400">({el.character})</span>
+              {data.credits.cast.map(
+                (el: {
+                  id: number;
+                  name: string;
+                  profile_path: string;
+                  character: string;
+                }) => (
+                  <div key={el.id} className="min-w-[305px]">
+                    <Link
+                      href={{
+                        pathname: `/people/${el.id}`,
+                        query: `${toUrl(el.name)}`,
+                      }}
+                    >
+                      <Image
+                        className="rounded-2xl"
+                        width={342}
+                        height={513}
+                        src={`https://image.tmdb.org/t/p/w342${el.profile_path}`}
+                        alt=""
+                        placeholder="blur"
+                        blurDataURL={
+                          'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAEklEQVR42mNMX/OkngEIGDEYAHIAB2ZYiQm7AAAAAElFTkSuQmCC'
+                        }
+                      />
+                      <div>
+                        <span className="font-bold">{el.name}</span>{' '}
+                        <span className="text-slate-400">({el.character})</span>
+                      </div>
+                    </Link>
                   </div>
-                </Link>
-              </div>
-            )
-          )}
-        </div>
-        <div className="col-span-2 px-2 font-bold">Similar:</div>
-        <div
-          className={`${styles.scrollbar} col-span-2 flex gap-4 overflow-y-hidden px-2 pb-1`}
-        >
-          {data.similar.results.map(
-            (el: { id: number; title: string; poster_path: string }) => (
-              <div key={el.id} className="min-w-[305px]">
-                <Link
-                  href={{
-                    pathname: `/movies/${el.id}`,
-                    query: `${toUrl(el.title)}`,
-                  }}
-                >
-                  <Image
-                    className="rounded-2xl"
-                    width={342}
-                    height={513}
-                    src={`https://image.tmdb.org/t/p/w342${el.poster_path}`}
-                    alt=""
-                    placeholder="blur"
-                    blurDataURL={
-                      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAEklEQVR42mNMX/OkngEIGDEYAHIAB2ZYiQm7AAAAAElFTkSuQmCC'
-                    }
-                  />
-                </Link>
-              </div>
-            )
-          )}
-        </div>
-        <div className="col-span-2 px-2 font-bold">Recommendations:</div>
-        <div
-          className={`${styles.scrollbar} col-span-2 flex gap-4 overflow-y-hidden px-2 pb-1`}
-        >
-          {data.recommendations.results.map(
-            (el: { id: number; title: string; poster_path: string }) => (
-              <div key={el.id} className="min-w-[305px]">
-                <Link
-                  href={{
-                    pathname: `/movies/${el.id}`,
-                    query: `${toUrl(el.title)}`,
-                  }}
-                >
-                  <Image
-                    className="rounded-2xl"
-                    width={342}
-                    height={513}
-                    src={`https://image.tmdb.org/t/p/w342${el.poster_path}`}
-                    alt=""
-                    placeholder="blur"
-                    blurDataURL={
-                      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAEklEQVR42mNMX/OkngEIGDEYAHIAB2ZYiQm7AAAAAElFTkSuQmCC'
-                    }
-                  />
-                </Link>
-              </div>
-            )
-          )}
-        </div>
+                )
+              )}
+            </div>
+          </>
+        )}
+        {data.similar.results && (
+          <>
+            <div className="col-span-2 px-2 font-bold">Similar:</div>
+            <div
+              className={`${styles.scrollbar} col-span-2 flex gap-4 overflow-y-hidden px-2 pb-1`}
+            >
+              {data.similar.results.map(
+                (el: { id: number; title: string; poster_path: string }) => (
+                  <div key={el.id} className="min-w-[305px]">
+                    <Link
+                      href={{
+                        pathname: `/movies/${el.id}`,
+                        query: `${toUrl(el.title)}`,
+                      }}
+                    >
+                      <Image
+                        className="rounded-2xl"
+                        width={342}
+                        height={513}
+                        src={`https://image.tmdb.org/t/p/w342${el.poster_path}`}
+                        alt=""
+                        placeholder="blur"
+                        blurDataURL={
+                          'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAEklEQVR42mNMX/OkngEIGDEYAHIAB2ZYiQm7AAAAAElFTkSuQmCC'
+                        }
+                      />
+                    </Link>
+                  </div>
+                )
+              )}
+            </div>
+          </>
+        )}
+        {data.recommendations.results && (
+          <>
+            <div className="col-span-2 px-2 font-bold">Recommendations:</div>
+            <div
+              className={`${styles.scrollbar} col-span-2 flex gap-4 overflow-y-hidden px-2 pb-1`}
+            >
+              {data.recommendations.results.map(
+                (el: { id: number; title: string; poster_path: string }) => (
+                  <div key={el.id} className="min-w-[305px]">
+                    <Link
+                      href={{
+                        pathname: `/movies/${el.id}`,
+                        query: `${toUrl(el.title)}`,
+                      }}
+                    >
+                      <Image
+                        className="rounded-2xl"
+                        width={342}
+                        height={513}
+                        src={`https://image.tmdb.org/t/p/w342${el.poster_path}`}
+                        alt=""
+                        placeholder="blur"
+                        blurDataURL={
+                          'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAEklEQVR42mNMX/OkngEIGDEYAHIAB2ZYiQm7AAAAAElFTkSuQmCC'
+                        }
+                      />
+                    </Link>
+                  </div>
+                )
+              )}
+            </div>
+          </>
+        )}
       </div>
     </>
   );
