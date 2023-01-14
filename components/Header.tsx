@@ -1,10 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import Link from 'next/link';
 
-interface Meta {
-  content: string;
-}
-
 export default function Header({
   theme,
   setTheme,
