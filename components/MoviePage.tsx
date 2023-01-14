@@ -38,10 +38,10 @@ export default function MoviePage() {
       <Head>
         <title>{data.title} | SOMEMORE</title>
       </Head>
-      <div className="mx-auto box-content grid max-w-[1280px] grid-cols-[3fr,8fr] gap-4 pb-8 text-slate-50">
-        <div className="-z-20 col-span-2 col-start-1 row-span-3 row-start-1">
+      <div className="mx-auto box-content grid max-w-[1280px] grid-cols-[3fr,8fr] gap-4 pb-8 dark:text-slate-100">
+        <div className="col-span-2 col-start-1 row-span-3 row-start-1">
           <Image
-            className="-z-20 min-[540px]:brightness-[0.5]"
+            className="min-[540px]:brightness-[0.5]"
             width={1280}
             height={720}
             src={`https://image.tmdb.org/t/p/w1280${data.backdrop_path}`}
@@ -52,7 +52,7 @@ export default function MoviePage() {
             alt=""
           />
         </div>
-        <div className="col-start-1 row-start-1 hidden self-center min-[540px]:ml-3 min-[540px]:block min-[1000px]:ml-12">
+        <div className="z-10 col-start-1 row-start-1 hidden self-center min-[540px]:ml-3 min-[540px]:block min-[1000px]:ml-12">
           <Image
             width={780}
             height={1170}
@@ -64,15 +64,15 @@ export default function MoviePage() {
             alt=""
           />
         </div>
-        <div className="col-span-2 col-start-1 row-start-3 px-2 py-2 text-xl font-bold [text-shadow:_0px_1px_6px_rgb(0_0_0_/_100%)] min-[540px]:row-start-2 min-[540px]:px-3 min-[540px]:py-0 min-[540px]:text-2xl min-[1000px]:px-12 min-[1300px]:text-4xl">
+        <div className="z-10 col-span-2 col-start-1 row-start-3 px-2 py-2 text-xl font-bold [text-shadow:_0px_1px_10px_rgb(0_0_0_/_100%)] min-[540px]:row-start-2 min-[540px]:px-3 min-[540px]:py-0 min-[540px]:text-2xl min-[1000px]:px-12 min-[1300px]:text-4xl">
           {data.title}
         </div>
-        <div className="col-span-2 col-start-1 flex flex-wrap justify-between gap-1 px-2 min-[540px]:row-start-3 min-[540px]:px-3 min-[1000px]:px-12">
-          <div className="text-slate-300 min-[540px]:[text-shadow:_0px_1px_6px_rgb(0_0_0_/_100%)]">
+        <div className="z-10 col-span-2 col-start-1 flex flex-wrap justify-between gap-1 px-2 min-[540px]:row-start-3 min-[540px]:px-3 min-[1000px]:px-12">
+          <div className="text-slate-200 min-[540px]:[text-shadow:_0px_1px_10px_rgb(0_0_0_/_100%)]">
             Release Date: {getDate(data.release_date)}
           </div>
           <Link
-            className="font-bold min-[540px]:[text-shadow:_0px_1px_6px_rgb(0_0_0_/_100%)]"
+            className="font-bold text-slate-200 min-[540px]:[text-shadow:_0px_1px_10px_rgb(0_0_0_/_100%)]"
             href={`https://www.imdb.com/title/${data.imdb_id}/`}
             target="_blank"
             rel="noopener"
@@ -80,7 +80,7 @@ export default function MoviePage() {
             🔗 IMDb
           </Link>
         </div>
-        <div className="col-span-2 aspect-video self-center min-[540px]:col-span-1 min-[540px]:col-start-2 min-[540px]:row-start-1 min-[540px]:mr-8 min-[1000px]:mr-32">
+        <div className="z-10 col-span-2 aspect-video self-center min-[540px]:col-span-1 min-[540px]:col-start-2 min-[540px]:row-start-1 min-[540px]:mr-8 min-[1000px]:mr-32">
           {trailer && (
             <iframe
               className="h-full w-full"
@@ -99,7 +99,7 @@ export default function MoviePage() {
           >
             {data.genres.map((el: { id: number; name: string }) => (
               <div
-                className="min-w-fit cursor-pointer rounded-full bg-gray-700 p-2 transition-colors hover:bg-gray-600"
+                className="min-w-fit cursor-pointer rounded-full bg-gray-700 p-2 hover:bg-gray-600"
                 key={el.id}
               >
                 {el.name}
@@ -114,7 +114,7 @@ export default function MoviePage() {
           >
             {data.keywords.keywords.map((el: { id: number; name: string }) => (
               <div
-                className="min-w-fit cursor-pointer rounded-full bg-gray-700 p-2 transition-colors hover:bg-gray-600"
+                className="min-w-fit cursor-pointer rounded-full bg-gray-700 p-2 hover:bg-gray-600"
                 key={el.id}
               >
                 {el.name}
