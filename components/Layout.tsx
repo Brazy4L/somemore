@@ -9,18 +9,18 @@ export default function Layout({ children }: React.PropsWithChildren) {
     if (window.matchMedia('(prefers-color-scheme: dark)').matches && !dark) {
       setTheme(true);
       // @ts-ignore
-      document.querySelector('meta[name="color-scheme"]').content = 'dark'
+      document.querySelector('meta[name="color-scheme"]').content = 'dark';
     } else if (dark === 'true') {
       setTheme(true);
       // @ts-ignore
-      document.querySelector('meta[name="color-scheme"]').content = 'dark'
+      document.querySelector('meta[name="color-scheme"]').content = 'dark';
     }
   }, []);
 
   return (
     <>
       <Header theme={theme} setTheme={setTheme} />
-      <div className="min-h-[calc(100vh-60px)] bg-white dark:bg-[#101010] ">
+      <div className="min-h-[calc(100vh-60px)] bg-white dark:bg-[#101010]">
         {children}
       </div>
     </>
