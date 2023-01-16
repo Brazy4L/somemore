@@ -1,30 +1,15 @@
-import { Dispatch, SetStateAction, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import useSWR from 'swr';
 import { toUrl } from './utils';
 
-export default function GetMoviesPage({
-  page,
-  inView,
-  setPage,
-}: {
-  page: number;
-  inView: boolean;
-  setPage: Dispatch<SetStateAction<number>>;
-}) {
+export default function GetMoviesPage({ apipage }: { apipage: number }) {
   const fetcher = (url: RequestInfo | URL) =>
     fetch(url).then((res) => res.json());
   const { data, error, isLoading } = useSWR(
-    `/api/movies?page=${page}`,
+    `/api/movies?page=${apipage}`,
     fetcher
   );
-
-  useEffect(() => {
-    if (inView && !isLoading && !error) {
-      setPage(page + 1);
-    }
-  });
 
   if (error) return <div>Failed to load</div>;
   if (isLoading)

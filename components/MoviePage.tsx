@@ -84,7 +84,7 @@ export default function MoviePage() {
         <div className="z-10 col-span-2 aspect-video self-center min-[540px]:col-span-1 min-[540px]:col-start-2 min-[540px]:row-start-1 min-[540px]:mr-8 min-[1000px]:mr-32">
           {trailer && <Trailer trailerKey={trailer.key} />}
         </div>
-        {data.genres && (
+        {data.genres && Boolean(data.genres.length) && (
           <div
             className={`${styles.scrollbar} col-span-2 flex gap-2 overflow-y-hidden px-2 pb-1`}
           >
@@ -99,7 +99,7 @@ export default function MoviePage() {
           </div>
         )}
         <div className="col-span-2 px-2">{data.overview}</div>
-        {data.keywords.keywords && (
+        {data.keywords.keywords && Boolean(data.keywords.keywords.length) && (
           <div
             className={`${styles.scrollbar} col-span-2 flex gap-2 overflow-y-hidden px-2 pb-1`}
           >
@@ -113,7 +113,7 @@ export default function MoviePage() {
             ))}
           </div>
         )}
-        {data.credits.cast && (
+        {data.credits.cast && Boolean(data.credits.cast.length) && (
           <>
             <div className="col-span-2 px-2 font-bold">Cast:</div>
             <div
@@ -145,8 +145,19 @@ export default function MoviePage() {
                         }
                       />
                       <div>
-                        <span className="font-bold">{el.name}</span>{' '}
-                        <span className="text-slate-400">({el.character})</span>
+                        {el.name && (
+                          <>
+                            <span className="font-bold">{el.name}</span>
+                            {el.character && (
+                              <>
+                                {' '}
+                                <span className="text-slate-400">
+                                  ({el.character})
+                                </span>
+                              </>
+                            )}
+                          </>
+                        )}
                       </div>
                     </Link>
                   </div>
@@ -155,7 +166,7 @@ export default function MoviePage() {
             </div>
           </>
         )}
-        {data.similar.results && (
+        {data.similar.results && Boolean(data.similar.results.length) && (
           <>
             <div className="col-span-2 px-2 font-bold">Similar:</div>
             <div
@@ -188,39 +199,40 @@ export default function MoviePage() {
             </div>
           </>
         )}
-        {data.recommendations.results && (
-          <>
-            <div className="col-span-2 px-2 font-bold">Recommendations:</div>
-            <div
-              className={`${styles.scrollbar} col-span-2 flex gap-4 overflow-y-hidden px-2 pb-1`}
-            >
-              {data.recommendations.results.map(
-                (el: { id: number; title: string; poster_path: string }) => (
-                  <div key={el.id} className="min-w-[305px]">
-                    <Link
-                      href={{
-                        pathname: `/movies/${el.id}`,
-                        query: `${toUrl(el.title)}`,
-                      }}
-                    >
-                      <Image
-                        className="rounded-2xl"
-                        width={342}
-                        height={513}
-                        src={`https://image.tmdb.org/t/p/w342${el.poster_path}`}
-                        alt=""
-                        placeholder="blur"
-                        blurDataURL={
-                          'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAEklEQVR42mNMX/OkngEIGDEYAHIAB2ZYiQm7AAAAAElFTkSuQmCC'
-                        }
-                      />
-                    </Link>
-                  </div>
-                )
-              )}
-            </div>
-          </>
-        )}
+        {data.recommendations.results &&
+          Boolean(data.recommendations.results.length) && (
+            <>
+              <div className="col-span-2 px-2 font-bold">Recommendations:</div>
+              <div
+                className={`${styles.scrollbar} col-span-2 flex gap-4 overflow-y-hidden px-2 pb-1`}
+              >
+                {data.recommendations.results.map(
+                  (el: { id: number; title: string; poster_path: string }) => (
+                    <div key={el.id} className="min-w-[305px]">
+                      <Link
+                        href={{
+                          pathname: `/movies/${el.id}`,
+                          query: `${toUrl(el.title)}`,
+                        }}
+                      >
+                        <Image
+                          className="rounded-2xl"
+                          width={342}
+                          height={513}
+                          src={`https://image.tmdb.org/t/p/w342${el.poster_path}`}
+                          alt=""
+                          placeholder="blur"
+                          blurDataURL={
+                            'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAEklEQVR42mNMX/OkngEIGDEYAHIAB2ZYiQm7AAAAAElFTkSuQmCC'
+                          }
+                        />
+                      </Link>
+                    </div>
+                  )
+                )}
+              </div>
+            </>
+          )}
       </div>
     </>
   );
