@@ -11,6 +11,7 @@ export default function App({ Component, pageProps }: AppProps) {
         {`
           const meta = document.createElement('meta');
           meta.name = "color-scheme";
+          meta.content = "light";
           document.getElementsByTagName('head')[0].appendChild(meta);
           const dark = localStorage.getItem('theme');
           if ((window.matchMedia('(prefers-color-scheme: dark)').matches && !dark) || (dark === 'true')) {

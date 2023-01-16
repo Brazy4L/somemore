@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import useSWR from 'swr';
 import { toUrl, getDate } from './utils';
+import Trailer from './Trailer';
 
 interface trailer {
   key: string;
@@ -81,17 +82,7 @@ export default function MoviePage() {
           </Link>
         </div>
         <div className="z-10 col-span-2 aspect-video self-center min-[540px]:col-span-1 min-[540px]:col-start-2 min-[540px]:row-start-1 min-[540px]:mr-8 min-[1000px]:mr-32">
-          {trailer && (
-            <iframe
-              className="h-full w-full"
-              width="560"
-              height="315"
-              src={`https://www.youtube-nocookie.com/embed/${trailer.key}`}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              title="YouTube video player"
-            />
-          )}
+          {trailer && <Trailer trailerKey={trailer.key} />}
         </div>
         {data.genres && (
           <div

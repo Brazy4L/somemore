@@ -9,7 +9,7 @@ export default function Header({
   setTheme: Dispatch<SetStateAction<boolean>>;
 }) {
   return (
-    <nav className="sticky top-0 flex h-[60px] items-center border-b-8 border-[#ffffff] px-2 text-gray-900 dark:border-[#101010] dark:text-gray-50 min-[540px]:px-8">
+    <nav className="sticky top-0 z-20 flex h-[60px] items-center border-b-8 border-[#ffffff] px-2 text-gray-900 dark:border-[#101010] dark:text-gray-50 min-[540px]:px-8">
       <div className="absolute top-0 left-0 -z-10 h-full w-full bg-[#e5e7eb] dark:bg-[#202020]"></div>
       <div className="mr-8 flex-grow text-2xl font-black">
         <Link href="/">SOMEMORE</Link>
