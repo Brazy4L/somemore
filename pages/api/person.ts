@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-export default async function getPopularMovies(
+export default async function getPerson(
   req: NextApiRequest,
   res: NextApiResponse
 ) {

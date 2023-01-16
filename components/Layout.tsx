@@ -6,21 +6,19 @@ export default function Layout({ children }: React.PropsWithChildren) {
 
   useEffect(() => {
     const dark = localStorage.getItem('theme');
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches && !dark) {
+    if (
+      (window.matchMedia('(prefers-color-scheme: dark)').matches && !dark) ||
+      dark === 'true'
+    ) {
       setTheme(true);
-      // @ts-ignore
-      document.querySelector('meta[name="color-scheme"]').content = 'dark';
-    } else if (dark === 'true') {
-      setTheme(true);
-      // @ts-ignore
-      document.querySelector('meta[name="color-scheme"]').content = 'dark';
     }
+    console.log('check');
   }, []);
 
   return (
     <>
       <Header theme={theme} setTheme={setTheme} />
-      <div className="min-h-[calc(100vh-60px)] bg-white dark:bg-[#101010]">
+      <div className="min-h-[calc(100vh-60px)] bg-white text-gray-900 dark:bg-[#101010] dark:text-gray-50">
         {children}
       </div>
     </>
