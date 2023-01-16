@@ -1,12 +1,13 @@
-import Layout from '../../components/Layout';
-import BaseHead from '../../components/BaseHead';
+import Head from 'next/head';
 import PersonPage from '../../components/PersonPage';
 
 export default function Person() {
   return (
-    <Layout>
-      <BaseHead title="..." />
+    <>
+      <Head>
+        <title>...</title>
+      </Head>
       <PersonPage />
-    </Layout>
+    </>
   );
 }

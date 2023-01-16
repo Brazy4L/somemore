@@ -1,11 +1,12 @@
-import Layout from '../components/Layout';
-import BaseHead from '../components/BaseHead';
+import Head from 'next/head';
 
 export default function Tvshows() {
   return (
-    <Layout>
-      <BaseHead title="TV Shows | SOMEMORE" />
+    <>
+      <Head>
+        <title>TV Shows | SOMEMORE</title>
+      </Head>
       <div>TV Shows</div>
-    </Layout>
+    </>
   );
 }

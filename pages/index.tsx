@@ -1,11 +1,12 @@
-import Layout from '../components/Layout';
-import BaseHead from '../components/BaseHead';
+import Head from 'next/head';
 
 export default function Home() {
   return (
-    <Layout>
-      <BaseHead title="SOMEMORE" />
+    <>
+      <Head>
+        <title>SOMEMORE</title>
+      </Head>
       <div>Main</div>
-    </Layout>
+    </>
   );
 }

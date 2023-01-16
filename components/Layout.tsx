@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Header from '../components/Header';
+import Header from './Header';
+import BaseHead from './BaseHead';
 
 export default function Layout({ children }: React.PropsWithChildren) {
   const [theme, setTheme] = useState(false);
@@ -12,11 +13,11 @@ export default function Layout({ children }: React.PropsWithChildren) {
     ) {
       setTheme(true);
     }
-    console.log('check');
   }, []);
 
   return (
     <>
+      <BaseHead />
       <Header theme={theme} setTheme={setTheme} />
       <div className="min-h-[calc(100vh-60px)] bg-white text-gray-900 dark:bg-[#101010] dark:text-gray-50">
         {children}

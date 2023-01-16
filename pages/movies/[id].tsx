@@ -1,12 +1,13 @@
-import Layout from '../../components/Layout';
-import BaseHead from '../../components/BaseHead';
+import Head from 'next/head';
 import MoviePage from '../../components/MoviePage';
 
 export default function Movie() {
   return (
-    <Layout>
-      <BaseHead title="..." />
+    <>
+      <Head>
+        <title>...</title>
+      </Head>
       <MoviePage />
-    </Layout>
+    </>
   );
 }
