@@ -4,33 +4,11 @@ import { toUrl } from './utils';
 
 export default function GetMediaPages({
   data,
-  isLoading,
   type,
 }: {
   data: any;
-  isLoading: boolean;
   type: any;
 }) {
-  if (isLoading)
-    return (
-      <>
-        {Array(20)
-          .fill(true)
-          .map((_, i) => (
-            <div key={i}>
-              <Image
-                src={
-                  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAEklEQVR42mNMX/OkngEIGDEYAHIAB2ZYiQm7AAAAAElFTkSuQmCC'
-                }
-                height={513}
-                width={342}
-                alt=""
-              />
-            </div>
-          ))}
-      </>
-    );
-
   return (
     <>
       {data.results.map(
@@ -55,7 +33,7 @@ export default function GetMediaPages({
                 alt=""
                 placeholder="blur"
                 blurDataURL={
-                  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAEklEQVR42mNMX/OkngEIGDEYAHIAB2ZYiQm7AAAAAElFTkSuQmCC'
+                  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAQAAAAT4xYKAAAAD0lEQVR42mNU+M/AwAgnABt1A2GYGZ4/AAAAAElFTkSuQmCC'
                 }
               />
             </Link>

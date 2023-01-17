@@ -22,12 +22,7 @@ export default function MediaPages({ type }: { type: string }) {
       setPage(page + 1);
       setPages((arr) => [
         ...arr,
-        <GetMediaPages
-          key={page}
-          data={data}
-          isLoading={isLoading}
-          type={type}
-        />,
+        <GetMediaPages key={page} data={data} type={type} />,
       ]);
     }
   }, [data, error, inView, isLoading, page, type]);
@@ -36,6 +31,18 @@ export default function MediaPages({ type }: { type: string }) {
     <>
       <div className="mx-auto box-content grid max-w-[1280px] grid-cols-3 justify-center gap-2 px-2 min-[540px]:grid-cols-4 min-[540px]:px-8 min-[800px]:grid-cols-5 min-[1050px]:grid-cols-6">
         {pages}
+        {isLoading ? (
+          <>
+            {Array(20)
+              .fill(true)
+              .map((_, i) => (
+                <div
+                  key={i}
+                  className="aspect-[2/3] w-[342px] max-w-full bg-[#202020]"
+                ></div>
+              ))}
+          </>
+        ) : null}
       </div>
       {error ? (
         <div className="grid h-[calc(100vh-60px)] items-center justify-items-center">
