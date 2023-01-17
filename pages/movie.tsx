@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import MoviesPage from '../components/MoviesPage';
+import MediaPages from '../components/MediaPages';
 
 export default function Movies() {
   return (
@@ -7,7 +7,7 @@ export default function Movies() {
       <Head>
         <title>Movies | SOMEMORE</title>
       </Head>
-      <MoviesPage />
+      <MediaPages type="movie" />
     </>
   );
 }

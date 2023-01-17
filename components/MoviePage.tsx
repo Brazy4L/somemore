@@ -177,7 +177,7 @@ export default function MoviePage() {
                   <div key={el.id} className="min-w-[305px]">
                     <Link
                       href={{
-                        pathname: `/movies/${el.id}`,
+                        pathname: `/movie/${el.id}`,
                         query: `${toUrl(el.title)}`,
                       }}
                     >
@@ -211,7 +211,7 @@ export default function MoviePage() {
                     <div key={el.id} className="min-w-[305px]">
                       <Link
                         href={{
-                          pathname: `/movies/${el.id}`,
+                          pathname: `/movie/${el.id}`,
                           query: `${toUrl(el.title)}`,
                         }}
                       >

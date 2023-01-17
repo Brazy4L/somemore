@@ -3,11 +3,17 @@ import Link from 'next/link';
 import useSWR from 'swr';
 import { toUrl } from './utils';
 
-export default function GetMoviesPage({ apipage }: { apipage: number }) {
+export default function GetMediaPages({
+  apipage,
+  type,
+}: {
+  apipage: number;
+  type: string;
+}) {
   const fetcher = (url: RequestInfo | URL) =>
     fetch(url).then((res) => res.json());
   const { data, error, isLoading } = useSWR(
-    `/api/movies?page=${apipage}`,
+    `/api/media?type=${type}&page=${apipage}`,
     fetcher
   );
 
@@ -35,12 +41,17 @@ export default function GetMoviesPage({ apipage }: { apipage: number }) {
   return (
     <>
       {data.results.map(
-        (el: { id: number; title: string; poster_path: string }) => (
+        (el: {
+          id: number;
+          title: string;
+          poster_path: string;
+          name: string;
+        }) => (
           <div key={el.id}>
             <Link
               href={{
-                pathname: `/movies/${el.id}`,
-                query: `${toUrl(el.title)}`,
+                pathname: `/${type}/${el.id}`,
+                query: `${toUrl(el.title || el.name)}`,
               }}
             >
               <Image

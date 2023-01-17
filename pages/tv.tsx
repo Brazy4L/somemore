@@ -1,12 +1,13 @@
 import Head from 'next/head';
+import MediaPages from '../components/MediaPages';
 
-export default function Tvshows() {
+export default function TvShows() {
   return (
     <>
       <Head>
         <title>TV Shows | SOMEMORE</title>
       </Head>
-      <div>TV Shows</div>
+      <MediaPages type="tv" />
     </>
   );
 }
