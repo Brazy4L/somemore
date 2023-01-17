@@ -1,23 +1,16 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import useSWR from 'swr';
 import { toUrl } from './utils';
 
 export default function GetMediaPages({
-  apipage,
+  data,
+  isLoading,
   type,
 }: {
-  apipage: number;
-  type: string;
+  data: any;
+  isLoading: boolean;
+  type: any;
 }) {
-  const fetcher = (url: RequestInfo | URL) =>
-    fetch(url).then((res) => res.json());
-  const { data, error, isLoading } = useSWR(
-    `/api/media?type=${type}&page=${apipage}`,
-    fetcher
-  );
-
-  if (error) return <div>Failed to load</div>;
   if (isLoading)
     return (
       <>
