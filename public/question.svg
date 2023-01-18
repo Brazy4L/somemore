@@ -1,0 +1,28 @@
+<svg width="92" height="138" viewBox="0 0 92 138" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_101_2)">
+<path d="M56.0767 90.0302C106.399 10.1885 44.7509 6.92421 20.1777 28.5014C15.6796 32.4511 15.5591 39.0231 18.1528 44.4181C19.1594 46.5119 21.8688 47.0949 23.7058 45.6728C43.9812 29.9774 51.8259 34.1409 53.2374 44.1567C55.5309 60.4311 39.6849 90.6802 39.6849 90.6802C46.6169 93.4478 47.7699 93.9082 51.7277 93.1157C53.5119 92.7584 55.1065 91.5695 56.0767 90.0302Z" fill="#202020"/>
+<g style="mix-blend-mode:screen">
+<ellipse cx="53" cy="27" rx="17" ry="8" fill="#0D0D0D"/>
+</g>
+<g style="mix-blend-mode:screen">
+<ellipse cx="63" cy="38.5" rx="10" ry="17.5" fill="#0D0D0D"/>
+</g>
+</g>
+<g clip-path="url(#clip1_101_2)">
+<circle cx="45.5" cy="107.964" r="10.5" fill="#202020"/>
+<g style="mix-blend-mode:screen">
+<ellipse cx="67.5" cy="124.464" rx="26.5" ry="23" fill="#0D0D0D"/>
+</g>
+<g style="mix-blend-mode:screen">
+<ellipse cx="23.5" cy="128.464" rx="26.5" ry="23" fill="#0D0D0D"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_101_2">
+<rect width="61.2891" height="76.3523" fill="white" transform="translate(14 17.1113)"/>
+</clipPath>
+<clipPath id="clip1_101_2">
+<rect x="35" y="97.4636" width="21" height="21" rx="10.5" fill="white"/>
+</clipPath>
+</defs>
+</svg>

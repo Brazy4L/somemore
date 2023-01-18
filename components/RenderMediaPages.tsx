@@ -1,6 +1,7 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { toUrl } from './utils';
+import CustomImage from './CustomImage';
+import question from '../public/question.svg';
 
 export default function RenderMediaPages({
   data,
@@ -25,16 +26,12 @@ export default function RenderMediaPages({
                 query: `${toUrl(el.title || el.name)}`,
               }}
             >
-              <Image
+              <CustomImage
                 className="rounded-2xl"
                 width={342}
                 height={513}
                 src={`https://image.tmdb.org/t/p/w342${el.poster_path}`}
-                alt=""
-                placeholder="blur"
-                blurDataURL={
-                  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAQAAAAT4xYKAAAAD0lEQVR42mNU+M/AwAgnABt1A2GYGZ4/AAAAAElFTkSuQmCC'
-                }
+                fallbackSrc={question}
               />
             </Link>
           </div>

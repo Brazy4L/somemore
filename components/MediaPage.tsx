@@ -1,12 +1,14 @@
 import styles from '../styles/scrollbar.module.css';
 import { useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import useSWR from 'swr';
 import { toUrl, getDate } from './utils';
 import Trailer from './Trailer';
+import CustomImage from './CustomImage';
+import question from '../public/question.svg';
+import questionWide from '../public/question-wide.svg';
 
 interface trailer {
   key: string;
@@ -41,28 +43,20 @@ export default function MediaPage({ type }: { type: string }) {
       </Head>
       <div className="mx-auto box-content grid max-w-[1280px] grid-cols-[3fr,8fr] gap-4 pb-8">
         <div className="col-span-2 col-start-1 row-span-3 row-start-1">
-          <Image
+          <CustomImage
             className="min-[540px]:brightness-[0.5]"
             width={1280}
             height={720}
             src={`https://image.tmdb.org/t/p/w1280${data.backdrop_path}`}
-            placeholder="blur"
-            blurDataURL={
-              'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAQAAAAT4xYKAAAAD0lEQVR42mNU+M/AwAgnABt1A2GYGZ4/AAAAAElFTkSuQmCC'
-            }
-            alt=""
+            fallbackSrc={questionWide}
           />
         </div>
         <div className="z-10 col-start-1 row-start-1 hidden self-center min-[540px]:ml-3 min-[540px]:block min-[1000px]:ml-12">
-          <Image
+          <CustomImage
             width={780}
             height={1170}
             src={`https://image.tmdb.org/t/p/w780${data.poster_path}`}
-            placeholder="blur"
-            blurDataURL={
-              'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAQAAAAT4xYKAAAAD0lEQVR42mNU+M/AwAgnABt1A2GYGZ4/AAAAAElFTkSuQmCC'
-            }
-            alt=""
+            fallbackSrc={question}
           />
         </div>
         <div className="z-10 col-span-2 col-start-1 row-start-3 px-2 py-2 text-xl font-bold text-gray-50 [text-shadow:_0px_1px_10px_rgb(0_0_0_/_100%)] min-[540px]:row-start-2 min-[540px]:px-3 min-[540px]:py-0 min-[540px]:text-2xl min-[1000px]:px-12 min-[1300px]:text-4xl">
@@ -142,16 +136,12 @@ export default function MediaPage({ type }: { type: string }) {
                         query: `${toUrl(el.name)}`,
                       }}
                     >
-                      <Image
+                      <CustomImage
                         className="rounded-2xl"
                         width={342}
                         height={513}
                         src={`https://image.tmdb.org/t/p/w342${el.profile_path}`}
-                        alt=""
-                        placeholder="blur"
-                        blurDataURL={
-                          'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAQAAAAT4xYKAAAAD0lEQVR42mNU+M/AwAgnABt1A2GYGZ4/AAAAAElFTkSuQmCC'
-                        }
+                        fallbackSrc={question}
                       />
                       <div>
                         {el.name && (
@@ -196,16 +186,12 @@ export default function MediaPage({ type }: { type: string }) {
                           query: `${toUrl(el.title || el.name)}`,
                         }}
                       >
-                        <Image
+                        <CustomImage
                           className="rounded-2xl"
                           width={342}
                           height={513}
                           src={`https://image.tmdb.org/t/p/w342${el.poster_path}`}
-                          alt=""
-                          placeholder="blur"
-                          blurDataURL={
-                            'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAQAAAAT4xYKAAAAD0lEQVR42mNU+M/AwAgnABt1A2GYGZ4/AAAAAElFTkSuQmCC'
-                          }
+                          fallbackSrc={question}
                         />
                       </Link>
                     </div>
@@ -234,16 +220,12 @@ export default function MediaPage({ type }: { type: string }) {
                         query: `${toUrl(el.title || el.name)}`,
                       }}
                     >
-                      <Image
+                      <CustomImage
                         className="rounded-2xl"
                         width={342}
                         height={513}
                         src={`https://image.tmdb.org/t/p/w342${el.poster_path}`}
-                        alt=""
-                        placeholder="blur"
-                        blurDataURL={
-                          'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAQAAAAT4xYKAAAAD0lEQVR42mNU+M/AwAgnABt1A2GYGZ4/AAAAAElFTkSuQmCC'
-                        }
+                        fallbackSrc={question}
                       />
                     </Link>
                   </div>

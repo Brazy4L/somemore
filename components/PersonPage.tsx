@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import useSWR from 'swr';
 import { toUrl, getDate, checkType } from './utils';
+import CustomImage from './CustomImage';
+import question from '../public/question.svg';
 
 export default function PersonPage() {
   const { query } = useRouter();
@@ -70,16 +71,12 @@ export default function PersonPage() {
       </Head>
       <div className="mx-auto box-content grid max-w-[1280px] gap-4 pb-8">
         <div className="grid gap-2 min-[600px]:grid-flow-col">
-          <Image
+          <CustomImage
             className="justify-self-center rounded-2xl"
             width={342}
             height={513}
             src={`https://image.tmdb.org/t/p/w342${data.profile_path}`}
-            alt=""
-            placeholder="blur"
-            blurDataURL={
-              'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAQAAAAT4xYKAAAAD0lEQVR42mNU+M/AwAgnABt1A2GYGZ4/AAAAAElFTkSuQmCC'
-            }
+            fallbackSrc={question}
           />
           <div className="grid gap-4 px-2">
             <div className="font-bold">{data.name}</div>
@@ -161,16 +158,12 @@ export default function PersonPage() {
                         }}
                       >
                         <div className="flex flex-shrink-0 items-center">
-                          <Image
+                          <CustomImage
                             className="rounded-2xl"
                             width={92}
                             height={138}
                             src={`https://image.tmdb.org/t/p/w92${el.poster_path}`}
-                            alt=""
-                            placeholder="blur"
-                            blurDataURL={
-                              'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAQAAAAT4xYKAAAAD0lEQVR42mNU+M/AwAgnABt1A2GYGZ4/AAAAAElFTkSuQmCC'
-                            }
+                            fallbackSrc={question}
                           />
                         </div>
                         <div className="flex flex-col justify-center pl-4">
@@ -229,16 +222,12 @@ export default function PersonPage() {
                         }}
                       >
                         <div className="flex flex-shrink-0 items-center">
-                          <Image
+                          <CustomImage
                             className="rounded-2xl"
                             width={92}
                             height={138}
                             src={`https://image.tmdb.org/t/p/w92${el.poster_path}`}
-                            alt=""
-                            placeholder="blur"
-                            blurDataURL={
-                              'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAQAAAAT4xYKAAAAD0lEQVR42mNU+M/AwAgnABt1A2GYGZ4/AAAAAElFTkSuQmCC'
-                            }
+                            fallbackSrc={question}
                           />
                         </div>
                         <div className="flex flex-col justify-center pl-4">
@@ -255,11 +244,10 @@ export default function PersonPage() {
                               <span>({el.episode_count} episode(s))</span>
                             )}
                           </div>
-                          {el.release_date && (
-                            <div>{getDate(el.release_date)}</div>
-                          )}
-                          {el.first_air_date && (
-                            <div>{getDate(el.first_air_date)}</div>
+                          {(el.release_date || el.first_air_date) && (
+                            <div>
+                              {getDate(el.release_date || el.first_air_date)}
+                            </div>
                           )}
                         </div>
                       </Link>
