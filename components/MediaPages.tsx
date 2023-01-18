@@ -13,7 +13,7 @@ export default function MediaPages({ type }: { type: string }) {
   const fetcher = (url: RequestInfo | URL) =>
     fetch(url).then((res) => res.json());
   const { data, error, isLoading } = useSWR(
-    `/api/media?type=${type}&page=${page}`,
+    `/api/popmedia?type=${type}&page=${page}`,
     fetcher,
     {
       onSuccess: (data, key, config) => {

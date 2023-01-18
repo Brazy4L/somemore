@@ -60,7 +60,7 @@ export default function PersonPage() {
   if (isLoading) return <div>Loading...</div>;
 
   const checkGender = (el: number) => {
-    return el === 1 ? 'Actress' : 2 ? 'Actor' : null;
+    return el === 1 ? 'Actress' : el === 2 ? 'Actor' : null;
   };
 
   return (
@@ -78,7 +78,7 @@ export default function PersonPage() {
             alt=""
             placeholder="blur"
             blurDataURL={
-              'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAEklEQVR42mNMX/OkngEIGDEYAHIAB2ZYiQm7AAAAAElFTkSuQmCC'
+              'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAQAAAAT4xYKAAAAD0lEQVR42mNU+M/AwAgnABt1A2GYGZ4/AAAAAElFTkSuQmCC'
             }
           />
           <div className="grid gap-4 px-2">
@@ -169,7 +169,7 @@ export default function PersonPage() {
                             alt=""
                             placeholder="blur"
                             blurDataURL={
-                              'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAEklEQVR42mNMX/OkngEIGDEYAHIAB2ZYiQm7AAAAAElFTkSuQmCC'
+                              'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAQAAAAT4xYKAAAAD0lEQVR42mNU+M/AwAgnABt1A2GYGZ4/AAAAAElFTkSuQmCC'
                             }
                           />
                         </div>
@@ -237,7 +237,7 @@ export default function PersonPage() {
                             alt=""
                             placeholder="blur"
                             blurDataURL={
-                              'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAEklEQVR42mNMX/OkngEIGDEYAHIAB2ZYiQm7AAAAAElFTkSuQmCC'
+                              'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAQAAAAT4xYKAAAAD0lEQVR42mNU+M/AwAgnABt1A2GYGZ4/AAAAAElFTkSuQmCC'
                             }
                           />
                         </div>

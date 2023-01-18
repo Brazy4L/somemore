@@ -18,7 +18,7 @@ export default function MediaPage({ type }: { type: string }) {
   const fetcher = (url: RequestInfo | URL) =>
     fetch(url).then((res) => res.json());
   const { data, error, isLoading } = useSWR(
-    `/api/movie?type=${type}&idmedia=${query.id}`,
+    `/api/media?type=${type}&idmedia=${query.id}`,
     fetcher,
     {
       onSuccess: (data, key, config) => {
