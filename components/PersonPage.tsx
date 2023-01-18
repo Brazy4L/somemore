@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import useSWR from 'swr';
-import { toUrl, getDate, checkType } from './utils';
+import { toUrl, getDate } from './utils';
 import CustomImage from './CustomImage';
 import question from '../public/question.svg';
 
@@ -64,6 +64,14 @@ export default function PersonPage() {
     return el === 1 ? 'Actress' : el === 2 ? 'Actor' : null;
   };
 
+  const checkType = (el: string) => {
+    return el === 'movie' ? 'movie' : 'tv';
+  };
+
+  const checkPlural = (el: number) => {
+    return el === 1 ? 'episode' : 'episodes';
+  };
+
   return (
     <>
       <Head>
@@ -80,9 +88,7 @@ export default function PersonPage() {
           />
           <div className="grid gap-4 px-2">
             <div className="font-bold">{data.name}</div>
-            <div className="h-[2px] w-full rounded-full bg-[#67ace4]"></div>
             <div>{data.biography}</div>
-            <div className="h-[2px] w-full rounded-full bg-[#67ace4]"></div>
             <div className="flex flex-wrap items-end justify-center gap-4">
               {data.imdb_id && (
                 <Link
@@ -128,9 +134,9 @@ export default function PersonPage() {
           </div>
         </div>
         <div className="text-4xl font-bold">Credits:</div>
-        {castCredits && (
+        {castCredits && Boolean(castCredits.length) && (
           <>
-            {data.gender && (
+            {checkGender(data.gender) && (
               <div className="text-2xl font-bold">
                 {checkGender(data.gender)}
               </div>
@@ -173,11 +179,16 @@ export default function PersonPage() {
                           {el.name && (
                             <div className="font-bold">{el.name}</div>
                           )}
-                          <div className="text-slate-400">{el.character}</div>
-                          <div className="text-slate-400">
+                          <div className="text-gray-500 dark:text-gray-400">
+                            {el.character}
+                          </div>
+                          <div className="text-gray-500 dark:text-gray-400">
                             {el.media_type}{' '}
                             {el.episode_count && (
-                              <span>({el.episode_count} episode(s))</span>
+                              <span>
+                                ({el.episode_count}{' '}
+                                {checkPlural(el.episode_count)})
+                              </span>
                             )}
                           </div>
                           {el.release_date && (
@@ -189,14 +200,13 @@ export default function PersonPage() {
                         </div>
                       </Link>
                     </div>
-                    <div className="h-[2px] w-full rounded-full bg-[#67ace4]"></div>
                   </div>
                 )
               )}
             </div>
           </>
         )}
-        {crewCredits && (
+        {crewCredits && Boolean(crewCredits.length) && (
           <>
             <div className="text-2xl font-bold">Filmmaking</div>
             <div className="grid">
@@ -237,11 +247,16 @@ export default function PersonPage() {
                           {el.name && (
                             <div className="font-bold">{el.name}</div>
                           )}
-                          <div className="text-slate-400">{el.job}</div>
-                          <div className="text-slate-400">
+                          <div className="text-gray-500 dark:text-gray-400">
+                            {el.job}
+                          </div>
+                          <div className="text-gray-500 dark:text-gray-400">
                             {el.media_type}{' '}
                             {el.episode_count && (
-                              <span>({el.episode_count} episode(s))</span>
+                              <span>
+                                ({el.episode_count}{' '}
+                                {checkPlural(el.episode_count)})
+                              </span>
                             )}
                           </div>
                           {(el.release_date || el.first_air_date) && (
@@ -252,7 +267,6 @@ export default function PersonPage() {
                         </div>
                       </Link>
                     </div>
-                    <div className="h-[2px] w-full rounded-full bg-[#67ace4]"></div>
                   </div>
                 )
               )}

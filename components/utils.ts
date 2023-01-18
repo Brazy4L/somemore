@@ -9,7 +9,3 @@ export function getDate(date: string) {
     year: 'numeric',
   });
 }
-
-export function checkType(el: string) {
-  return el === 'movie' ? 'movie' : 'tv';
-}
