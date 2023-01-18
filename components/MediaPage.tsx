@@ -118,7 +118,7 @@ export default function MediaPage({ type }: { type: string }) {
         )}
         {data.credits.cast && Boolean(data.credits.cast.length) && (
           <>
-            <div className="col-span-2 px-2 font-bold">Cast:</div>
+            <div className="col-span-2 px-2 text-2xl font-bold">Cast:</div>
             <div
               className={`${styles.scrollbar} col-span-2 mx-2 flex gap-4 overflow-y-hidden`}
             >
@@ -150,7 +150,7 @@ export default function MediaPage({ type }: { type: string }) {
                             {el.character && (
                               <>
                                 {' '}
-                                <span className="text-gray-500 dark:text-gray-400">
+                                <span className="text-gray-600 dark:text-gray-400">
                                   {el.character}
                                 </span>
                               </>
@@ -168,7 +168,9 @@ export default function MediaPage({ type }: { type: string }) {
         {data.recommendations.results &&
           Boolean(data.recommendations.results.length) && (
             <>
-              <div className="col-span-2 px-2 font-bold">Recommendations:</div>
+              <div className="col-span-2 px-2 text-2xl font-bold">
+                Recommendations:
+              </div>
               <div
                 className={`${styles.scrollbar} col-span-2 mx-2 flex gap-4 overflow-y-hidden`}
               >
@@ -202,7 +204,7 @@ export default function MediaPage({ type }: { type: string }) {
           )}
         {data.similar.results && Boolean(data.similar.results.length) && (
           <>
-            <div className="col-span-2 px-2 font-bold">Similar:</div>
+            <div className="col-span-2 px-2 text-2xl font-bold">Similar:</div>
             <div
               className={`${styles.scrollbar} col-span-2 mx-2 flex gap-4 overflow-y-hidden`}
             >
