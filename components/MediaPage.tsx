@@ -12,13 +12,13 @@ interface trailer {
   key: string;
 }
 
-export default function MoviePage() {
+export default function MediaPage({ type }: { type: string }) {
   const { query } = useRouter();
   const [trailer, setTrailer] = useState<trailer>();
   const fetcher = (url: RequestInfo | URL) =>
     fetch(url).then((res) => res.json());
   const { data, error, isLoading } = useSWR(
-    `/api/movie?idmovie=${query.id}`,
+    `/api/movie?type=${type}&idmedia=${query.id}`,
     fetcher,
     {
       onSuccess: (data, key, config) => {
@@ -37,7 +37,7 @@ export default function MoviePage() {
   return (
     <>
       <Head>
-        <title>{data.title} | SOMEMORE</title>
+        <title>{data.title || data.name} | SOMEMORE</title>
       </Head>
       <div className="mx-auto box-content grid max-w-[1280px] grid-cols-[3fr,8fr] gap-4 pb-8 dark:text-slate-100">
         <div className="col-span-2 col-start-1 row-span-3 row-start-1">
@@ -48,7 +48,7 @@ export default function MoviePage() {
             src={`https://image.tmdb.org/t/p/w1280${data.backdrop_path}`}
             placeholder="blur"
             blurDataURL={
-              'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAEklEQVR42mNMX/OkngEIGDEYAHIAB2ZYiQm7AAAAAElFTkSuQmCC'
+              'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAQAAAAT4xYKAAAAD0lEQVR42mNU+M/AwAgnABt1A2GYGZ4/AAAAAElFTkSuQmCC'
             }
             alt=""
           />
@@ -60,21 +60,23 @@ export default function MoviePage() {
             src={`https://image.tmdb.org/t/p/w780${data.poster_path}`}
             placeholder="blur"
             blurDataURL={
-              'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAEklEQVR42mNMX/OkngEIGDEYAHIAB2ZYiQm7AAAAAElFTkSuQmCC'
+              'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAQAAAAT4xYKAAAAD0lEQVR42mNU+M/AwAgnABt1A2GYGZ4/AAAAAElFTkSuQmCC'
             }
             alt=""
           />
         </div>
         <div className="z-10 col-span-2 col-start-1 row-start-3 px-2 py-2 text-xl font-bold [text-shadow:_0px_1px_10px_rgb(0_0_0_/_100%)] min-[540px]:row-start-2 min-[540px]:px-3 min-[540px]:py-0 min-[540px]:text-2xl min-[1000px]:px-12 min-[1300px]:text-4xl">
-          {data.title}
+          {data.title || data.name}
         </div>
         <div className="z-10 col-span-2 col-start-1 flex flex-wrap justify-between gap-1 px-2 min-[540px]:row-start-3 min-[540px]:px-3 min-[1000px]:px-12">
           <div className="text-slate-200 min-[540px]:[text-shadow:_0px_1px_10px_rgb(0_0_0_/_100%)]">
-            Release Date: {getDate(data.release_date)}
+            Release Date: {getDate(data.release_date || data.first_air_date)}
           </div>
           <Link
             className="font-bold text-slate-200 min-[540px]:[text-shadow:_0px_1px_10px_rgb(0_0_0_/_100%)]"
-            href={`https://www.imdb.com/title/${data.imdb_id}/`}
+            href={`https://www.imdb.com/title/${
+              data.external_ids.imdb_id || data.imdb_id
+            }/`}
             target="_blank"
             rel="noopener"
           >
@@ -141,7 +143,7 @@ export default function MoviePage() {
                         alt=""
                         placeholder="blur"
                         blurDataURL={
-                          'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAEklEQVR42mNMX/OkngEIGDEYAHIAB2ZYiQm7AAAAAElFTkSuQmCC'
+                          'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAQAAAAT4xYKAAAAD0lEQVR42mNU+M/AwAgnABt1A2GYGZ4/AAAAAElFTkSuQmCC'
                         }
                       />
                       <div>
@@ -173,12 +175,17 @@ export default function MoviePage() {
               className={`${styles.scrollbar} col-span-2 flex gap-4 overflow-y-hidden px-2 pb-1`}
             >
               {data.similar.results.map(
-                (el: { id: number; title: string; poster_path: string }) => (
+                (el: {
+                  id: number;
+                  title: string;
+                  poster_path: string;
+                  name: string;
+                }) => (
                   <div key={el.id} className="min-w-[305px]">
                     <Link
                       href={{
-                        pathname: `/movie/${el.id}`,
-                        query: `${toUrl(el.title)}`,
+                        pathname: `/${type}/${el.id}`,
+                        query: `${toUrl(el.title || el.name)}`,
                       }}
                     >
                       <Image
@@ -189,7 +196,7 @@ export default function MoviePage() {
                         alt=""
                         placeholder="blur"
                         blurDataURL={
-                          'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAEklEQVR42mNMX/OkngEIGDEYAHIAB2ZYiQm7AAAAAElFTkSuQmCC'
+                          'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAQAAAAT4xYKAAAAD0lEQVR42mNU+M/AwAgnABt1A2GYGZ4/AAAAAElFTkSuQmCC'
                         }
                       />
                     </Link>
@@ -207,12 +214,17 @@ export default function MoviePage() {
                 className={`${styles.scrollbar} col-span-2 flex gap-4 overflow-y-hidden px-2 pb-1`}
               >
                 {data.recommendations.results.map(
-                  (el: { id: number; title: string; poster_path: string }) => (
+                  (el: {
+                    id: number;
+                    title: string;
+                    poster_path: string;
+                    name: string;
+                  }) => (
                     <div key={el.id} className="min-w-[305px]">
                       <Link
                         href={{
-                          pathname: `/movie/${el.id}`,
-                          query: `${toUrl(el.title)}`,
+                          pathname: `/${type}/${el.id}`,
+                          query: `${toUrl(el.title || el.name)}`,
                         }}
                       >
                         <Image
@@ -223,7 +235,7 @@ export default function MoviePage() {
                           alt=""
                           placeholder="blur"
                           blurDataURL={
-                            'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAEklEQVR42mNMX/OkngEIGDEYAHIAB2ZYiQm7AAAAAElFTkSuQmCC'
+                            'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAQAAAAT4xYKAAAAD0lEQVR42mNU+M/AwAgnABt1A2GYGZ4/AAAAAElFTkSuQmCC'
                           }
                         />
                       </Link>

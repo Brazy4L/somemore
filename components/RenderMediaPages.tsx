@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { toUrl } from './utils';
 
-export default function GetMediaPages({
+export default function RenderMediaPages({
   data,
   type,
 }: {

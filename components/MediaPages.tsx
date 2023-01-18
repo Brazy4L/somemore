@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import useSWR from 'swr';
 import { useInView } from 'react-intersection-observer';
-import GetMediaPages from './GetMediaPages';
+import RenderMediaPages from './RenderMediaPages';
 
 export default function MediaPages({ type }: { type: string }) {
   const [page, setPage] = useState(1);
@@ -22,7 +22,7 @@ export default function MediaPages({ type }: { type: string }) {
       setPage(page + 1);
       setPages((arr) => [
         ...arr,
-        <GetMediaPages key={page} data={data} type={type} />,
+        <RenderMediaPages key={page} data={data} type={type} />,
       ]);
     }
   }, [data, error, inView, isLoading, page, type]);
@@ -38,7 +38,7 @@ export default function MediaPages({ type }: { type: string }) {
               .map((_, i) => (
                 <div
                   key={i}
-                  className="aspect-[2/3] w-[342px] max-w-full bg-[#202020]"
+                  className="aspect-[2/3] w-[342px] max-w-full rounded-2xl bg-[#202020]"
                 ></div>
               ))}
           </>
