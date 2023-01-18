@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import useSWR from 'swr';
-import { toUrl, getDate } from './utils';
+import { toUrl, getDate, checkType } from './utils';
 
 export default function PersonPage() {
   const { query } = useRouter();
@@ -59,10 +59,6 @@ export default function PersonPage() {
   if (error) return <div>Failed to load</div>;
   if (isLoading) return <div>Loading...</div>;
 
-  const checkType = (el: string) => {
-    return el === 'movie' ? 'movies' : 'tvshows';
-  };
-
   const checkGender = (el: number) => {
     return el === 1 ? 'Actress' : 2 ? 'Actor' : null;
   };
@@ -72,7 +68,7 @@ export default function PersonPage() {
       <Head>
         <title>{data.name} | SOMEMORE</title>
       </Head>
-      <div className="mx-auto box-content grid max-w-[1280px] gap-4 pb-8 text-slate-50">
+      <div className="mx-auto box-content grid max-w-[1280px] gap-4 pb-8">
         <div className="grid gap-2 min-[600px]:grid-flow-col">
           <Image
             className="justify-self-center rounded-2xl"
@@ -93,7 +89,7 @@ export default function PersonPage() {
             <div className="flex flex-wrap items-end justify-center gap-4">
               {data.imdb_id && (
                 <Link
-                  className="h-min cursor-pointer rounded-full bg-gray-700 p-2 transition-colors hover:bg-gray-600"
+                  className="h-min cursor-pointer rounded-full bg-gray-300 p-2 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-800"
                   href={`https://www.imdb.com/name/${data.imdb_id}/`}
                   target="_blank"
                   rel="noopener"
@@ -103,7 +99,7 @@ export default function PersonPage() {
               )}
               {data.external_ids.twitter_id && (
                 <Link
-                  className="h-min cursor-pointer rounded-full bg-gray-700 p-2 transition-colors hover:bg-gray-600"
+                  className="h-min cursor-pointer rounded-full bg-gray-300 p-2 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-800"
                   href={`https://twitter.com/${data.external_ids.twitter_id}`}
                   target="_blank"
                   rel="noopener"
@@ -113,7 +109,7 @@ export default function PersonPage() {
               )}
               {data.external_ids.instagram_id && (
                 <Link
-                  className="h-min cursor-pointer rounded-full bg-gray-700 p-2 transition-colors hover:bg-gray-600"
+                  className="h-min cursor-pointer rounded-full bg-gray-300 p-2 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-800"
                   href={`https://instagram.com/${data.external_ids.instagram_id}/`}
                   target="_blank"
                   rel="noopener"
@@ -123,7 +119,7 @@ export default function PersonPage() {
               )}
               {data.external_ids.facebook_id && (
                 <Link
-                  className="h-min cursor-pointer rounded-full bg-gray-700 p-2 transition-colors hover:bg-gray-600"
+                  className="h-min cursor-pointer rounded-full bg-gray-300 p-2 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-800"
                   href={`https://www.facebook.com/${data.external_ids.facebook_id}/`}
                   target="_blank"
                   rel="noopener"

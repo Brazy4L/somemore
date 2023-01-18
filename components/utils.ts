@@ -3,11 +3,13 @@ export function toUrl(item: string) {
 }
 
 export function getDate(date: string) {
-  if (date) {
-    return new Date(date).toLocaleString('en-us', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
-    });
-  }
+  return new Date(date).toLocaleString('en-us', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
+}
+
+export function checkType(el: string) {
+  return el === 'movie' ? 'movie' : 'tv';
 }

@@ -14,7 +14,17 @@ export default function MediaPages({ type }: { type: string }) {
     fetch(url).then((res) => res.json());
   const { data, error, isLoading } = useSWR(
     `/api/media?type=${type}&page=${page}`,
-    fetcher
+    fetcher,
+    {
+      onSuccess: (data, key, config) => {
+        let i = data.results.length;
+        while (i--) {
+          if (data.results[i].name && data.results[i].vote_count < 22) {
+            data.results.splice(i, 1);
+          }
+        }
+      },
+    }
   );
 
   useEffect(() => {
