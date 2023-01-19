@@ -128,6 +128,16 @@ export default function PersonPage() {
                 Facebook
               </Link>
             )}
+            {data.name && (
+              <Link
+                className="h-min cursor-pointer rounded-full bg-gray-300 p-2 transition-colors hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-800"
+                href={`https://www.google.com/search?q=${data.name}`}
+                target="_blank"
+                rel="noopener"
+              >
+                Google
+              </Link>
+            )}
           </div>
           <div className="mx-2 rounded-2xl bg-gray-300 p-2 transition-colors dark:bg-gray-700">
             {data.biography}
