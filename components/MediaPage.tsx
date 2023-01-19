@@ -11,6 +11,7 @@ import question from '../public/question.svg';
 import questionWide from '../public/question-wide.svg';
 import Spinner from './Spinner';
 import LoadingError from './LoadingError';
+import { createVerify } from 'crypto';
 
 interface trailer {
   key: string;
@@ -19,6 +20,7 @@ interface trailer {
 export default function MediaPage({ type }: { type: string }) {
   const { query } = useRouter();
   const [trailer, setTrailer] = useState<trailer>();
+  const [crewCredits, setCrewCredits] = useState<Array<any>>([]);
   const fetcher = (url: RequestInfo | URL) =>
     fetch(url).then((res) => res.json());
   const { data, error, isLoading } = useSWR(
@@ -30,6 +32,16 @@ export default function MediaPage({ type }: { type: string }) {
           data.videos.results.find((el: { type: string }) => {
             return el.type === 'Trailer';
           })
+        );
+        setCrewCredits(
+          data.credits.crew
+            .filter(
+              (el: { job: string }) =>
+                el.job === 'Director' || el.job === 'Screenplay'
+            )
+            .sort((a: { job: string }, b: { job: string }) =>
+              a.job.localeCompare(b.job)
+            )
         );
       },
     }
@@ -95,7 +107,7 @@ export default function MediaPage({ type }: { type: string }) {
           >
             {data.genres.map((el: { id: number; name: string }) => (
               <div
-                className="min-w-fit cursor-pointer rounded-full bg-gray-300 p-2 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-800"
+                className="min-w-fit cursor-pointer rounded-2xl bg-gray-300 p-2 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-800"
                 key={el.id}
               >
                 {el.name}
@@ -110,7 +122,7 @@ export default function MediaPage({ type }: { type: string }) {
           >
             {data.keywords.keywords.map((el: { id: number; name: string }) => (
               <div
-                className="min-w-fit cursor-pointer rounded-full bg-gray-300 p-2 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-800"
+                className="min-w-fit cursor-pointer rounded-2xl bg-gray-300 p-2 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-800"
                 key={el.id}
               >
                 {el.name}
@@ -131,7 +143,10 @@ export default function MediaPage({ type }: { type: string }) {
                   profile_path: string;
                   character: string;
                 }) => (
-                  <div key={el.id} className="min-w-[305px]">
+                  <div
+                    key={el.id}
+                    className="min-w-[65%] min-[340px]:min-w-[60%] min-[420px]:min-w-[55%] min-[500px]:min-w-[45%] min-[600px]:min-w-[35%] min-[750px]:min-w-[25%] min-[1050px]:min-w-[18.9%]"
+                  >
                     <Link
                       href={{
                         pathname: `/person/${el.id}`,
@@ -145,23 +160,55 @@ export default function MediaPage({ type }: { type: string }) {
                         src={`https://image.tmdb.org/t/p/w342${el.profile_path}`}
                         fallbackSrc={question}
                       />
-                      <div>
-                        {el.name && (
-                          <>
-                            <span className="font-bold">{el.name}</span>
-                            {el.character && (
-                              <>
-                                {' '}
-                                <span className="text-gray-600 dark:text-gray-400">
-                                  {el.character}
-                                </span>
-                              </>
-                            )}
-                          </>
-                        )}
-                      </div>
+                      {el.name && (
+                        <>
+                          <div className="font-bold">{el.name}</div>
+                          {el.character && (
+                            <div className="text-gray-600 dark:text-gray-400">
+                              {el.character}
+                            </div>
+                          )}
+                        </>
+                      )}
                     </Link>
                   </div>
+                )
+              )}
+            </div>
+          </>
+        )}
+        {crewCredits && Boolean(crewCredits.length) && (
+          <>
+            <div className="col-span-2 px-2 text-2xl font-bold">Crew:</div>
+            <div className="col-span-2 flex flex-wrap justify-between gap-4 px-2">
+              {crewCredits.map(
+                (
+                  el: {
+                    id: number;
+                    name: string;
+                    job: string;
+                  },
+                  index: number
+                ) => (
+                  <Link
+                    className="rounded-2xl bg-gray-300 p-4 transition-colors hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-800"
+                    key={index}
+                    href={{
+                      pathname: `/person/${el.id}`,
+                      query: `${toUrl(el.name)}`,
+                    }}
+                  >
+                    {el.name && (
+                      <>
+                        <div className="font-bold">{el.name}</div>
+                        {el.job && (
+                          <div className="text-gray-600 dark:text-gray-400">
+                            {el.job}
+                          </div>
+                        )}
+                      </>
+                    )}
+                  </Link>
                 )
               )}
             </div>
@@ -183,7 +230,10 @@ export default function MediaPage({ type }: { type: string }) {
                     poster_path: string;
                     name: string;
                   }) => (
-                    <div key={el.id} className="min-w-[305px]">
+                    <div
+                      key={el.id}
+                      className="min-w-[65%] min-[340px]:min-w-[60%] min-[420px]:min-w-[55%] min-[500px]:min-w-[45%] min-[600px]:min-w-[35%] min-[750px]:min-w-[25%] min-[1050px]:min-w-[18.9%]"
+                    >
                       <Link
                         href={{
                           pathname: `/${type}/${el.id}`,
@@ -209,7 +259,7 @@ export default function MediaPage({ type }: { type: string }) {
             <div className="col-span-2 flex gap-2 px-2 text-2xl font-bold">
               <span className="flex-grow">Similar:</span>
               <span
-                className="min-w-fit cursor-pointer rounded-full bg-gray-300 px-3 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-800"
+                className="min-w-fit cursor-pointer rounded-2xl bg-gray-300 px-4 transition-colors hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-800"
                 title="This list is assembled by looking at keywords and genres."
               >
                 ?
@@ -225,7 +275,10 @@ export default function MediaPage({ type }: { type: string }) {
                   poster_path: string;
                   name: string;
                 }) => (
-                  <div key={el.id} className="min-w-[305px]">
+                  <div
+                    key={el.id}
+                    className="min-w-[65%] min-[340px]:min-w-[60%] min-[420px]:min-w-[55%] min-[500px]:min-w-[45%] min-[600px]:min-w-[35%] min-[750px]:min-w-[25%] min-[1050px]:min-w-[18.9%]"
+                  >
                     <Link
                       href={{
                         pathname: `/${type}/${el.id}`,
