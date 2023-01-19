@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
 import useSWR from 'swr';
 import { useInView } from 'react-intersection-observer';
 import RenderMediaPages from './RenderMediaPages';
+import LoadingError from './LoadingError';
 
 export default function MediaPages({ type }: { type: string }) {
   const [page, setPage] = useState(1);
@@ -37,6 +37,8 @@ export default function MediaPages({ type }: { type: string }) {
     }
   }, [data, error, inView, isLoading, page, type]);
 
+  if (error) return <LoadingError />;
+
   return (
     <>
       <div className="mx-auto box-content grid max-w-[1280px] grid-cols-3 justify-center gap-2 px-2 min-[540px]:grid-cols-4 min-[540px]:px-8 min-[800px]:grid-cols-5 min-[1050px]:grid-cols-6">
@@ -54,25 +56,6 @@ export default function MediaPages({ type }: { type: string }) {
           </>
         ) : null}
       </div>
-      {error ? (
-        <div className="grid h-[calc(100vh-60px)] items-center">
-          <div className="-translate-y-1/2 text-center">
-            <div className="font-bold">ERROR</div>
-            <div>
-              Looks like you couldn&apos;t reach{' '}
-              <Link
-                className="cursor-pointer underline"
-                href="https://www.themoviedb.org/"
-                target="_blank"
-                rel="noopener"
-              >
-                TMDB
-              </Link>
-            </div>
-            <div>Check your connection</div>
-          </div>
-        </div>
-      ) : null}
       <div ref={ref}>{inView}</div>
     </>
   );

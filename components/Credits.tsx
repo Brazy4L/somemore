@@ -79,7 +79,10 @@ export default function Credits(props: any) {
                 )}
               </div>
               {el.vote_count > 0 && (
-                <div className="h-[40px] w-[40px] flex-shrink-0 self-center">
+                <div
+                  title={`User Ratings: ${el.vote_count}`}
+                  className="h-[40px] w-[40px] flex-shrink-0 self-center"
+                >
                   <Rating vote={el.vote_average} />
                 </div>
               )}

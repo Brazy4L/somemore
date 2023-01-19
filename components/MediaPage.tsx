@@ -64,7 +64,7 @@ export default function MediaPage({ type }: { type: string }) {
         <div className="z-10 col-span-2 col-start-1 row-start-3 px-2 py-2 text-xl font-bold text-gray-50 [text-shadow:_0px_1px_10px_rgb(0_0_0_/_100%)] min-[540px]:row-start-2 min-[540px]:px-3 min-[540px]:py-0 min-[540px]:text-2xl min-[1000px]:px-12 min-[1300px]:text-4xl">
           {data.title || data.name}
         </div>
-        <div className="z-10 col-span-2 col-start-1 flex flex-wrap justify-between gap-1 px-2 min-[540px]:row-start-3 min-[540px]:px-3 min-[540px]:text-gray-50 min-[1000px]:px-12">
+        <div className="z-10 col-span-2 col-start-1 flex flex-wrap justify-between gap-2 px-2 min-[540px]:row-start-3 min-[540px]:px-3 min-[540px]:text-gray-50 min-[1000px]:px-12">
           <div className="min-[540px]:[text-shadow:_0px_1px_10px_rgb(0_0_0_/_100%)]">
             {(data.release_date || data.first_air_date) && (
               <div>
@@ -206,7 +206,15 @@ export default function MediaPage({ type }: { type: string }) {
           )}
         {data.similar.results && Boolean(data.similar.results.length) && (
           <>
-            <div className="col-span-2 px-2 text-2xl font-bold">Similar:</div>
+            <div className="col-span-2 flex gap-2 px-2 text-2xl font-bold">
+              <span className="flex-grow">Similar:</span>
+              <span
+                className="min-w-fit cursor-pointer rounded-full bg-gray-300 px-3 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-800"
+                title="This list is assembled by looking at keywords and genres."
+              >
+                ?
+              </span>
+            </div>
             <div
               className={`${styles.scrollbar} col-span-2 mx-2 flex gap-4 overflow-y-auto`}
             >
