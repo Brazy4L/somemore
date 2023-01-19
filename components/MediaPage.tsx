@@ -1,4 +1,4 @@
-import styles from '../styles/scrollbar.module.css';
+import styles from '../styles/scrollbar-x.module.css';
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -89,7 +89,7 @@ export default function MediaPage({ type }: { type: string }) {
         </div>
         {data.genres && Boolean(data.genres.length) && (
           <div
-            className={`${styles.scrollbar} col-span-2 mx-2 flex gap-2 overflow-y-hidden`}
+            className={`${styles.scrollbar} col-span-2 mx-2 flex gap-2 overflow-y-auto`}
           >
             {data.genres.map((el: { id: number; name: string }) => (
               <div
@@ -104,7 +104,7 @@ export default function MediaPage({ type }: { type: string }) {
         <div className="col-span-2 px-2">{data.overview}</div>
         {data.keywords.keywords && Boolean(data.keywords.keywords.length) && (
           <div
-            className={`${styles.scrollbar} col-span-2 mx-2 flex gap-2 overflow-y-hidden`}
+            className={`${styles.scrollbar} col-span-2 mx-2 flex gap-2 overflow-y-auto`}
           >
             {data.keywords.keywords.map((el: { id: number; name: string }) => (
               <div
@@ -120,7 +120,7 @@ export default function MediaPage({ type }: { type: string }) {
           <>
             <div className="col-span-2 px-2 text-2xl font-bold">Cast:</div>
             <div
-              className={`${styles.scrollbar} col-span-2 mx-2 flex gap-4 overflow-y-hidden`}
+              className={`${styles.scrollbar} col-span-2 mx-2 flex gap-4 overflow-y-auto`}
             >
               {data.credits.cast.map(
                 (el: {
@@ -172,7 +172,7 @@ export default function MediaPage({ type }: { type: string }) {
                 Recommendations:
               </div>
               <div
-                className={`${styles.scrollbar} col-span-2 mx-2 flex gap-4 overflow-y-hidden`}
+                className={`${styles.scrollbar} col-span-2 mx-2 flex gap-4 overflow-y-auto`}
               >
                 {data.recommendations.results.map(
                   (el: {
@@ -206,7 +206,7 @@ export default function MediaPage({ type }: { type: string }) {
           <>
             <div className="col-span-2 px-2 text-2xl font-bold">Similar:</div>
             <div
-              className={`${styles.scrollbar} col-span-2 mx-2 flex gap-4 overflow-y-hidden`}
+              className={`${styles.scrollbar} col-span-2 mx-2 flex gap-4 overflow-y-auto`}
             >
               {data.similar.results.map(
                 (el: {

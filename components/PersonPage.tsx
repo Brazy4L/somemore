@@ -1,13 +1,13 @@
-import styles from '../styles/scrollbar.module.css';
+import styles from '../styles/scrollbar-x.module.css';
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import useSWR from 'swr';
-import { toUrl, getDate } from './utils';
 import CustomImage from './CustomImage';
 import question from '../public/question.svg';
 import Gallery from './Gallery';
+import Credits from './Credits';
 
 export default function PersonPage() {
   const { query } = useRouter();
@@ -67,14 +67,6 @@ export default function PersonPage() {
     return el === 1 ? 'Actress:' : el === 2 ? 'Actor:' : 'Credits:';
   };
 
-  const checkType = (el: string) => {
-    return el === 'movie' ? 'movie' : 'tv';
-  };
-
-  const checkPlural = (el: number) => {
-    return el === 1 ? 'episode' : 'episodes';
-  };
-
   return (
     <>
       <Head>
@@ -95,16 +87,16 @@ export default function PersonPage() {
               fallbackSrc={question}
             />
             <div
-              className={`${styles.scrollbar} z-10 fixed top-[60px] left-0 flex w-full cursor-pointer overflow-y-hidden bg-[#e5e7eb] dark:bg-[#202020]`}
+              className={`${styles.scrollbar} fixed top-[60px] left-0 z-10 flex w-full cursor-pointer overflow-y-hidden bg-[#e5e7eb] dark:bg-[#202020]`}
             >
               <Gallery hidden={hidden} data={data.images.profiles} />
             </div>
             {!hidden && (
               <>
-              <div className='fixed top-0 left-0 w-screen h-screen bg-[#00000080]'></div>
-              <button className="fixed top-[620px] left-[50%] w-[200px] -translate-x-1/2 rounded-3xl bg-[#89b2ff] p-5 hover:bg-[#4b8aff] dark:bg-[#1768ff] transition-colors dark:hover:bg-[#035bff]">
-                Close
-              </button>
+                <div className="fixed top-0 left-0 h-screen w-screen bg-[#00000080]"></div>
+                <button className="fixed top-[620px] left-[50%] w-[200px] -translate-x-1/2 rounded-3xl bg-[#89b2ff] p-5 transition-colors hover:bg-[#4b8aff] dark:bg-[#1768ff] dark:hover:bg-[#035bff]">
+                  Close
+                </button>
               </>
             )}
           </div>
@@ -168,144 +160,16 @@ export default function PersonPage() {
         <div className="px-2">
           {castCredits && Boolean(castCredits.length) && (
             <>
-              <div className="py-2 text-2xl font-bold">
+              <div className="pb-2 text-2xl font-bold">
                 {checkGender(data.gender)}
               </div>
-              <div className="grid gap-2">
-                {castCredits.map(
-                  (
-                    el: {
-                      id: number;
-                      poster_path: string;
-                      release_date: string;
-                      title: string;
-                      character: string;
-                      media_type: string;
-                      name: string;
-                      first_air_date: string;
-                      episode_count: number;
-                    },
-                    index
-                  ) => (
-                    <div
-                      className="rounded-2xl bg-gray-300 p-2 transition-colors hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-800"
-                      key={index}
-                    >
-                      <Link
-                        className="flex"
-                        href={{
-                          pathname: `/${checkType(el.media_type)}/${el.id}`,
-                          query: `${toUrl(el.title || el.name)}`,
-                        }}
-                      >
-                        <div className="flex flex-shrink-0 items-center">
-                          <CustomImage
-                            className="rounded-2xl"
-                            width={92}
-                            height={138}
-                            src={`https://image.tmdb.org/t/p/w92${el.poster_path}`}
-                            fallbackSrc={question}
-                          />
-                        </div>
-                        <div className="flex flex-col justify-center pl-4">
-                          {(el.title || el.name) && (
-                            <div className="font-bold">
-                              {el.title || el.name}
-                            </div>
-                          )}
-                          <div className="text-gray-600 dark:text-gray-400">
-                            {el.character}
-                          </div>
-                          <div className="text-gray-600 dark:text-gray-400">
-                            {el.media_type}{' '}
-                            {el.episode_count && (
-                              <span>
-                                ({el.episode_count}{' '}
-                                {checkPlural(el.episode_count)})
-                              </span>
-                            )}
-                          </div>
-                          {(el.release_date || el.first_air_date) && (
-                            <div>
-                              {getDate(el.release_date || el.first_air_date)}
-                            </div>
-                          )}
-                        </div>
-                      </Link>
-                    </div>
-                  )
-                )}
-              </div>
+              <Credits data={castCredits} />
             </>
           )}
           {crewCredits && Boolean(crewCredits.length) && (
             <>
               <div className="py-2 text-2xl font-bold">Filmmaking:</div>
-              <div className="grid gap-2">
-                {crewCredits.map(
-                  (
-                    el: {
-                      id: number;
-                      poster_path: string;
-                      release_date: string;
-                      title: string;
-                      job: string;
-                      media_type: string;
-                      name: string;
-                      first_air_date: string;
-                      episode_count: number;
-                    },
-                    index
-                  ) => (
-                    <div
-                      className="rounded-2xl bg-gray-300 p-2 transition-colors hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-800"
-                      key={index}
-                    >
-                      <Link
-                        className="flex"
-                        href={{
-                          pathname: `/${checkType(el.media_type)}/${el.id}`,
-                          query: `${toUrl(el.title || el.name)}`,
-                        }}
-                      >
-                        <div className="flex flex-shrink-0 items-center">
-                          <CustomImage
-                            className="rounded-2xl"
-                            width={92}
-                            height={138}
-                            src={`https://image.tmdb.org/t/p/w92${el.poster_path}`}
-                            fallbackSrc={question}
-                          />
-                        </div>
-                        <div className="flex flex-col justify-center pl-4">
-                          {(el.title || el.name) && (
-                            <div className="font-bold">
-                              {el.title || el.name}
-                            </div>
-                          )}
-                          <div className="text-gray-600 dark:text-gray-400">
-                            {el.job}
-                          </div>
-                          <div className="text-gray-600 dark:text-gray-400">
-                            {el.media_type}{' '}
-                            {el.episode_count && (
-                              <span>
-                                ({el.episode_count}{' '}
-                                {checkPlural(el.episode_count)})
-                              </span>
-                            )}
-                          </div>
-                          {(el.release_date || el.first_air_date) && (
-                            <div>
-                              {getDate(el.release_date || el.first_air_date)}
-                            </div>
-                          )}
-                        </div>
-                      </Link>
-                    </div>
-                  )
-                )}
-              </div>
+              <Credits data={crewCredits} />
             </>
           )}
         </div>
