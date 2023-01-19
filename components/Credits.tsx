@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { toUrl, getDate } from './utils';
 import CustomImage from './CustomImage';
 import question from '../public/question.svg';
+import Rating from './Rating';
 
 export default function Credits(props: any) {
   const { data } = props;
@@ -18,7 +19,7 @@ export default function Credits(props: any) {
   if (!data) return null;
   return (
     <div
-      className={`${styles.scrollbar} grid max-h-[480px] gap-2 overflow-y-auto`}
+      className={`${styles.scrollbar} grid max-h-[480px] gap-2 overflow-y-auto overflow-x-clip`}
     >
       {data.map(
         (
@@ -58,7 +59,7 @@ export default function Credits(props: any) {
                   fallbackSrc={question}
                 />
               </div>
-              <div className="flex flex-col justify-center flex-grow">
+              <div className="flex flex-grow flex-col justify-center">
                 {(el.title || el.name) && (
                   <div className="font-bold">{el.title || el.name}</div>
                 )}
@@ -77,9 +78,11 @@ export default function Credits(props: any) {
                   <div>{getDate(el.release_date || el.first_air_date)}</div>
                 )}
               </div>
-              <div className='self-center'>
-                
-              </div>
+              {el.vote_count > 0 && (
+                <div className="h-[40px] w-[40px] flex-shrink-0 self-center">
+                  <Rating vote={el.vote_average} />
+                </div>
+              )}
             </Link>
           </div>
         )
