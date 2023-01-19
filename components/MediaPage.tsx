@@ -9,6 +9,8 @@ import Trailer from './Trailer';
 import CustomImage from './CustomImage';
 import question from '../public/question.svg';
 import questionWide from '../public/question-wide.svg';
+import Spinner from './Spinner';
+import LoadingError from './LoadingError';
 
 interface trailer {
   key: string;
@@ -33,8 +35,8 @@ export default function MediaPage({ type }: { type: string }) {
     }
   );
 
-  if (error) return <div>Failed to load</div>;
-  if (isLoading) return <div>Loading...</div>;
+  if (error) return <LoadingError />;
+  if (isLoading) return <Spinner />;
 
   return (
     <>

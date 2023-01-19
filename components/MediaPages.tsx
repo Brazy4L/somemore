@@ -55,7 +55,7 @@ export default function MediaPages({ type }: { type: string }) {
         ) : null}
       </div>
       {error ? (
-        <div className="grid h-[calc(100vh-60px)] items-center justify-items-center">
+        <div className="grid h-[calc(100vh-60px)] items-center">
           <div className="-translate-y-1/2 text-center">
             <div className="font-bold">ERROR</div>
             <div>

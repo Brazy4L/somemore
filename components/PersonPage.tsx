@@ -8,6 +8,8 @@ import CustomImage from './CustomImage';
 import question from '../public/question.svg';
 import Gallery from './Gallery';
 import Credits from './Credits';
+import Spinner from './Spinner';
+import LoadingError from './LoadingError';
 
 export default function PersonPage() {
   const { query } = useRouter();
@@ -60,8 +62,8 @@ export default function PersonPage() {
     }
   );
 
-  if (error) return <div>Failed to load</div>;
-  if (isLoading) return <div>Loading...</div>;
+  if (error) return <LoadingError />;
+  if (isLoading) return <Spinner />;
 
   const checkGender = (el: number) => {
     return el === 1 ? 'Actress:' : el === 2 ? 'Actor:' : 'Credits:';
