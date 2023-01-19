@@ -18,7 +18,7 @@ export default function Credits(props: any) {
   if (!data) return null;
   return (
     <div
-      className={`${styles.scrollbar} grid max-h-[486px] gap-2 overflow-y-auto`}
+      className={`${styles.scrollbar} grid max-h-[480px] gap-2 overflow-y-auto`}
     >
       {data.map(
         (
@@ -33,6 +33,8 @@ export default function Credits(props: any) {
             name: string;
             first_air_date: string;
             episode_count: number;
+            vote_average: number;
+            vote_count: number;
           },
           index: number
         ) => (
@@ -41,22 +43,22 @@ export default function Credits(props: any) {
             key={index}
           >
             <Link
-              className="flex"
+              className="flex gap-4"
               href={{
                 pathname: `/${checkType(el.media_type)}/${el.id}`,
                 query: `${toUrl(el.title || el.name)}`,
               }}
             >
-              <div className="flex flex-shrink-0 items-center">
+              <div className="flex-shrink-0">
                 <CustomImage
                   className="rounded-2xl"
-                  width={92}
-                  height={138}
+                  width={64}
+                  height={96}
                   src={`https://image.tmdb.org/t/p/w92${el.poster_path}`}
                   fallbackSrc={question}
                 />
               </div>
-              <div className="flex flex-col justify-center pl-4">
+              <div className="flex flex-col justify-center flex-grow">
                 {(el.title || el.name) && (
                   <div className="font-bold">{el.title || el.name}</div>
                 )}
@@ -74,6 +76,9 @@ export default function Credits(props: any) {
                 {(el.release_date || el.first_air_date) && (
                   <div>{getDate(el.release_date || el.first_air_date)}</div>
                 )}
+              </div>
+              <div className='self-center'>
+                
               </div>
             </Link>
           </div>
