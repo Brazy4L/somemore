@@ -1,6 +1,6 @@
 import styles from '../styles/scrollbar-y.module.css';
 import Link from 'next/link';
-import { toUrl, getDate } from './utils';
+import { toUrl, getDate, checkPlural } from './utils';
 import CustomImage from './CustomImage';
 import question from '../public/question.svg';
 import Rating from './Rating';
@@ -10,10 +10,6 @@ export default function Credits(props: any) {
 
   const checkType = (el: string) => {
     return el === 'movie' ? 'movie' : 'tv';
-  };
-
-  const checkPlural = (el: number) => {
-    return el === 1 ? 'episode' : 'episodes';
   };
 
   if (!data) return null;
@@ -70,7 +66,7 @@ export default function Credits(props: any) {
                   {el.media_type}{' '}
                   {el.episode_count && (
                     <span>
-                      ({el.episode_count} {checkPlural(el.episode_count)})
+                      ({el.episode_count} episode{checkPlural(el.episode_count)})
                     </span>
                   )}
                 </div>

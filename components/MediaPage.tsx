@@ -4,14 +4,14 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import useSWR from 'swr';
-import { toUrl, getDate } from './utils';
+import { toUrl, getDate, checkPlural } from './utils';
 import Trailer from './Trailer';
 import CustomImage from './CustomImage';
 import question from '../public/question.svg';
 import questionWide from '../public/question-wide.svg';
 import Spinner from './Spinner';
 import LoadingError from './LoadingError';
-import { createVerify } from 'crypto';
+import Rating from './Rating';
 
 interface trailer {
   key: string;
@@ -47,6 +47,10 @@ export default function MediaPage({ type }: { type: string }) {
     }
   );
 
+  const checkProduction = (el: boolean) => {
+    return el ? 'Returning Series' : !el ? 'Ended' : null;
+  };
+
   if (error) return <LoadingError />;
   if (isLoading) return <Spinner />;
 
@@ -73,7 +77,7 @@ export default function MediaPage({ type }: { type: string }) {
             fallbackSrc={question}
           />
         </div>
-        <div className="z-10 col-span-2 col-start-1 row-start-3 px-2 py-2 text-xl font-bold text-gray-50 [text-shadow:_0px_1px_10px_rgb(0_0_0_/_100%)] min-[540px]:row-start-2 min-[540px]:px-3 min-[540px]:py-0 min-[540px]:text-2xl min-[1000px]:px-12 min-[1300px]:text-4xl">
+        <div className="z-10 col-span-2 col-start-1 row-start-3 px-2 py-2 text-xl font-bold text-gray-50 [text-shadow:_0px_1px_10px_rgb(0_0_0_/_100%)] min-[540px]:row-start-2 min-[540px]:px-3 min-[540px]:py-0 min-[540px]:text-2xl min-[1000px]:px-12 min-[1000px]:text-4xl">
           {data.title || data.name}
         </div>
         <div className="z-10 col-span-2 col-start-1 flex flex-wrap justify-between gap-2 px-2 min-[540px]:row-start-3 min-[540px]:px-3 min-[540px]:text-gray-50 min-[1000px]:px-12">
@@ -101,6 +105,41 @@ export default function MediaPage({ type }: { type: string }) {
         <div className="z-10 col-span-2 aspect-video self-center min-[540px]:col-span-1 min-[540px]:col-start-2 min-[540px]:row-start-1 min-[540px]:mr-8 min-[1000px]:mr-32">
           {trailer && <Trailer trailerKey={trailer.key} />}
         </div>
+        {(data.status ||
+          data.in_production ||
+          data.production_countries ||
+          data.tagline ||
+          data.number_of_seasons ||
+          data.number_of_episodes ||
+          data.vote_count > 0) && (
+          <div className="col-span-2 flex flex-wrap gap-4 px-2">
+            {(data.status || data.in_production) && (
+              <div>{data.status || checkProduction(data.in_production)}</div>
+            )}
+            {data.production_countries &&
+              data.production_countries.map(
+                (el: { iso_3166_1: string }, index: number) => (
+                  <div key={index}>{el.iso_3166_1}</div>
+                )
+              )}
+            {data.tagline && <div className="italic">{data.tagline}</div>}
+            {data.number_of_seasons && data.number_of_episodes && (
+              <div>
+                {data.number_of_seasons} season
+                {checkPlural(data.number_of_seasons)} ({data.number_of_episodes}{' '}
+                episode{checkPlural(data.number_of_episodes)})
+              </div>
+            )}
+            {data.vote_count > 0 && (
+              <div
+                title={`User Ratings: ${data.vote_count}`}
+                className="h-[40px] w-[40px] flex-shrink-0 self-center"
+              >
+                <Rating vote={data.vote_average} />
+              </div>
+            )}
+          </div>
+        )}
         {data.genres && Boolean(data.genres.length) && (
           <div
             className={`${styles.scrollbar} col-span-2 mx-2 flex gap-2 overflow-y-auto`}
@@ -116,18 +155,21 @@ export default function MediaPage({ type }: { type: string }) {
           </div>
         )}
         <div className="col-span-2 px-2">{data.overview}</div>
-        {data.keywords.keywords && Boolean(data.keywords.keywords.length) && (
+        {((data.keywords.keywords && Boolean(data.keywords.keywords.length)) ||
+          (data.keywords.results && Boolean(data.keywords.results.length))) && (
           <div
             className={`${styles.scrollbar} col-span-2 mx-2 flex gap-2 overflow-y-auto`}
           >
-            {data.keywords.keywords.map((el: { id: number; name: string }) => (
-              <div
-                className="min-w-fit cursor-pointer rounded-2xl bg-gray-300 p-2 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-800"
-                key={el.id}
-              >
-                {el.name}
-              </div>
-            ))}
+            {data.keywords[Object.keys(data.keywords)[0]].map(
+              (el: { id: number; name: string }) => (
+                <div
+                  className="min-w-fit cursor-pointer rounded-2xl bg-gray-300 p-2 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-800"
+                  key={el.id}
+                >
+                  {el.name}
+                </div>
+              )
+            )}
           </div>
         )}
         {data.credits.cast && Boolean(data.credits.cast.length) && (
@@ -177,10 +219,39 @@ export default function MediaPage({ type }: { type: string }) {
             </div>
           </>
         )}
+        {data.created_by && Boolean(data.created_by.length) && (
+          <>
+            <div className="col-span-2 px-2 text-2xl font-bold">
+              Created by:
+            </div>
+            <div className="col-span-2 flex flex-wrap gap-4 px-2">
+              {data.created_by.map(
+                (
+                  el: {
+                    id: number;
+                    name: string;
+                  },
+                  index: number
+                ) => (
+                  <Link
+                    className="rounded-2xl bg-gray-300 p-4 transition-colors hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-800"
+                    key={index}
+                    href={{
+                      pathname: `/person/${el.id}`,
+                      query: `${toUrl(el.name)}`,
+                    }}
+                  >
+                    {el.name && <div className="font-bold">{el.name}</div>}
+                  </Link>
+                )
+              )}
+            </div>
+          </>
+        )}
         {crewCredits && Boolean(crewCredits.length) && (
           <>
             <div className="col-span-2 px-2 text-2xl font-bold">Crew:</div>
-            <div className="col-span-2 flex flex-wrap justify-between gap-4 px-2">
+            <div className="col-span-2 flex flex-wrap gap-4 px-2">
               {crewCredits.map(
                 (
                   el: {

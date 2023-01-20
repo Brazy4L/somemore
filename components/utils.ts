@@ -9,3 +9,7 @@ export function getDate(date: string) {
     year: 'numeric',
   });
 }
+
+export function checkPlural(item: number) {
+  return item === 1 ? '' : 's';
+}
