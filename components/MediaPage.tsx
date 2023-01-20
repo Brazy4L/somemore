@@ -62,7 +62,7 @@ export default function MediaPage({ type }: { type: string }) {
       <div className="mx-auto box-content grid max-w-[1280px] grid-cols-[3fr,8fr] gap-4 pb-8">
         <div className="col-span-2 col-start-1 row-span-3 row-start-1">
           <CustomImage
-            className="rounded-2xl min-[540px]:brightness-[0.5]"
+            className="min-[540px]:rounded-2xl min-[540px]:brightness-[0.5]"
             width={1280}
             height={720}
             src={`https://image.tmdb.org/t/p/w1280${data.backdrop_path}`}
@@ -105,7 +105,7 @@ export default function MediaPage({ type }: { type: string }) {
         <div className="z-10 col-span-2 aspect-video self-center min-[540px]:col-span-1 min-[540px]:col-start-2 min-[540px]:row-start-1 min-[540px]:mr-8 min-[1000px]:mr-32">
           {trailer && <Trailer trailerKey={trailer.key} />}
         </div>
-        <div className="col-span-2 grid grid-flow-col gap-4">
+        <div className="col-span-2 mx-2 grid gap-4 min-[700px]:grid-flow-col">
           {((data.genres && Boolean(data.genres.length)) ||
             data.tagline ||
             data.overview) && (
@@ -198,87 +198,85 @@ export default function MediaPage({ type }: { type: string }) {
                   </div>
                 )}
               </div>
-              {data.created_by && Boolean(data.created_by.length) && (
-                <>
-                  <div className="col-span-2 px-2 text-2xl font-bold">
-                    Created by:
-                  </div>
-                  <div className="col-span-2 flex flex-wrap gap-4 px-2">
-                    {data.created_by.map(
-                      (
-                        el: {
-                          id: number;
-                          name: string;
-                        },
-                        index: number
-                      ) => (
-                        <Link
-                          className="rounded-2xl bg-gray-400 p-4 transition-colors hover:bg-gray-500 dark:bg-gray-800 dark:hover:bg-gray-900"
-                          key={index}
-                          href={{
-                            pathname: `/person/${el.id}`,
-                            query: `${toUrl(el.name)}`,
-                          }}
-                        >
-                          {el.name && (
-                            <div className="font-bold">{el.name}</div>
-                          )}
-                        </Link>
-                      )
-                    )}
-                  </div>
-                </>
-              )}
-              {crewCredits && Boolean(crewCredits.length) && (
-                <>
-                  <div className="col-span-2 px-2 text-2xl font-bold">
-                    Crew:
-                  </div>
-                  <div className="col-span-2 flex flex-wrap gap-4 px-2">
-                    {crewCredits.map(
-                      (
-                        el: {
-                          id: number;
-                          name: string;
-                          job: string;
-                        },
-                        index: number
-                      ) => (
-                        <Link
-                          className="rounded-2xl bg-gray-400 p-4 transition-colors hover:bg-gray-500 dark:bg-gray-800 dark:hover:bg-gray-900"
-                          key={index}
-                          href={{
-                            pathname: `/person/${el.id}`,
-                            query: `${toUrl(el.name)}`,
-                          }}
-                        >
-                          {el.name && (
-                            <>
-                              <div className="font-bold">{el.name}</div>
-                              {el.job && (
+              {((data.created_by && Boolean(data.created_by.length)) ||
+                (crewCredits && Boolean(crewCredits.length))) && (
+                <div className="flex flex-wrap gap-4">
+                  {data.created_by && Boolean(data.created_by.length) && (
+                    <>
+                      {data.created_by.map(
+                        (
+                          el: {
+                            id: number;
+                            name: string;
+                          },
+                          index: number
+                        ) => (
+                          <Link
+                            className="rounded-2xl bg-gray-400 p-4 transition-colors hover:bg-gray-500 dark:bg-gray-800 dark:hover:bg-gray-900"
+                            key={index}
+                            href={{
+                              pathname: `/person/${el.id}`,
+                              query: `${toUrl(el.name)}`,
+                            }}
+                          >
+                            {el.name && (
+                              <>
+                                <div className="font-bold">{el.name}</div>
                                 <div className="text-gray-600 dark:text-gray-400">
-                                  {el.job}
+                                  Creator
                                 </div>
-                              )}
-                            </>
-                          )}
-                        </Link>
-                      )
-                    )}
-                  </div>
-                </>
+                              </>
+                            )}
+                          </Link>
+                        )
+                      )}
+                    </>
+                  )}
+                  {crewCredits && Boolean(crewCredits.length) && (
+                    <>
+                      {crewCredits.map(
+                        (
+                          el: {
+                            id: number;
+                            name: string;
+                            job: string;
+                          },
+                          index: number
+                        ) => (
+                          <Link
+                            className="rounded-2xl bg-gray-400 p-4 transition-colors hover:bg-gray-500 dark:bg-gray-800 dark:hover:bg-gray-900"
+                            key={index}
+                            href={{
+                              pathname: `/person/${el.id}`,
+                              query: `${toUrl(el.name)}`,
+                            }}
+                          >
+                            {el.name && (
+                              <>
+                                <div className="font-bold">{el.name}</div>
+                                {el.job && (
+                                  <div className="text-gray-600 dark:text-gray-400">
+                                    {el.job}
+                                  </div>
+                                )}
+                              </>
+                            )}
+                          </Link>
+                        )
+                      )}
+                    </>
+                  )}
+                </div>
               )}
               {((data.keywords.keywords &&
                 Boolean(data.keywords.keywords.length)) ||
                 (data.keywords.results &&
                   Boolean(data.keywords.results.length))) && (
-                <div
-                  className={`${styles.scrollbar} col-span-2 mx-2 flex gap-2 overflow-y-auto`}
-                >
+                <div className="flex flex-wrap gap-2">
                   {data.keywords[Object.keys(data.keywords)[0]].map(
                     (el: { id: number; name: string }) => (
                       <div
-                        className="min-w-fit cursor-pointer rounded-2xl bg-gray-400 p-2 hover:bg-gray-500 dark:bg-gray-800 dark:hover:bg-gray-900"
+                        className="cursor-pointer rounded-2xl bg-gray-400 p-2 transition-colors hover:bg-gray-500 dark:bg-gray-800 dark:hover:bg-gray-900"
                         key={el.id}
                       >
                         {el.name}
