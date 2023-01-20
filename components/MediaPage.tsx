@@ -62,7 +62,7 @@ export default function MediaPage({ type }: { type: string }) {
       <div className="mx-auto box-content grid max-w-[1280px] grid-cols-[3fr,8fr] gap-4 pb-8">
         <div className="col-span-2 col-start-1 row-span-3 row-start-1">
           <CustomImage
-            className="min-[540px]:brightness-[0.5]"
+            className="rounded-2xl min-[540px]:brightness-[0.5]"
             width={1280}
             height={720}
             src={`https://image.tmdb.org/t/p/w1280${data.backdrop_path}`}
@@ -80,7 +80,7 @@ export default function MediaPage({ type }: { type: string }) {
         <div className="z-10 col-span-2 col-start-1 row-start-3 px-2 py-2 text-xl font-bold text-gray-50 [text-shadow:_0px_1px_10px_rgb(0_0_0_/_100%)] min-[540px]:row-start-2 min-[540px]:px-3 min-[540px]:py-0 min-[540px]:text-2xl min-[1000px]:px-12 min-[1000px]:text-4xl">
           {data.title || data.name}
         </div>
-        <div className="z-10 col-span-2 col-start-1 flex flex-wrap justify-between gap-2 px-2 min-[540px]:row-start-3 min-[540px]:px-3 min-[540px]:text-gray-50 min-[1000px]:px-12">
+        <div className="z-10 col-span-2 col-start-1 flex flex-wrap justify-between gap-2 px-2 min-[540px]:row-start-3 min-[540px]:px-3 min-[540px]:text-gray-50 min-[1000px]:px-12 min-[1000px]:pr-32">
           <div className="min-[540px]:[text-shadow:_0px_1px_10px_rgb(0_0_0_/_100%)]">
             {(data.release_date || data.first_air_date) && (
               <div>
@@ -105,73 +105,191 @@ export default function MediaPage({ type }: { type: string }) {
         <div className="z-10 col-span-2 aspect-video self-center min-[540px]:col-span-1 min-[540px]:col-start-2 min-[540px]:row-start-1 min-[540px]:mr-8 min-[1000px]:mr-32">
           {trailer && <Trailer trailerKey={trailer.key} />}
         </div>
-        {(data.status ||
-          data.in_production ||
-          data.production_countries ||
-          data.tagline ||
-          data.number_of_seasons ||
-          data.number_of_episodes ||
-          data.vote_count > 0) && (
-          <div className="col-span-2 flex flex-wrap gap-4 px-2">
-            {(data.status || data.in_production) && (
-              <div>{data.status || checkProduction(data.in_production)}</div>
-            )}
-            {data.production_countries &&
-              data.production_countries.map(
-                (el: { iso_3166_1: string }, index: number) => (
-                  <div key={index}>{el.iso_3166_1}</div>
-                )
-              )}
-            {data.tagline && <div className="italic">{data.tagline}</div>}
-            {data.number_of_seasons && data.number_of_episodes && (
-              <div>
-                {data.number_of_seasons} season
-                {checkPlural(data.number_of_seasons)} ({data.number_of_episodes}{' '}
-                episode{checkPlural(data.number_of_episodes)})
-              </div>
-            )}
-            {data.vote_count > 0 && (
-              <div
-                title={`User Ratings: ${data.vote_count}`}
-                className="h-[40px] w-[40px] flex-shrink-0 self-center"
-              >
-                <Rating vote={data.vote_average} />
-              </div>
-            )}
-          </div>
-        )}
-        {data.genres && Boolean(data.genres.length) && (
-          <div
-            className={`${styles.scrollbar} col-span-2 mx-2 flex gap-2 overflow-y-auto`}
-          >
-            {data.genres.map((el: { id: number; name: string }) => (
-              <div
-                className="min-w-fit cursor-pointer rounded-2xl bg-gray-300 p-2 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-800"
-                key={el.id}
-              >
-                {el.name}
-              </div>
-            ))}
-          </div>
-        )}
-        <div className="col-span-2 px-2">{data.overview}</div>
-        {((data.keywords.keywords && Boolean(data.keywords.keywords.length)) ||
-          (data.keywords.results && Boolean(data.keywords.results.length))) && (
-          <div
-            className={`${styles.scrollbar} col-span-2 mx-2 flex gap-2 overflow-y-auto`}
-          >
-            {data.keywords[Object.keys(data.keywords)[0]].map(
-              (el: { id: number; name: string }) => (
-                <div
-                  className="min-w-fit cursor-pointer rounded-2xl bg-gray-300 p-2 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-800"
-                  key={el.id}
-                >
-                  {el.name}
+        <div className="col-span-2 grid grid-flow-col gap-4">
+          {((data.genres && Boolean(data.genres.length)) ||
+            data.tagline ||
+            data.overview) && (
+            <div className="flex flex-col gap-4 rounded-2xl bg-gray-300 p-2 dark:bg-gray-700">
+              <button className="rounded-2xl bg-gray-400 p-2 transition-colors hover:bg-gray-500 dark:bg-gray-800 dark:hover:bg-gray-900">
+                <div className="font-bold">Add to Watchlist</div>
+                <div className="text-gray-600 dark:text-gray-400">
+                  Added by {Math.round(data.popularity)} users
                 </div>
-              )
-            )}
-          </div>
-        )}
+              </button>
+              {data.genres && Boolean(data.genres.length) && (
+                <div className="flex flex-wrap gap-2">
+                  {data.genres.map((el: { id: number; name: string }) => (
+                    <div
+                      className="cursor-pointer rounded-2xl bg-gray-400 p-2 transition-colors hover:bg-gray-500 dark:bg-gray-800 dark:hover:bg-gray-900"
+                      key={el.id}
+                    >
+                      {el.name}
+                    </div>
+                  ))}
+                </div>
+              )}
+              {data.tagline && (
+                <div className="self-center italic">{data.tagline}</div>
+              )}
+              {data.overview && <div>{data.overview}</div>}
+            </div>
+          )}
+          {(data.status ||
+            data.in_production ||
+            data.production_countries ||
+            data.number_of_seasons ||
+            data.number_of_episodes ||
+            data.vote_count > 1 ||
+            (data.created_by && Boolean(data.created_by.length)) ||
+            (crewCredits && Boolean(crewCredits.length)) ||
+            (data.keywords.keywords &&
+              Boolean(data.keywords.keywords.length)) ||
+            (data.keywords.results &&
+              Boolean(data.keywords.results.length))) && (
+            <div className="flex flex-col gap-4 rounded-2xl bg-gray-300 p-2 dark:bg-gray-700">
+              <div className="flex items-center justify-center gap-2 rounded-2xl bg-gray-400 p-2 dark:bg-gray-800">
+                {(data.status || data.in_production) && (
+                  <div className="font-semibold">
+                    {data.status || checkProduction(data.in_production)}
+                  </div>
+                )}
+                {data.status &&
+                  (data.production_countries ||
+                    (data.number_of_seasons && data.number_of_episodes) ||
+                    data.vote_count > 0) && (
+                    <div className="h-[2rem] w-[1px] bg-gray-900 dark:bg-gray-50"></div>
+                  )}
+                {data.production_countries &&
+                  data.production_countries.map(
+                    (el: { iso_3166_1: string }, index: number) => (
+                      <div key={index} className="font-semibold">
+                        {el.iso_3166_1}
+                      </div>
+                    )
+                  )}
+                {data.production_countries &&
+                  ((data.number_of_seasons && data.number_of_episodes) ||
+                    data.vote_count > 0) && (
+                    <div className="h-[2rem] w-[1px] bg-gray-900 dark:bg-gray-50"></div>
+                  )}
+                {data.number_of_seasons && data.number_of_episodes && (
+                  <div>
+                    <span className="font-semibold">
+                      {data.number_of_seasons} season
+                      {checkPlural(data.number_of_seasons)}{' '}
+                    </span>
+                    <span className="text-gray-600 dark:text-gray-400">
+                      ({data.number_of_episodes} episode
+                      {checkPlural(data.number_of_episodes)})
+                    </span>
+                  </div>
+                )}
+                {data.number_of_seasons &&
+                  data.number_of_episodes &&
+                  data.vote_count > 0 && (
+                    <div className="h-[2rem] w-[1px] bg-gray-900 dark:bg-gray-50"></div>
+                  )}
+                {data.vote_count > 0 && (
+                  <div
+                    title={`User Ratings: ${data.vote_count}`}
+                    className="h-[40px] w-[40px]"
+                  >
+                    <Rating vote={data.vote_average} />
+                  </div>
+                )}
+              </div>
+              {data.created_by && Boolean(data.created_by.length) && (
+                <>
+                  <div className="col-span-2 px-2 text-2xl font-bold">
+                    Created by:
+                  </div>
+                  <div className="col-span-2 flex flex-wrap gap-4 px-2">
+                    {data.created_by.map(
+                      (
+                        el: {
+                          id: number;
+                          name: string;
+                        },
+                        index: number
+                      ) => (
+                        <Link
+                          className="rounded-2xl bg-gray-400 p-4 transition-colors hover:bg-gray-500 dark:bg-gray-800 dark:hover:bg-gray-900"
+                          key={index}
+                          href={{
+                            pathname: `/person/${el.id}`,
+                            query: `${toUrl(el.name)}`,
+                          }}
+                        >
+                          {el.name && (
+                            <div className="font-bold">{el.name}</div>
+                          )}
+                        </Link>
+                      )
+                    )}
+                  </div>
+                </>
+              )}
+              {crewCredits && Boolean(crewCredits.length) && (
+                <>
+                  <div className="col-span-2 px-2 text-2xl font-bold">
+                    Crew:
+                  </div>
+                  <div className="col-span-2 flex flex-wrap gap-4 px-2">
+                    {crewCredits.map(
+                      (
+                        el: {
+                          id: number;
+                          name: string;
+                          job: string;
+                        },
+                        index: number
+                      ) => (
+                        <Link
+                          className="rounded-2xl bg-gray-400 p-4 transition-colors hover:bg-gray-500 dark:bg-gray-800 dark:hover:bg-gray-900"
+                          key={index}
+                          href={{
+                            pathname: `/person/${el.id}`,
+                            query: `${toUrl(el.name)}`,
+                          }}
+                        >
+                          {el.name && (
+                            <>
+                              <div className="font-bold">{el.name}</div>
+                              {el.job && (
+                                <div className="text-gray-600 dark:text-gray-400">
+                                  {el.job}
+                                </div>
+                              )}
+                            </>
+                          )}
+                        </Link>
+                      )
+                    )}
+                  </div>
+                </>
+              )}
+              {((data.keywords.keywords &&
+                Boolean(data.keywords.keywords.length)) ||
+                (data.keywords.results &&
+                  Boolean(data.keywords.results.length))) && (
+                <div
+                  className={`${styles.scrollbar} col-span-2 mx-2 flex gap-2 overflow-y-auto`}
+                >
+                  {data.keywords[Object.keys(data.keywords)[0]].map(
+                    (el: { id: number; name: string }) => (
+                      <div
+                        className="min-w-fit cursor-pointer rounded-2xl bg-gray-400 p-2 hover:bg-gray-500 dark:bg-gray-800 dark:hover:bg-gray-900"
+                        key={el.id}
+                      >
+                        {el.name}
+                      </div>
+                    )
+                  )}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
         {data.credits.cast && Boolean(data.credits.cast.length) && (
           <>
             <div className="col-span-2 px-2 text-2xl font-bold">Cast:</div>
@@ -214,72 +332,6 @@ export default function MediaPage({ type }: { type: string }) {
                       )}
                     </Link>
                   </div>
-                )
-              )}
-            </div>
-          </>
-        )}
-        {data.created_by && Boolean(data.created_by.length) && (
-          <>
-            <div className="col-span-2 px-2 text-2xl font-bold">
-              Created by:
-            </div>
-            <div className="col-span-2 flex flex-wrap gap-4 px-2">
-              {data.created_by.map(
-                (
-                  el: {
-                    id: number;
-                    name: string;
-                  },
-                  index: number
-                ) => (
-                  <Link
-                    className="rounded-2xl bg-gray-300 p-4 transition-colors hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-800"
-                    key={index}
-                    href={{
-                      pathname: `/person/${el.id}`,
-                      query: `${toUrl(el.name)}`,
-                    }}
-                  >
-                    {el.name && <div className="font-bold">{el.name}</div>}
-                  </Link>
-                )
-              )}
-            </div>
-          </>
-        )}
-        {crewCredits && Boolean(crewCredits.length) && (
-          <>
-            <div className="col-span-2 px-2 text-2xl font-bold">Crew:</div>
-            <div className="col-span-2 flex flex-wrap gap-4 px-2">
-              {crewCredits.map(
-                (
-                  el: {
-                    id: number;
-                    name: string;
-                    job: string;
-                  },
-                  index: number
-                ) => (
-                  <Link
-                    className="rounded-2xl bg-gray-300 p-4 transition-colors hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-800"
-                    key={index}
-                    href={{
-                      pathname: `/person/${el.id}`,
-                      query: `${toUrl(el.name)}`,
-                    }}
-                  >
-                    {el.name && (
-                      <>
-                        <div className="font-bold">{el.name}</div>
-                        {el.job && (
-                          <div className="text-gray-600 dark:text-gray-400">
-                            {el.job}
-                          </div>
-                        )}
-                      </>
-                    )}
-                  </Link>
                 )
               )}
             </div>
