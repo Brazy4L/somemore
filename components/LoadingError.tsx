@@ -12,7 +12,7 @@ export default function LoadingError() {
           target="_blank"
           rel="noopener"
         >
-          TMDB
+          TMDb
         </Link>
       </div>
       <div>Check your connection</div>

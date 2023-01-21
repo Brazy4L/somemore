@@ -147,7 +147,7 @@ export default function MediaPage({ type }: { type: string }) {
             (data.keywords.results &&
               Boolean(data.keywords.results.length))) && (
             <div className="flex flex-col gap-4 rounded-2xl bg-gray-300 p-2 dark:bg-gray-700">
-              <div className="flex items-center justify-center gap-2 rounded-2xl bg-gray-400 p-2 dark:bg-gray-800">
+              <div className="flex items-center justify-center gap-2 rounded-2xl p-2">
                 {(data.status || data.in_production) && (
                   <div className="font-semibold">
                     {data.status || checkProduction(data.in_production)}
@@ -303,7 +303,7 @@ export default function MediaPage({ type }: { type: string }) {
                 }) => (
                   <div
                     key={el.id}
-                    className="min-w-[65%] min-[340px]:min-w-[60%] min-[420px]:min-w-[55%] min-[500px]:min-w-[45%] min-[600px]:min-w-[35%] min-[750px]:min-w-[25%] min-[1050px]:min-w-[18.9%]"
+                    className="min-w-[65%] max-w-[19%] min-[340px]:min-w-[60%] min-[420px]:min-w-[55%] min-[500px]:min-w-[45%] min-[600px]:min-w-[35%] min-[750px]:min-w-[25%] min-[1050px]:min-w-[18.995%]"
                   >
                     <Link
                       href={{
@@ -353,7 +353,7 @@ export default function MediaPage({ type }: { type: string }) {
                   }) => (
                     <div
                       key={el.id}
-                      className="min-w-[65%] min-[340px]:min-w-[60%] min-[420px]:min-w-[55%] min-[500px]:min-w-[45%] min-[600px]:min-w-[35%] min-[750px]:min-w-[25%] min-[1050px]:min-w-[18.9%]"
+                      className="min-w-[65%] max-w-[19%] min-[340px]:min-w-[60%] min-[420px]:min-w-[55%] min-[500px]:min-w-[45%] min-[600px]:min-w-[35%] min-[750px]:min-w-[25%] min-[1050px]:min-w-[18.995%]"
                     >
                       <Link
                         href={{
@@ -398,7 +398,7 @@ export default function MediaPage({ type }: { type: string }) {
                 }) => (
                   <div
                     key={el.id}
-                    className="min-w-[65%] min-[340px]:min-w-[60%] min-[420px]:min-w-[55%] min-[500px]:min-w-[45%] min-[600px]:min-w-[35%] min-[750px]:min-w-[25%] min-[1050px]:min-w-[18.9%]"
+                    className="min-w-[65%] max-w-[19%] min-[340px]:min-w-[60%] min-[420px]:min-w-[55%] min-[500px]:min-w-[45%] min-[600px]:min-w-[35%] min-[750px]:min-w-[25%] min-[1050px]:min-w-[18.995%]"
                   >
                     <Link
                       href={{
