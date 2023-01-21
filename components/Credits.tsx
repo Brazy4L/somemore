@@ -2,7 +2,7 @@ import styles from '../styles/scrollbar-y.module.css';
 import Link from 'next/link';
 import { toUrl, getDate, checkPlural } from './utils';
 import CustomImage from './CustomImage';
-import question from '../public/question.svg';
+import questionTall from '../public/question-tall.svg';
 import Rating from './Rating';
 
 export default function Credits(props: any) {
@@ -52,7 +52,7 @@ export default function Credits(props: any) {
                   width={64}
                   height={96}
                   src={`https://image.tmdb.org/t/p/w92${el.poster_path}`}
-                  fallbackSrc={question}
+                  fallbackSrc={questionTall}
                 />
               </div>
               <div className="flex flex-grow flex-col justify-center">

@@ -1,5 +1,5 @@
 import CustomImage from './CustomImage';
-import question from '../public/question.svg';
+import questionTall from '../public/question-tall.svg';
 
 export default function Gallery(props: any) {
   const { hidden, data } = props;
@@ -15,7 +15,7 @@ export default function Gallery(props: any) {
             width={342}
             height={513}
             src={`https://image.tmdb.org/t/p/w342${el.file_path}`}
-            fallbackSrc={question}
+            fallbackSrc={questionTall}
           />
         ))}
     </>

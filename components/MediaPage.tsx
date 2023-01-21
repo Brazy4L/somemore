@@ -7,7 +7,7 @@ import useSWR from 'swr';
 import { toUrl, getDate, checkPlural } from './utils';
 import Trailer from './Trailer';
 import CustomImage from './CustomImage';
-import question from '../public/question.svg';
+import questionTall from '../public/question-tall.svg';
 import questionWide from '../public/question-wide.svg';
 import Spinner from './Spinner';
 import LoadingError from './LoadingError';
@@ -74,7 +74,7 @@ export default function MediaPage({ type }: { type: string }) {
             width={780}
             height={1170}
             src={`https://image.tmdb.org/t/p/w780${data.poster_path}`}
-            fallbackSrc={question}
+            fallbackSrc={questionTall}
           />
         </div>
         <div className="z-10 col-span-2 col-start-1 row-start-3 px-2 py-2 text-xl font-bold text-gray-50 [text-shadow:_0px_1px_10px_rgb(0_0_0_/_100%)] min-[540px]:row-start-2 min-[540px]:px-3 min-[540px]:py-0 min-[540px]:text-2xl min-[1000px]:px-12 min-[1000px]:text-4xl">
@@ -316,7 +316,7 @@ export default function MediaPage({ type }: { type: string }) {
                         width={342}
                         height={513}
                         src={`https://image.tmdb.org/t/p/w342${el.profile_path}`}
-                        fallbackSrc={question}
+                        fallbackSrc={questionTall}
                       />
                       {el.name && (
                         <>
@@ -366,7 +366,7 @@ export default function MediaPage({ type }: { type: string }) {
                           width={342}
                           height={513}
                           src={`https://image.tmdb.org/t/p/w342${el.poster_path}`}
-                          fallbackSrc={question}
+                          fallbackSrc={questionTall}
                         />
                       </Link>
                     </div>
@@ -411,7 +411,7 @@ export default function MediaPage({ type }: { type: string }) {
                         width={342}
                         height={513}
                         src={`https://image.tmdb.org/t/p/w342${el.poster_path}`}
-                        fallbackSrc={question}
+                        fallbackSrc={questionTall}
                       />
                     </Link>
                   </div>

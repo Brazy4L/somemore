@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import useSWR from 'swr';
 import CustomImage from './CustomImage';
-import question from '../public/question.svg';
+import questionTall from '../public/question-tall.svg';
 import Gallery from './Gallery';
 import Credits from './Credits';
 import Spinner from './Spinner';
@@ -86,7 +86,7 @@ export default function PersonPage() {
               width={342}
               height={513}
               src={`https://image.tmdb.org/t/p/w342${data.profile_path}`}
-              fallbackSrc={question}
+              fallbackSrc={questionTall}
             />
             <div
               className={`${styles.scrollbar} fixed top-[60px] left-0 z-10 flex w-full cursor-pointer overflow-y-hidden bg-[#e5e7eb] dark:bg-[#202020]`}

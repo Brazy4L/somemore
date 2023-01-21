@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { toUrl } from './utils';
 import CustomImage from './CustomImage';
-import question from '../public/question.svg';
+import questionTall from '../public/question-tall.svg';
 
 export default function RenderMediaPages({
   data,
@@ -31,7 +31,7 @@ export default function RenderMediaPages({
                 width={342}
                 height={513}
                 src={`https://image.tmdb.org/t/p/w342${el.poster_path}`}
-                fallbackSrc={question}
+                fallbackSrc={questionTall}
               />
             </Link>
           </div>
