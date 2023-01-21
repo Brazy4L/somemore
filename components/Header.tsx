@@ -30,15 +30,31 @@ export default function Header({
           onClick={() => {
             setTheme(!theme);
             localStorage.setItem('theme', JSON.stringify(!theme));
+            const css = document.createElement('style');
+            css.type = 'text/css';
+            css.appendChild(
+              document.createTextNode(
+                `* {
+                      -webkit-transition: none !important;
+                      -moz-transition: none !important;
+                      -o-transition: none !important;
+                      -ms-transition: none !important;
+                      transition: none !important;
+                    }
+                `
+              )
+            );
+            document.head.appendChild(css);
             document.documentElement.className = theme ? '' : 'dark';
+            const _ = window.getComputedStyle(css).opacity;
+            document.head.removeChild(css);
             // @ts-expect-error
             document.querySelector('meta[name="color-scheme"]').content = theme
               ? 'light'
               : 'dark';
           }}
         >
-          {theme && <div>🌝</div>}
-          {!theme && <div>🌚</div>}
+          {theme ? <div>🌝</div> : <div>🌚</div>}
         </button>
       </div>
     </nav>
