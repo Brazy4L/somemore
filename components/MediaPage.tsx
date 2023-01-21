@@ -102,9 +102,11 @@ export default function MediaPage({ type }: { type: string }) {
             </Link>
           )}
         </div>
-        <div className="z-10 col-span-2 aspect-video self-center min-[540px]:col-span-1 min-[540px]:col-start-2 min-[540px]:row-start-1 min-[540px]:mr-8 min-[1000px]:mr-32">
-          {trailer && <Trailer trailerKey={trailer.key} />}
-        </div>
+        {trailer && (
+          <div className="z-10 col-span-2 aspect-video self-center min-[540px]:col-span-1 min-[540px]:col-start-2 min-[540px]:row-start-1 min-[540px]:mr-8 min-[1000px]:mr-32">
+            <Trailer trailerKey={trailer.key} />
+          </div>
+        )}
         <div className="col-span-2 mx-2 grid gap-4 min-[700px]:grid-flow-col">
           {((data.genres && Boolean(data.genres.length)) ||
             data.tagline ||
@@ -147,7 +149,7 @@ export default function MediaPage({ type }: { type: string }) {
             (data.keywords.results &&
               Boolean(data.keywords.results.length))) && (
             <div className="flex flex-col gap-4 rounded-2xl bg-gray-300 p-2 dark:bg-gray-700">
-              <div className="flex items-center justify-center gap-2 rounded-2xl p-2">
+              <div className="flex flex-wrap items-center justify-center gap-2 rounded-2xl p-2">
                 {(data.status || data.in_production) && (
                   <div className="font-semibold">
                     {data.status || checkProduction(data.in_production)}
