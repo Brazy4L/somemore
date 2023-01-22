@@ -297,14 +297,17 @@ export default function MediaPage({ type }: { type: string }) {
               className={`${styles.scrollbar} col-span-2 mx-2 flex gap-4 overflow-y-auto`}
             >
               {data.credits.cast.map(
-                (el: {
-                  id: number;
-                  name: string;
-                  profile_path: string;
-                  character: string;
-                }) => (
+                (
+                  el: {
+                    id: number;
+                    name: string;
+                    profile_path: string;
+                    character: string;
+                  },
+                  index: number
+                ) => (
                   <div
-                    key={el.id}
+                    key={index}
                     className="min-w-[65%] max-w-[19%] min-[340px]:min-w-[60%] min-[420px]:min-w-[55%] min-[500px]:min-w-[45%] min-[600px]:min-w-[35%] min-[750px]:min-w-[25%] min-[1050px]:min-w-[18.995%]"
                   >
                     <Link
