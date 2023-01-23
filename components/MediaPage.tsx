@@ -384,14 +384,15 @@ export default function MediaPage({ type }: { type: string }) {
           )}
         {data.similar.results && Boolean(data.similar.results.length) && (
           <>
-            <div className="col-span-2 flex gap-2 px-2 text-2xl font-bold">
-              <span className="flex-grow">Similar:</span>
-              <span
-                className="min-w-fit cursor-pointer rounded-2xl bg-gray-300 px-4 transition-colors hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-800"
-                title="This list is assembled by looking at keywords and genres."
-              >
-                ?
-              </span>
+            <div className="col-span-2 flex gap-2 px-2">
+              <div className="flex-grow text-2xl font-bold">Similar:</div>
+              <div className="group h-[40px] w-[40px] cursor-pointer rounded-2xl bg-gray-300 px-4 transition-colors dark:bg-gray-700">
+                <span className="text-2xl font-bold">?</span>
+                <span className="pointer-events-none relative right-[3400%] bottom-[110%] mx-auto flex w-max justify-center rounded-2xl bg-gray-400 p-2 opacity-0 shadow shadow-black transition-opacity duration-300 group-hover:opacity-100 dark:bg-gray-800">
+                  This list is assembled by looking <br />
+                  at keywords and genres.
+                </span>
+              </div>
             </div>
             <div
               className={`${styles.scrollbar} col-span-2 mx-2 flex gap-4 overflow-y-auto`}
