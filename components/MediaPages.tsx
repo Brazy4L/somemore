@@ -1,14 +1,24 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import useSWR from 'swr';
 import { useInView } from 'react-intersection-observer';
 import RenderMediaPages from './RenderMediaPages';
 import LoadingError from './LoadingError';
 
-export default function MediaPages({ type }: { type: string }) {
-  const [page, setPage] = useState(1);
-  const [pages, setPages] = useState<Array<any>>([]);
+export default function MediaPages({
+  type,
+  page,
+  setPage,
+  pages,
+  setPages,
+}: {
+  type: string;
+  page: number;
+  setPage: any;
+  pages: any;
+  setPages: any;
+}) {
   const [ref, inView] = useInView({
-    rootMargin: '2160px',
+    rootMargin: '320px',
   });
   const fetcher = (url: RequestInfo | URL) =>
     fetch(url).then((res) => res.json());
@@ -29,13 +39,10 @@ export default function MediaPages({ type }: { type: string }) {
 
   useEffect(() => {
     if (inView && !isLoading && !error) {
-      setPage(page + 1);
-      setPages((arr) => [
-        ...arr,
-        <RenderMediaPages key={page} data={data} type={type} />,
-      ]);
+      setPage();
+      setPages(<RenderMediaPages key={page} data={data} type={type} />);
     }
-  }, [data, error, inView, isLoading, page, type]);
+  }, [inView, data]);
 
   if (error) return <LoadingError />;
 
