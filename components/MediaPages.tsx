@@ -42,8 +42,7 @@ export default function MediaPages({
       setPage();
       setPages(<RenderMediaPages key={page} data={data} type={type} />);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inView]);
+  }, [inView, data, isLoading, error, setPage, setPages, page, type]);
 
   if (error) return <LoadingError />;
 

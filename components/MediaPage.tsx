@@ -192,11 +192,13 @@ export default function MediaPage({ type }: { type: string }) {
                     <div className="h-[2rem] w-[1px] bg-gray-900 dark:bg-gray-50"></div>
                   )}
                 {data.vote_count > 0 && (
-                  <div
-                    title={`User Ratings: ${data.vote_count}`}
-                    className="h-[40px] w-[40px]"
-                  >
-                    <Rating vote={data.vote_average} />
+                  <div className="h-[40px] w-[40px] cursor-pointer">
+                    <div className="peer">
+                      <Rating vote={data.vote_average} />
+                    </div>
+                    <span className="pointer-events-none relative right-[270%] bottom-[215%] mx-auto flex w-max justify-center rounded-2xl bg-gray-400 p-2 opacity-0 shadow shadow-black transition-opacity duration-300 peer-hover:opacity-100 dark:bg-gray-800 min-[1500px]:right-0">
+                      User Ratings: {data.vote_count}
+                    </span>
                   </div>
                 )}
               </div>

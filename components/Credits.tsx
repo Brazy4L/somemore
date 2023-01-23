@@ -66,7 +66,8 @@ export default function Credits(props: any) {
                   {el.media_type}{' '}
                   {el.episode_count && (
                     <span>
-                      ({el.episode_count} episode{checkPlural(el.episode_count)})
+                      ({el.episode_count} episode{checkPlural(el.episode_count)}
+                      )
                     </span>
                   )}
                 </div>
@@ -75,11 +76,13 @@ export default function Credits(props: any) {
                 )}
               </div>
               {el.vote_count > 0 && (
-                <div
-                  title={`User Ratings: ${el.vote_count}`}
-                  className="h-[40px] w-[40px] flex-shrink-0 self-center"
-                >
-                  <Rating vote={el.vote_average} />
+                <div className="h-[40px] w-[40px] flex-shrink-0 self-center">
+                  <div className="peer">
+                    <Rating vote={el.vote_average} />
+                  </div>
+                  <span className="pointer-events-none relative bottom-[100%] right-[420%] mx-auto flex w-max justify-center rounded-2xl bg-gray-400 p-2 opacity-0 shadow shadow-black transition-opacity duration-300 peer-hover:opacity-100 dark:bg-gray-800">
+                    User Ratings: {el.vote_count}
+                  </span>
                 </div>
               )}
             </Link>
