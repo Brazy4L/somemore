@@ -24,19 +24,34 @@ export default function Header({
       </label>
       <div className="fixed left-0 top-[-124px] -z-20 grid w-full justify-items-center gap-3 rounded-b-2xl border-b-4 border-[#e5e7eb] bg-[#ffffff] py-5 font-bold transition-[top] duration-[100ms] ease-out peer-checked:top-[52px] dark:border-[#202020] dark:bg-[#101010] min-[540px]:static min-[540px]:z-0 min-[540px]:w-auto min-[540px]:grid-flow-col min-[540px]:border-0 min-[540px]:bg-inherit min-[540px]:py-0 dark:min-[540px]:bg-inherit">
         <Link
-          onClick={() => document.getElementById('menu')?.click()}
+          onClick={() => {
+            // @ts-expect-error
+            if (document.getElementById('menu')?.checked) {
+              document.getElementById('menu')?.click();
+            }
+          }}
           href="/movie"
         >
           Movies
         </Link>
         <Link
-          onClick={() => document.getElementById('menu')?.click()}
+          onClick={() => {
+            // @ts-expect-error
+            if (document.getElementById('menu')?.checked) {
+              document.getElementById('menu')?.click();
+            }
+          }}
           href="/tv"
         >
           TV Shows
         </Link>
         <Link
-          onClick={() => document.getElementById('menu')?.click()}
+          onClick={() => {
+            // @ts-expect-error
+            if (document.getElementById('menu')?.checked) {
+              document.getElementById('menu')?.click();
+            }
+          }}
           href="/about"
         >
           About
