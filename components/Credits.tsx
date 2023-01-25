@@ -36,7 +36,7 @@ export default function Credits(props: any) {
           index: number
         ) => (
           <div
-            className="rounded-2xl bg-gray-300 p-2 transition-colors hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-800"
+            className="rounded-2xl bg-gray-200 p-2 transition-colors hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-800"
             key={index}
           >
             <Link
@@ -64,7 +64,7 @@ export default function Credits(props: any) {
                 </div>
                 <div className="text-gray-600 dark:text-gray-400">
                   {el.media_type}{' '}
-                  {el.episode_count && (
+                  {el.episode_count > 0 && (
                     <span>
                       ({el.episode_count} episode{checkPlural(el.episode_count)}
                       )
@@ -80,7 +80,7 @@ export default function Credits(props: any) {
                   <div className="peer">
                     <Rating vote={el.vote_average} />
                   </div>
-                  <span className="pointer-events-none relative bottom-[100%] right-[420%] mx-auto flex w-max justify-center rounded-2xl bg-gray-400 p-2 opacity-0 shadow shadow-black transition-opacity duration-300 peer-hover:opacity-100 dark:bg-gray-800">
+                  <span className="pointer-events-none relative bottom-[100%] right-[420%] mx-auto flex w-max justify-center rounded-2xl bg-gray-300 p-2 opacity-0 shadow shadow-black transition-opacity duration-300 peer-hover:opacity-100 dark:bg-gray-800">
                     User Ratings: {el.vote_count}
                   </span>
                 </div>

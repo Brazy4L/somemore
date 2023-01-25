@@ -111,8 +111,8 @@ export default function MediaPage({ type }: { type: string }) {
           {((data.genres && Boolean(data.genres.length)) ||
             data.tagline ||
             data.overview) && (
-            <div className="flex flex-col gap-4 rounded-2xl bg-gray-300 p-2 dark:bg-gray-700">
-              <button className="rounded-2xl bg-gray-400 p-2 transition-colors hover:bg-gray-500 dark:bg-gray-800 dark:hover:bg-gray-900">
+            <div className="flex flex-col gap-4 rounded-2xl bg-gray-200 p-2 dark:bg-gray-700">
+              <button className="rounded-2xl bg-gray-300 p-2 transition-colors hover:bg-gray-400 dark:bg-gray-800 dark:hover:bg-gray-900">
                 <div className="font-bold">Add to Watchlist</div>
                 <div className="text-gray-600 dark:text-gray-400">
                   Added by {Math.round(data.popularity)} users
@@ -122,7 +122,7 @@ export default function MediaPage({ type }: { type: string }) {
                 <div className="flex flex-wrap gap-2">
                   {data.genres.map((el: { id: number; name: string }) => (
                     <div
-                      className="cursor-pointer rounded-2xl bg-gray-400 p-2 transition-colors hover:bg-gray-500 dark:bg-gray-800 dark:hover:bg-gray-900"
+                      className="cursor-pointer rounded-2xl bg-gray-300 p-2 transition-colors hover:bg-gray-400 dark:bg-gray-800 dark:hover:bg-gray-900"
                       key={el.id}
                     >
                       {el.name}
@@ -148,7 +148,7 @@ export default function MediaPage({ type }: { type: string }) {
               Boolean(data.keywords.keywords.length)) ||
             (data.keywords.results &&
               Boolean(data.keywords.results.length))) && (
-            <div className="flex flex-col gap-4 rounded-2xl bg-gray-300 p-2 dark:bg-gray-700">
+            <div className="flex flex-col gap-4 rounded-2xl bg-gray-200 p-2 dark:bg-gray-700">
               <div className="flex flex-wrap items-center justify-center gap-2 rounded-2xl p-2">
                 {(data.status || data.in_production) && (
                   <div className="font-semibold">
@@ -162,6 +162,7 @@ export default function MediaPage({ type }: { type: string }) {
                     <div className="h-[2rem] w-[1px] bg-gray-900 dark:bg-gray-50"></div>
                   )}
                 {data.production_countries &&
+                  Boolean(data.production_countries.length) &&
                   data.production_countries.map(
                     (el: { iso_3166_1: string }, index: number) => (
                       <div key={index} className="font-semibold">
@@ -170,11 +171,12 @@ export default function MediaPage({ type }: { type: string }) {
                     )
                   )}
                 {data.production_countries &&
+                  Boolean(data.production_countries.length) &&
                   ((data.number_of_seasons && data.number_of_episodes) ||
                     data.vote_count > 0) && (
                     <div className="h-[2rem] w-[1px] bg-gray-900 dark:bg-gray-50"></div>
                   )}
-                {data.number_of_seasons && data.number_of_episodes && (
+                {data.number_of_seasons && data.number_of_episodes > 0 && (
                   <div>
                     <span className="font-semibold">
                       {data.number_of_seasons} season
@@ -187,7 +189,7 @@ export default function MediaPage({ type }: { type: string }) {
                   </div>
                 )}
                 {data.number_of_seasons &&
-                  data.number_of_episodes &&
+                  data.number_of_episodes > 0 &&
                   data.vote_count > 0 && (
                     <div className="h-[2rem] w-[1px] bg-gray-900 dark:bg-gray-50"></div>
                   )}
@@ -196,7 +198,7 @@ export default function MediaPage({ type }: { type: string }) {
                     <div className="peer">
                       <Rating vote={data.vote_average} />
                     </div>
-                    <span className="pointer-events-none relative right-[270%] bottom-[215%] mx-auto flex w-max justify-center rounded-2xl bg-gray-400 p-2 opacity-0 shadow shadow-black transition-opacity duration-300 peer-hover:opacity-100 dark:bg-gray-800 min-[1500px]:right-0">
+                    <span className="pointer-events-none relative right-[270%] bottom-[215%] mx-auto flex w-max justify-center rounded-2xl bg-gray-300 p-2 opacity-0 shadow shadow-black transition-opacity duration-300 peer-hover:opacity-100 dark:bg-gray-800 min-[1500px]:right-0">
                       User Ratings: {data.vote_count}
                     </span>
                   </div>
@@ -216,7 +218,7 @@ export default function MediaPage({ type }: { type: string }) {
                           index: number
                         ) => (
                           <Link
-                            className="rounded-2xl bg-gray-400 p-4 transition-colors hover:bg-gray-500 dark:bg-gray-800 dark:hover:bg-gray-900"
+                            className="rounded-2xl bg-gray-300 p-4 transition-colors hover:bg-gray-400 dark:bg-gray-800 dark:hover:bg-gray-900"
                             key={index}
                             href={{
                               pathname: `/person/${el.id}`,
@@ -248,7 +250,7 @@ export default function MediaPage({ type }: { type: string }) {
                           index: number
                         ) => (
                           <Link
-                            className="rounded-2xl bg-gray-400 p-4 transition-colors hover:bg-gray-500 dark:bg-gray-800 dark:hover:bg-gray-900"
+                            className="rounded-2xl bg-gray-300 p-4 transition-colors hover:bg-gray-400 dark:bg-gray-800 dark:hover:bg-gray-900"
                             key={index}
                             href={{
                               pathname: `/person/${el.id}`,
@@ -280,7 +282,7 @@ export default function MediaPage({ type }: { type: string }) {
                   {data.keywords[Object.keys(data.keywords)[0]].map(
                     (el: { id: number; name: string }) => (
                       <div
-                        className="cursor-pointer rounded-2xl bg-gray-400 p-2 transition-colors hover:bg-gray-500 dark:bg-gray-800 dark:hover:bg-gray-900"
+                        className="cursor-pointer rounded-2xl bg-gray-300 p-2 transition-colors hover:bg-gray-400 dark:bg-gray-800 dark:hover:bg-gray-900"
                         key={el.id}
                       >
                         {el.name}
@@ -386,9 +388,16 @@ export default function MediaPage({ type }: { type: string }) {
           <>
             <div className="col-span-2 flex gap-2 px-2">
               <div className="flex-grow text-2xl font-bold">Similar:</div>
-              <div className="group h-[40px] w-[40px] cursor-pointer rounded-2xl bg-gray-300 px-4 transition-colors dark:bg-gray-700">
-                <span className="text-2xl font-bold">?</span>
-                <span className="pointer-events-none relative right-[3400%] bottom-[110%] mx-auto flex w-max justify-center rounded-2xl bg-gray-400 p-2 opacity-0 shadow shadow-black transition-opacity duration-300 group-hover:opacity-100 dark:bg-gray-800">
+              <div className="group h-[40px] w-[40px] cursor-pointer rounded-2xl bg-gray-200 transition-colors dark:bg-gray-700">
+                <svg
+                  className="fill-gray-900 dark:fill-gray-50"
+                  width="40"
+                  height="40"
+                >
+                  <rect width="4" height="4" x="18" y="29.808" rx="2" />
+                  <path d="M19.996 27.808h-.246a.75.75 0 0 1-.75-.75V24.322c0-.862.255-1.705.733-2.422 1.482-2.223 4.327-4.103 4.058-6.762-.32-3.167-4.05-6.333-6.64-.671a.863.863 0 0 1-.494.458l-1.835.625c-.648.22-1.322-.27-1.22-.949 1.365-9.023 15.824-8.975 12.675 3.068-.405 1.55-1.45 2.843-2.724 3.814l-.272.207a7.057 7.057 0 0 0-2.781 5.614.504.504 0 0 1-.504.504Z" />
+                </svg>
+                <span className="pointer-events-none relative right-[650%] bottom-[130%] mx-auto flex w-max justify-center rounded-2xl bg-gray-200 p-2 opacity-0 shadow shadow-black transition-opacity duration-300 group-hover:opacity-100 dark:bg-gray-800">
                   This list is assembled by looking <br />
                   at keywords and genres.
                 </span>

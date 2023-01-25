@@ -96,7 +96,7 @@ export default function PersonPage() {
             {!hidden && (
               <>
                 <div className="fixed top-0 left-0 h-screen w-screen bg-[#00000080]"></div>
-                <button className="fixed top-[620px] left-[50%] w-[200px] -translate-x-1/2 rounded-2xl bg-[#89b2ff] p-5 transition-colors hover:bg-[#4b8aff] dark:bg-[#1768ff] dark:hover:bg-[#035bff]">
+                <button className="fixed top-[620px] left-[50%] w-[200px] -translate-x-1/2 rounded-2xl bg-gray-200 p-5 transition-colors hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-900">
                   Close
                 </button>
               </>
@@ -106,7 +106,7 @@ export default function PersonPage() {
           <div className="flex flex-wrap gap-4 px-2">
             {data.imdb_id && (
               <Link
-                className="h-min cursor-pointer rounded-2xl bg-gray-300 p-2 transition-colors hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-800"
+                className="h-min cursor-pointer rounded-2xl bg-gray-200 p-2 transition-colors hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-800"
                 href={`https://www.imdb.com/name/${data.imdb_id}/`}
                 target="_blank"
                 rel="noopener"
@@ -116,7 +116,7 @@ export default function PersonPage() {
             )}
             {data.external_ids.twitter_id && (
               <Link
-                className="h-min cursor-pointer rounded-2xl bg-gray-300 p-2 transition-colors hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-800"
+                className="h-min cursor-pointer rounded-2xl bg-gray-200 p-2 transition-colors hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-800"
                 href={`https://twitter.com/${data.external_ids.twitter_id}`}
                 target="_blank"
                 rel="noopener"
@@ -126,7 +126,7 @@ export default function PersonPage() {
             )}
             {data.external_ids.instagram_id && (
               <Link
-                className="h-min cursor-pointer rounded-2xl bg-gray-300 p-2 transition-colors hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-800"
+                className="h-min cursor-pointer rounded-2xl bg-gray-200 p-2 transition-colors hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-800"
                 href={`https://instagram.com/${data.external_ids.instagram_id}/`}
                 target="_blank"
                 rel="noopener"
@@ -136,7 +136,7 @@ export default function PersonPage() {
             )}
             {data.external_ids.facebook_id && (
               <Link
-                className="h-min cursor-pointer rounded-2xl bg-gray-300 p-2 transition-colors hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-800"
+                className="h-min cursor-pointer rounded-2xl bg-gray-200 p-2 transition-colors hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-800"
                 href={`https://www.facebook.com/${data.external_ids.facebook_id}/`}
                 target="_blank"
                 rel="noopener"
@@ -146,7 +146,7 @@ export default function PersonPage() {
             )}
             {data.name && (
               <Link
-                className="h-min cursor-pointer rounded-2xl bg-gray-300 p-2 transition-colors hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-800"
+                className="h-min cursor-pointer rounded-2xl bg-gray-200 p-2 transition-colors hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-800"
                 href={`https://www.google.com/search?q=${data.name}`}
                 target="_blank"
                 rel="noopener"
@@ -156,7 +156,7 @@ export default function PersonPage() {
             )}
           </div>
           {data.biography && (
-            <div className="mx-2 rounded-2xl bg-gray-300 p-2 transition-colors dark:bg-gray-700">
+            <div className="mx-2 rounded-2xl bg-gray-200 p-2 transition-colors dark:bg-gray-700">
               {data.biography}
             </div>
           )}
