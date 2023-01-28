@@ -96,7 +96,7 @@ export default function Header({
         >
           {theme ? (
             <svg
-              className="h-[28px] fill-gray-400 stroke-gray-900 dark:fill-gray-600 dark:stroke-gray-50"
+              className="h-[28px] fill-gray-400 stroke-gray-400"
               width="24"
               height="24"
             >
@@ -104,13 +104,13 @@ export default function Header({
             </svg>
           ) : (
             <svg
-              className="h-[28px] fill-gray-400 stroke-gray-900 dark:fill-gray-600 dark:stroke-gray-50"
+              className="h-[28px] fill-gray-300 stroke-gray-700"
               width="24"
               height="24"
             >
-              <circle cx="12" cy="12" r="4" stroke="#000" stroke-width="4" />
+              <circle cx="12" cy="12" r="4" strokeWidth="4" />
               <path
-                stroke-width="2"
+                strokeWidth="2"
                 d="M12 5V2M12 22v-3M17.293 6.455l2.828-2.828M16.707 17.293l2.828 2.828M3.707 3.293l2.829 2.828M3.293 20.455l2.828-2.828M19 12h2M3 12h2"
               />
             </svg>

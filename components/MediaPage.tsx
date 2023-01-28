@@ -122,7 +122,7 @@ export default function MediaPage({ type }: { type: string }) {
                 <div className="flex flex-wrap gap-2">
                   {data.genres.map((el: { id: number; name: string }) => (
                     <div
-                      className="cursor-pointer rounded-2xl bg-gray-300 p-2 transition-colors hover:bg-gray-400 dark:bg-gray-800 dark:hover:bg-gray-900"
+                      className="rounded-2xl border-4 border-gray-300 px-2 py-1 dark:border-gray-800"
                       key={el.id}
                     >
                       {el.name}
@@ -156,7 +156,8 @@ export default function MediaPage({ type }: { type: string }) {
                   </div>
                 )}
                 {data.status &&
-                  (data.production_countries ||
+                  ((data.production_countries &&
+                    Boolean(data.production_countries.length)) ||
                     (data.number_of_seasons && data.number_of_episodes) ||
                     data.vote_count > 0) && (
                     <div className="h-[2rem] w-[1px] bg-gray-900 dark:bg-gray-50"></div>
@@ -282,7 +283,7 @@ export default function MediaPage({ type }: { type: string }) {
                   {data.keywords[Object.keys(data.keywords)[0]].map(
                     (el: { id: number; name: string }) => (
                       <div
-                        className="cursor-pointer rounded-2xl bg-gray-300 p-2 transition-colors hover:bg-gray-400 dark:bg-gray-800 dark:hover:bg-gray-900"
+                        className="rounded-2xl border-4 border-gray-300 px-2 py-1 dark:border-gray-800"
                         key={el.id}
                       >
                         {el.name}
@@ -394,8 +395,8 @@ export default function MediaPage({ type }: { type: string }) {
                   width="40"
                   height="40"
                 >
-                  <rect width="4" height="4" x="18" y="29.808" rx="2" />
-                  <path d="M19.996 27.808h-.246a.75.75 0 0 1-.75-.75V24.322c0-.862.255-1.705.733-2.422 1.482-2.223 4.327-4.103 4.058-6.762-.32-3.167-4.05-6.333-6.64-.671a.863.863 0 0 1-.494.458l-1.835.625c-.648.22-1.322-.27-1.22-.949 1.365-9.023 15.824-8.975 12.675 3.068-.405 1.55-1.45 2.843-2.724 3.814l-.272.207a7.057 7.057 0 0 0-2.781 5.614.504.504 0 0 1-.504.504Z" />
+                  <rect width="3" height="3" x="19" y="29" rx="1.5" />
+                  <path d="M21 27.808h-1a1 1 0 0 1-1-1v-3.675a.44.44 0 0 1 .074-.244c1.931-2.897 5.653-5.474 5.01-8.897C23.446 10.59 18.766 8.392 16 16h-2.364a.138.138 0 0 1-.135-.14c.134-9.584 14.03-10.66 13.187-.514-.264 3.163-2.345 5.811-4.59 8.055a.338.338 0 0 0-.098.239v3.168a1 1 0 0 1-1 1Z" />
                 </svg>
                 <span className="pointer-events-none relative right-[650%] bottom-[130%] mx-auto flex w-max justify-center rounded-2xl bg-gray-200 p-2 opacity-0 shadow shadow-black transition-opacity duration-300 group-hover:opacity-100 dark:bg-gray-800">
                   This list is assembled by looking <br />

@@ -4,6 +4,6 @@
 
 @layer base {
   :root {
-    overflow-y: scroll;
+    overflow-y: overlay;
   }
 }
