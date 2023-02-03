@@ -17,7 +17,7 @@
   border-left: solid 8px transparent;
 }
 
-@media only screen and (min-width: 600px) {
+@media (min-width: 1025px) {
   .scrollbar::-webkit-scrollbar {
     width: 16px;
   }

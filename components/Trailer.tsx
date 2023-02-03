@@ -1,7 +1,7 @@
 import ReactPlayer from 'react-player/youtube';
 
 export default function Trailer(props: { trailerKey: string }) {
-  if (props.trailerKey === undefined) return <div></div>;
+  if (props.trailerKey === undefined) return null;
   return (
     <ReactPlayer
       light={true}

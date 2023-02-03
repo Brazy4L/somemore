@@ -1,4 +1,4 @@
-import styles from '../styles/scrollbar-x.module.css';
+import styles from '../styles/carousel.module.css';
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -12,6 +12,7 @@ import questionWide from '../public/question-wide.svg';
 import Spinner from './Spinner';
 import LoadingError from './LoadingError';
 import Rating from './Rating';
+import Carousel from './Carousel';
 
 interface trailer {
   key: string;
@@ -62,6 +63,7 @@ export default function MediaPage({ type }: { type: string }) {
       <div className="mx-auto box-content grid max-w-[1280px] grid-cols-[3fr,8fr] gap-4 pb-8">
         <div className="col-span-2 col-start-1 row-span-3 row-start-1">
           <CustomImage
+            key={data.backdrop_path}
             className="min-[540px]:rounded-2xl min-[540px]:brightness-[0.5]"
             width={1280}
             height={720}
@@ -71,6 +73,7 @@ export default function MediaPage({ type }: { type: string }) {
         </div>
         <div className="z-10 col-start-1 row-start-1 hidden self-center min-[540px]:ml-3 min-[540px]:block min-[1000px]:ml-12">
           <CustomImage
+            key={data.poster_path}
             width={780}
             height={1170}
             src={`https://image.tmdb.org/t/p/w780${data.poster_path}`}
@@ -298,23 +301,15 @@ export default function MediaPage({ type }: { type: string }) {
         {data.credits.cast && Boolean(data.credits.cast.length) && (
           <>
             <div className="col-span-2 px-2 text-2xl font-bold">Cast:</div>
-            <div
-              className={`${styles.scrollbar} col-span-2 mx-2 flex gap-4 overflow-y-auto`}
-            >
+            <Carousel>
               {data.credits.cast.map(
-                (
-                  el: {
-                    id: number;
-                    name: string;
-                    profile_path: string;
-                    character: string;
-                  },
-                  index: number
-                ) => (
-                  <div
-                    key={index}
-                    className="min-w-[65%] max-w-[19%] min-[340px]:min-w-[60%] min-[420px]:min-w-[55%] min-[500px]:min-w-[45%] min-[600px]:min-w-[35%] min-[750px]:min-w-[25%] min-[1050px]:min-w-[18.995%]"
-                  >
+                (el: {
+                  id: number;
+                  name: string;
+                  profile_path: string;
+                  character: string;
+                }) => (
+                  <div key={el.id} className={styles.slide}>
                     <Link
                       href={{
                         pathname: `/person/${el.id}`,
@@ -342,7 +337,7 @@ export default function MediaPage({ type }: { type: string }) {
                   </div>
                 )
               )}
-            </div>
+            </Carousel>
           </>
         )}
         {data.recommendations.results &&
@@ -351,9 +346,7 @@ export default function MediaPage({ type }: { type: string }) {
               <div className="col-span-2 px-2 text-2xl font-bold">
                 Recommendations:
               </div>
-              <div
-                className={`${styles.scrollbar} col-span-2 mx-2 flex gap-4 overflow-y-auto`}
-              >
+              <Carousel>
                 {data.recommendations.results.map(
                   (el: {
                     id: number;
@@ -361,10 +354,7 @@ export default function MediaPage({ type }: { type: string }) {
                     poster_path: string;
                     name: string;
                   }) => (
-                    <div
-                      key={el.id}
-                      className="min-w-[65%] max-w-[19%] min-[340px]:min-w-[60%] min-[420px]:min-w-[55%] min-[500px]:min-w-[45%] min-[600px]:min-w-[35%] min-[750px]:min-w-[25%] min-[1050px]:min-w-[18.995%]"
-                    >
+                    <div key={el.id} className={styles.slide}>
                       <Link
                         href={{
                           pathname: `/${type}/${el.id}`,
@@ -382,7 +372,7 @@ export default function MediaPage({ type }: { type: string }) {
                     </div>
                   )
                 )}
-              </div>
+              </Carousel>
             </>
           )}
         {data.similar.results && Boolean(data.similar.results.length) && (
@@ -404,9 +394,7 @@ export default function MediaPage({ type }: { type: string }) {
                 </span>
               </div>
             </div>
-            <div
-              className={`${styles.scrollbar} col-span-2 mx-2 flex gap-4 overflow-y-auto`}
-            >
+            <Carousel>
               {data.similar.results.map(
                 (el: {
                   id: number;
@@ -414,10 +402,7 @@ export default function MediaPage({ type }: { type: string }) {
                   poster_path: string;
                   name: string;
                 }) => (
-                  <div
-                    key={el.id}
-                    className="min-w-[65%] max-w-[19%] min-[340px]:min-w-[60%] min-[420px]:min-w-[55%] min-[500px]:min-w-[45%] min-[600px]:min-w-[35%] min-[750px]:min-w-[25%] min-[1050px]:min-w-[18.995%]"
-                  >
+                  <div key={el.id} className={styles.slide}>
                     <Link
                       href={{
                         pathname: `/${type}/${el.id}`,
@@ -435,7 +420,7 @@ export default function MediaPage({ type }: { type: string }) {
                   </div>
                 )
               )}
-            </div>
+            </Carousel>
           </>
         )}
       </div>

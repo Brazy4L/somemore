@@ -30,7 +30,7 @@ export default function SearchResults() {
       <Head>
         <title>{query.id} | SOMEMORE</title>
       </Head>
-      <div className="mx-auto box-content grid min-[1150px]:grid-cols-2 max-w-[1280px] gap-2 px-2">
+      <div className="mx-auto box-content grid max-w-[1280px] gap-2 px-2 pb-8 min-[1150px]:grid-cols-2">
         {data.results.map(
           (
             el: {

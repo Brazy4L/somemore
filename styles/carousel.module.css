@@ -1,0 +1,29 @@
+.viewport {
+  grid-column: span 2 / span 2;
+  --slide-spacing: 1rem;
+  --slide-size: 33.3%;
+  overflow: hidden;
+  padding: 0 0.5rem;
+}
+
+.container {
+  display: flex;
+  margin-left: calc(var(--slide-spacing) * -1);
+}
+
+.slide {
+  flex: 0 0 var(--slide-size);
+  padding-left: var(--slide-spacing);
+}
+
+@media (min-width: 540px) {
+  .viewport {
+    --slide-size: 25%;
+  }
+}
+
+@media (min-width: 750px) {
+  .viewport {
+    --slide-size: 20%;
+  }
+}
