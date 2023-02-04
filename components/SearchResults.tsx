@@ -47,53 +47,49 @@ export default function SearchResults() {
             },
             index: number
           ) => (
-            <div
-              className="rounded-2xl bg-gray-200 p-2 transition-colors hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-800"
+            <Link
+              className="flex gap-4 rounded-2xl bg-gray-200 p-2 transition-colors hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-800"
               key={index}
+              href={{
+                pathname: `/${checkType(el.media_type)}/${el.id}`,
+                query: `${toUrl(el.title || el.name)}`,
+              }}
             >
-              <Link
-                className="flex gap-4"
-                href={{
-                  pathname: `/${checkType(el.media_type)}/${el.id}`,
-                  query: `${toUrl(el.title || el.name)}`,
-                }}
-              >
-                <div className="flex-shrink-0">
-                  <CustomImage
-                    className="rounded-2xl"
-                    width={64}
-                    height={96}
-                    src={`https://image.tmdb.org/t/p/w92${
-                      el.poster_path || el.profile_path
-                    }`}
-                    fallbackSrc={questionTall}
-                  />
-                </div>
-                <div className="flex flex-grow flex-col justify-center">
-                  {(el.title || el.name) && (
-                    <div className="font-bold">{el.title || el.name}</div>
-                  )}
-                  {el.media_type && (
-                    <div className="text-gray-600 dark:text-gray-400">
-                      {el.media_type}
-                    </div>
-                  )}
-                  {(el.release_date || el.first_air_date) && (
-                    <div>{getDate(el.release_date || el.first_air_date)}</div>
-                  )}
-                </div>
-                {el.vote_count > 0 && (
-                  <div className="h-[40px] w-[40px] flex-shrink-0 self-center">
-                    <div className="peer">
-                      <Rating vote={el.vote_average} />
-                    </div>
-                    <span className="pointer-events-none relative bottom-[100%] right-[420%] mx-auto flex w-max justify-center rounded-2xl bg-gray-300 p-2 opacity-0 shadow shadow-black transition-opacity duration-300 peer-hover:opacity-100 dark:bg-gray-800">
-                      User Ratings: {el.vote_count}
-                    </span>
+              <div className="flex-shrink-0">
+                <CustomImage
+                  className="rounded-2xl"
+                  width={64}
+                  height={96}
+                  src={`https://image.tmdb.org/t/p/w92${
+                    el.poster_path || el.profile_path
+                  }`}
+                  fallbackSrc={questionTall}
+                />
+              </div>
+              <div className="flex flex-grow flex-col justify-center">
+                {(el.title || el.name) && (
+                  <div className="font-bold">{el.title || el.name}</div>
+                )}
+                {el.media_type && (
+                  <div className="text-gray-600 dark:text-gray-400">
+                    {el.media_type}
                   </div>
                 )}
-              </Link>
-            </div>
+                {(el.release_date || el.first_air_date) && (
+                  <div>{getDate(el.release_date || el.first_air_date)}</div>
+                )}
+              </div>
+              {el.vote_count > 0 && (
+                <div className="h-[40px] w-[40px] flex-shrink-0 self-center">
+                  <div className="peer">
+                    <Rating vote={el.vote_average} />
+                  </div>
+                  <span className="pointer-events-none relative bottom-[100%] right-[420%] mx-auto flex w-max justify-center rounded-2xl bg-gray-300 p-2 opacity-0 shadow shadow-black transition-opacity duration-300 peer-hover:opacity-100 dark:bg-gray-800">
+                    User Ratings: {el.vote_count}
+                  </span>
+                </div>
+              )}
+            </Link>
           )
         )}
         {(!data.results || Boolean(!data.results.length)) && (

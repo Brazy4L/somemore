@@ -5,7 +5,7 @@ import { Thumb } from './GalleryThumb';
 import CustomImage from './CustomImage';
 import questionTall from '../public/question-tall.svg';
 
-export default function Gallery2(props: any) {
+export default function Gallery(props: any) {
   const { hidden, data } = props;
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [emblaMainRef, emblaMainApi] = useEmblaCarousel();

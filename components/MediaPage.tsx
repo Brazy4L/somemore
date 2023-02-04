@@ -1,5 +1,5 @@
 import styles from '../styles/carousel.module.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
@@ -20,6 +20,7 @@ interface trailer {
 
 export default function MediaPage({ type }: { type: string }) {
   const { query } = useRouter();
+  const [watch, setWatch] = useState(false);
   const [trailer, setTrailer] = useState<trailer>();
   const [crewCredits, setCrewCredits] = useState<Array<any>>([]);
   const fetcher = (url: RequestInfo | URL) =>
@@ -47,6 +48,49 @@ export default function MediaPage({ type }: { type: string }) {
       },
     }
   );
+
+  useEffect(() => {
+    let current = JSON.parse(localStorage.getItem('watchlist') || '[]');
+    let entry = { type, id: query.id };
+    setWatch(findMatch(current, entry));
+  }, [query.id, type]);
+
+  const findMatch = (arr: any, el: { type: any; id: any }) => {
+    for (const item of arr) {
+      if (item.type === el.type && item.id === el.id) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  function reject(
+    array: any[],
+    iteratorFunction: { (item: any): boolean; (arg0: any): any }
+  ) {
+    return array.filter((item: any) => {
+      return !iteratorFunction(item);
+    });
+  }
+
+  const addToWatchlist = () => {
+    let current = JSON.parse(localStorage.getItem('watchlist') || '[]');
+    let entry = { type, id: query.id, title: data.title || data.name, poster: data.poster_path, release: data.release_date || data.first_air_date};
+    if (!findMatch(current, entry)) {
+      localStorage.setItem('watchlist', JSON.stringify([entry, ...current]));
+      setWatch(!watch);
+    }
+    if (findMatch(current, entry)) {
+      let removed = reject(
+        current,
+        (item: { type: string; id: string | string[] | undefined }) => {
+          return item.type === entry.type && item.id === entry.id;
+        }
+      );
+      localStorage.setItem('watchlist', JSON.stringify(removed));
+      setWatch(!watch);
+    }
+  };
 
   const checkProduction = (el: boolean) => {
     return el ? 'Returning Series' : !el ? 'Ended' : null;
@@ -115,8 +159,13 @@ export default function MediaPage({ type }: { type: string }) {
             data.tagline ||
             data.overview) && (
             <div className="flex flex-col gap-4 rounded-2xl bg-gray-200 p-2 dark:bg-gray-700">
-              <button className="rounded-2xl bg-gray-300 p-2 transition-colors hover:bg-gray-400 dark:bg-gray-800 dark:hover:bg-gray-900">
-                <div className="font-bold">Add to Watchlist</div>
+              <button
+                className="rounded-2xl bg-gray-300 p-2 transition-colors hover:bg-gray-400 dark:bg-gray-800 dark:hover:bg-gray-900"
+                onClick={addToWatchlist}
+              >
+                <div className="font-bold">
+                  Add to Watchlist {watch ? <>-</> : <>+</>}
+                </div>
                 <div className="text-gray-600 dark:text-gray-400">
                   Added by {Math.round(data.popularity)} users
                 </div>
