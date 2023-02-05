@@ -93,7 +93,7 @@ export default function SearchResults() {
           )
         )}
         {(!data.results || Boolean(!data.results.length)) && (
-          <div className="flex h-[calc(100vh-60px)] items-center justify-center text-center">
+          <div className="flex h-[calc(100vh-60px-2rem)] items-center justify-center text-center col-span-2 translate-y-4">
             No results found for &quot;{query.id}&quot;
           </div>
         )}

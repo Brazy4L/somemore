@@ -17,9 +17,9 @@ export default function SearchHeader() {
   };
 
   return (
-    <div className="flex h-[28px] items-center gap-1">
+    <div className="left-[50%] flex h-[28px] items-center gap-1 min-[780px]:absolute min-[780px]:-translate-x-[50%]">
       <input
-        className="w-[234px] z-10 h-[32px] rounded-2xl bg-gray-300 px-2 pr-[32px] focus:outline-none focus:ring-2 focus:ring-gray-900 dark:bg-gray-50 dark:text-gray-900 dark:focus:ring-gray-50"
+        className="z-10 h-[32px] w-[256px] rounded-lg bg-gray-400 px-2 pr-[32px] placeholder:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-600 dark:bg-gray-600 dark:placeholder:text-gray-50 dark:focus:ring-gray-400"
         type="text"
         placeholder="Search..."
         onChange={inputHandler}
@@ -27,7 +27,7 @@ export default function SearchHeader() {
       />
       <div className="absolute">
         <Link
-          className="relative left-[206px] z-10"
+          className="relative left-[228px] z-10"
           href={{
             pathname: `/search/${id}`,
           }}
@@ -40,7 +40,7 @@ export default function SearchHeader() {
         >
           <button className="flex py-1 pr-1" id="button">
             <svg
-              className="fill-gray-500 stroke-gray-800 dark:fill-gray-400 dark:stroke-gray-700"
+              className="fill-gray-100 stroke-gray-700 dark:fill-gray-500 dark:stroke-gray-100"
               width="24"
               height="24"
             >

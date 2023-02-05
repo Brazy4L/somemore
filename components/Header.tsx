@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 import Link from 'next/link';
 import SearchHeader from './SearchHeader';
+import { useStore } from '../components/Store';
 
 export default function Header({
   theme,
@@ -9,11 +10,13 @@ export default function Header({
   theme: boolean;
   setTheme: Dispatch<SetStateAction<boolean>>;
 }) {
+  const nav = useStore((state: any) => state.nav);
+
   return (
     <nav className="sticky top-0 z-20 flex h-[60px] items-center border-b-8 border-[#ffffff] px-2 text-gray-900 dark:border-[#101010] dark:text-gray-50 min-[540px]:px-8">
       <div className="absolute top-0 left-0 -z-10 h-full w-full bg-gray-200 dark:bg-[#202020]"></div>
-      <div className="">
-        <Link className="" href="/">
+      <div>
+        <Link href={`${nav}`}>
           <svg
             className="fill-gray-900 dark:fill-gray-50"
             width="214"
@@ -25,13 +28,13 @@ export default function Header({
       </div>
       <input id="menu" type="checkbox" className="peer hidden" />
       <label htmlFor="menu" className="ml-auto">
-        <div className="grid cursor-pointer gap-1 min-[810px]:hidden">
+        <div className="grid cursor-pointer gap-1 min-[780px]:hidden">
           <div className="h-1 w-8 rounded-full bg-gray-900 dark:bg-gray-50"></div>
           <div className="h-1 w-8 rounded-full bg-gray-900 dark:bg-gray-50"></div>
           <div className="h-1 w-8 rounded-full bg-gray-900 dark:bg-gray-50"></div>
         </div>
       </label>
-      <div className="fixed left-0 top-[-216px] -z-20 ml-auto grid w-full justify-items-center gap-6 rounded-b-2xl border-b-4 border-[#e5e7eb] bg-[#ffffff] py-5 font-semibold transition-[top] duration-[100ms] ease-out peer-checked:top-[52px] dark:border-[#202020] dark:bg-[#101010] min-[810px]:static min-[810px]:z-0 min-[810px]:w-auto min-[810px]:grid-flow-col min-[810px]:border-0 min-[810px]:bg-inherit min-[810px]:py-0 dark:min-[810px]:bg-inherit">
+      <div className="fixed left-0 top-[-168px] -z-20 grid w-full justify-items-center gap-6 rounded-b-2xl border-b-4 border-[#e5e7eb] bg-[#ffffff] py-5 font-semibold transition-[top] duration-[100ms] ease-out peer-checked:top-[52px] dark:border-[#202020] dark:bg-[#101010] min-[780px]:static min-[780px]:z-0 min-[780px]:w-auto min-[780px]:grid-flow-col min-[780px]:border-0 min-[780px]:bg-inherit min-[780px]:py-0 dark:min-[780px]:bg-inherit">
         <SearchHeader />
         <Link
           onClick={() => {
@@ -40,20 +43,9 @@ export default function Header({
               document.getElementById('menu')?.click();
             }
           }}
-          href="/movie"
+          href="/watchlist"
         >
-          MOVIES
-        </Link>
-        <Link
-          onClick={() => {
-            // @ts-expect-error
-            if (document.getElementById('menu')?.checked) {
-              document.getElementById('menu')?.click();
-            }
-          }}
-          href="/tv"
-        >
-          TV
+          WATCHLIST
         </Link>
         <Link
           onClick={() => {

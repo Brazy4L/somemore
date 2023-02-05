@@ -5,7 +5,7 @@ export default function Watchlist() {
   return (
     <>
       <Head>
-        <title>SOMEMORE | Watchlist</title>
+        <title>Watchlist | SOMEMORE</title>
       </Head>
       <WatchlistPage />
     </>

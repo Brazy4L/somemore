@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import MediaPages from '../components/MediaPages';
+import MediaNavigation from '../components/MediaNavigation';
 import { useStore } from '../components/Store';
 
 export default function TvShows() {
@@ -12,6 +13,7 @@ export default function TvShows() {
       <Head>
         <title>TV Shows | SOMEMORE</title>
       </Head>
+      <MediaNavigation />
       <MediaPages
         type="tv"
         page={page}

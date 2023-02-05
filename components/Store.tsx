@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 
 export const useStore = create((set) => ({
+  nav: '/',
+  setNav: (item: any) => set(() => ({ nav: item })),
   pageMovie: 1,
   setPageMovie: () =>
     set((state: { pageMovie: number }) => ({ pageMovie: state.pageMovie + 1 })),
