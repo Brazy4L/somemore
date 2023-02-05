@@ -3,9 +3,10 @@ import CustomImage from './CustomImage';
 import questionTall from '../public/question-tall.svg';
 import { toUrl, getDate } from './utils';
 import { useEffect, useState } from 'react';
+import Spinner from './Spinner';
 
 export default function WatchlistPage() {
-  const [data, setData] = useState<Array<any>>([]);
+  const [data, setData] = useState<Array<any>>();
   useEffect(() => {
     setData(JSON.parse(localStorage.getItem('watchlist') || '[]'));
   }, []);
@@ -14,12 +15,14 @@ export default function WatchlistPage() {
     return el === 'movie' ? 'movie' : 'tv';
   };
 
-  if (!data || Boolean(!data.length))
+  if (!data) return <Spinner />;
+  if (Boolean(!data.length))
     return (
       <div className="flex h-[calc(100vh-60px)] items-center justify-center text-center">
         Nothing to watch in this list.
       </div>
     );
+
   return (
     <>
       <div className="mx-auto box-content grid max-w-[1280px] gap-2 px-2 pb-8 min-[1150px]:grid-cols-2">
@@ -34,6 +37,7 @@ export default function WatchlistPage() {
           >
             <div className="flex-shrink-0">
               <CustomImage
+                key={el.poster}
                 className="rounded-2xl"
                 width={64}
                 height={96}
@@ -50,6 +54,20 @@ export default function WatchlistPage() {
               )}
               {el.release && <div>{getDate(el.release)}</div>}
             </div>
+            <button
+              className="h-[40px] w-[40px] flex-shrink-0 self-center rounded-2xl bg-gray-100 transition-colors hover:bg-gray-400 dark:bg-gray-600 dark:hover:bg-gray-900"
+              onClick={(e) => {
+                e.preventDefault();
+                let current = JSON.parse(
+                  localStorage.getItem('watchlist') || '[]'
+                );
+                current.splice(index, 1);
+                localStorage.setItem('watchlist', JSON.stringify(current));
+                setData(current);
+              }}
+            >
+              -
+            </button>
           </Link>
         ))}
       </div>
