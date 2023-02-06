@@ -55,7 +55,7 @@ export default function WatchlistPage() {
               {el.release && <div>{getDate(el.release)}</div>}
             </div>
             <button
-              className="h-[40px] w-[40px] flex-shrink-0 self-center rounded-2xl bg-gray-100 transition-colors hover:bg-gray-400 dark:bg-gray-600 dark:hover:bg-gray-900"
+              className="flex h-[40px] w-[40px] flex-shrink-0 items-center justify-center self-center rounded-2xl bg-gray-100 transition-colors hover:bg-gray-400 dark:bg-gray-600 dark:hover:bg-gray-900"
               onClick={(e) => {
                 e.preventDefault();
                 let current = JSON.parse(
@@ -66,7 +66,17 @@ export default function WatchlistPage() {
                 setData(current);
               }}
             >
-              -
+              <svg
+                className="fill-none stroke-gray-900 dark:stroke-gray-50"
+                width="24"
+                height="24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-width="4"
+                  d="m21 3-9.25 9L3 21M3 3l18 18"
+                />
+              </svg>
             </button>
           </Link>
         ))}

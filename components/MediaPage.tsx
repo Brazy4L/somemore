@@ -75,7 +75,13 @@ export default function MediaPage({ type }: { type: string }) {
 
   const addToWatchlist = () => {
     let current = JSON.parse(localStorage.getItem('watchlist') || '[]');
-    let entry = { type, id: query.id, title: data.title || data.name, poster: data.poster_path, release: data.release_date || data.first_air_date};
+    let entry = {
+      type,
+      id: query.id,
+      title: data.title || data.name,
+      poster: data.poster_path,
+      release: data.release_date || data.first_air_date,
+    };
     if (!findMatch(current, entry)) {
       localStorage.setItem('watchlist', JSON.stringify([entry, ...current]));
       setWatch(!watch);
@@ -163,11 +169,38 @@ export default function MediaPage({ type }: { type: string }) {
                 className="rounded-2xl bg-gray-300 p-2 transition-colors hover:bg-gray-400 dark:bg-gray-800 dark:hover:bg-gray-900"
                 onClick={addToWatchlist}
               >
-                <div className="font-bold">
-                  Add to Watchlist {watch ? <>-</> : <>+</>}
-                </div>
-                <div className="text-gray-600 dark:text-gray-400">
-                  Added by {Math.round(data.popularity)} users
+                <div className="mx-auto grid w-fit grid-cols-[24px,1fr] grid-rows-2 gap-x-2">
+                  {watch ? (
+                    <svg
+                      className="row-span-2 textge self-center fill-none stroke-green-600 dark:stroke-[rgb(0,255,140)]"
+                      width="24"
+                      height="24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-width="4"
+                        d="m3.5 11 7 9 11-17"
+                      />
+                    </svg>
+                  ) : (
+                    <svg
+                      className="row-span-2 self-center fill-none stroke-gray-900 dark:stroke-gray-50"
+                      width="24"
+                      height="24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-width="4"
+                        d="M21 12H3m9-9v18"
+                      />
+                    </svg>
+                  )}
+                  <div className="justify-self-start font-bold">
+                    Add to Watchlist
+                  </div>
+                  <div className="justify-self-start text-gray-600 dark:text-gray-400">
+                    Added by {Math.round(data.popularity)} users
+                  </div>
                 </div>
               </button>
               {data.genres && Boolean(data.genres.length) && (
