@@ -6,25 +6,10 @@ import questionTall from '../public/question-tall.svg';
 export default function RenderMediaPages({
   data,
   type,
-  isLoading,
 }: {
   data: any;
   type: string;
-  isLoading: boolean;
 }) {
-  if (isLoading)
-    return (
-      <>
-        {Array(20)
-          .fill(true)
-          .map((_, i) => (
-            <div
-              key={i}
-              className="aspect-[2/3] w-[342px] max-w-full rounded-2xl bg-[#202020]"
-            ></div>
-          ))}
-      </>
-    );
   return (
     <>
       {data.results.map(

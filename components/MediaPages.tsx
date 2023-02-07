@@ -40,14 +40,7 @@ export default function MediaPages({
   useEffect(() => {
     if (inView && !isLoading && !error) {
       setPage();
-      setPages(
-        <RenderMediaPages
-          key={page}
-          data={data}
-          type={type}
-          isLoading={isLoading}
-        />
-      );
+      setPages(<RenderMediaPages key={page} data={data} type={type} />);
     }
   }, [inView, data, isLoading, error, setPage, setPages, page, type]);
 
@@ -57,6 +50,15 @@ export default function MediaPages({
     <>
       <div className="mx-auto box-content grid max-w-[1280px] grid-cols-3 justify-center gap-2 px-2 min-[540px]:grid-cols-4 min-[540px]:px-8 min-[800px]:grid-cols-5 min-[1050px]:grid-cols-6">
         {pages}
+        {isLoading &&
+          Array(20)
+            .fill(true)
+            .map((_, i) => (
+              <div
+                key={i}
+                className="aspect-[2/3] w-[342px] max-w-full rounded-2xl bg-[#202020]"
+              ></div>
+            ))}
       </div>
       <div ref={ref}>{inView}</div>
     </>
