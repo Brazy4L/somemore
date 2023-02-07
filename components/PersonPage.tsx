@@ -76,34 +76,32 @@ export default function PersonPage() {
       </Head>
       <div className="mx-auto box-content grid max-w-[1280px] gap-8 pb-8 min-[820px]:grid-cols-[minmax(342px,1fr)_10fr]">
         <div className="flex flex-col items-center gap-4 min-[820px]:items-start">
-          <div>
-            <CustomImage
-              className="cursor-pointer rounded-2xl"
-              width={342}
-              height={513}
-              src={`https://image.tmdb.org/t/p/w342${data.profile_path}`}
-              fallbackSrc={questionTall}
-              onClick={() => {
-                setHidden(false);
-              }}
-            />
-            <div className="fixed top-[60px] left-0 z-10 bg-[#ffffff] dark:bg-[#101010]">
-              <Gallery hidden={hidden} data={data.images.profiles} />
-            </div>
-            {!hidden && (
-              <>
-                <div className="fixed top-0 left-0 h-screen w-screen bg-[#000000c0]"></div>
-                <button
-                  className={`${styles.galleryButton} fixed left-[50%] z-10 w-[200px] -translate-x-1/2 rounded-2xl bg-gray-200 p-4 transition-colors hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-900`}
-                  onClick={() => {
-                    setHidden(true);
-                  }}
-                >
-                  Close
-                </button>
-              </>
-            )}
+          <CustomImage
+            className="aspect-[2/3] w-full max-w-[342px] cursor-pointer rounded-2xl"
+            width={342}
+            height={513}
+            src={`https://image.tmdb.org/t/p/w342${data.profile_path}`}
+            fallbackSrc={questionTall}
+            onClick={() => {
+              setHidden(false);
+            }}
+          />
+          <div className="fixed top-[60px] left-0 z-10 bg-[#ffffff] dark:bg-[#101010]">
+            <Gallery hidden={hidden} data={data.images.profiles} />
           </div>
+          {!hidden && (
+            <>
+              <div className="fixed top-0 left-0 h-screen w-screen bg-[#000000c0]"></div>
+              <button
+                className={`${styles.galleryButton} fixed left-[50%] z-10 w-[200px] -translate-x-1/2 rounded-2xl bg-gray-200 p-4 transition-colors hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-900`}
+                onClick={() => {
+                  setHidden(true);
+                }}
+              >
+                Close
+              </button>
+            </>
+          )}
           <div className="px-2 text-3xl font-bold">{data.name}</div>
           <div className="flex flex-wrap gap-4 px-2">
             {data.imdb_id && (

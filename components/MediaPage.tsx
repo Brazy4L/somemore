@@ -123,6 +123,7 @@ export default function MediaPage({ type }: { type: string }) {
         </div>
         <div className="z-10 col-start-1 row-start-1 hidden self-center min-[540px]:ml-3 min-[540px]:block min-[1000px]:ml-12">
           <CustomImage
+            className="w-full"
             key={data.poster_path}
             width={780}
             height={1170}
@@ -399,7 +400,7 @@ export default function MediaPage({ type }: { type: string }) {
                       }}
                     >
                       <CustomImage
-                        className="rounded-2xl"
+                        className="rounded-2xl w-full"
                         width={342}
                         height={513}
                         src={`https://image.tmdb.org/t/p/w342${el.profile_path}`}
@@ -444,7 +445,7 @@ export default function MediaPage({ type }: { type: string }) {
                         }}
                       >
                         <CustomImage
-                          className="rounded-2xl"
+                          className="rounded-2xl w-full"
                           width={342}
                           height={513}
                           src={`https://image.tmdb.org/t/p/w342${el.poster_path}`}
@@ -492,7 +493,7 @@ export default function MediaPage({ type }: { type: string }) {
                       }}
                     >
                       <CustomImage
-                        className="rounded-2xl"
+                        className="rounded-2xl w-full"
                         width={342}
                         height={513}
                         src={`https://image.tmdb.org/t/p/w342${el.poster_path}`}
