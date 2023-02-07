@@ -72,8 +72,8 @@ export default function WatchlistPage() {
                 height="24"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-width="4"
+                  strokeLinecap="round"
+                  strokeWidth="4"
                   d="m21 3-9.25 9L3 21M3 3l18 18"
                 />
               </svg>

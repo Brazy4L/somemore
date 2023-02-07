@@ -178,8 +178,8 @@ export default function MediaPage({ type }: { type: string }) {
                       height="24"
                     >
                       <path
-                        stroke-linecap="round"
-                        stroke-width="4"
+                        strokeLinecap="round"
+                        strokeWidth="4"
                         d="m3.5 11 7 9 11-17"
                       />
                     </svg>
