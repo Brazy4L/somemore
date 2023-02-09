@@ -12,11 +12,10 @@ import Rating from './Rating';
 export default function SearchResults() {
   const { query } = useRouter();
   const fetcher = (url: RequestInfo | URL) =>
-    fetch(url).then((res) => res.json());
-  const { data, error, isLoading } = useSWR(
-    `/api/search?searchquery=${query.id}`,
-    fetcher
-  );
+    fetch(url, { headers: { searchquery: `${query.id}` } }).then((res) =>
+      res.json()
+    );
+  const { data, error, isLoading } = useSWR(`/api/search?${query.id}`, fetcher);
 
   if (error) return <LoadingError />;
   if (isLoading) return <Spinner />;
@@ -57,6 +56,7 @@ export default function SearchResults() {
             >
               <div className="flex-shrink-0">
                 <CustomImage
+                  key={el.poster_path || el.profile_path}
                   className="rounded-2xl"
                   width={64}
                   height={96}
@@ -93,7 +93,7 @@ export default function SearchResults() {
           )
         )}
         {(!data.results || Boolean(!data.results.length)) && (
-          <div className="flex h-[calc(100vh-60px-2rem)] items-center justify-center text-center col-span-2 translate-y-4">
+          <div className="col-span-2 flex h-[calc(100vh-60px-2rem)] translate-y-4 items-center justify-center text-center">
             No results found for &quot;{query.id}&quot;
           </div>
         )}

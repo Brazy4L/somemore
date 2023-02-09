@@ -3,6 +3,7 @@ import useSWR from 'swr';
 import { useInView } from 'react-intersection-observer';
 import RenderMediaPages from './RenderMediaPages';
 import LoadingError from './LoadingError';
+import BeatLoader from 'react-spinners/BeatLoader';
 
 export default function MediaPages({
   type,
@@ -21,9 +22,11 @@ export default function MediaPages({
     rootMargin: '320px',
   });
   const fetcher = (url: RequestInfo | URL) =>
-    fetch(url).then((res) => res.json());
+    fetch(url, {
+      headers: { mediatype: `${type}`, pagenumber: `${page}` },
+    }).then((res) => res.json());
   const { data, error, isLoading } = useSWR(
-    `/api/popmedia?type=${type}&page=${page}`,
+    `/api/popmedia?${type}&${page}`,
     fetcher,
     {
       onSuccess: (data, key, config) => {
@@ -50,16 +53,12 @@ export default function MediaPages({
     <>
       <div className="mx-auto box-content grid max-w-[1280px] grid-cols-3 justify-center gap-2 px-2 min-[540px]:grid-cols-4 min-[540px]:px-8 min-[800px]:grid-cols-5 min-[1050px]:grid-cols-6">
         {pages}
-        {isLoading &&
-          Array(20)
-            .fill(true)
-            .map((_, i) => (
-              <div
-                key={i}
-                className="aspect-[2/3] w-[342px] max-w-full rounded-2xl bg-[#202020]"
-              ></div>
-            ))}
       </div>
+      {isLoading && (
+        <div className="flex justify-center">
+          <BeatLoader color="#808080" />
+        </div>
+      )}
       <div ref={ref}>{inView}</div>
     </>
   );

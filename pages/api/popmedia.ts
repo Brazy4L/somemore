@@ -1,11 +1,16 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextRequest, NextResponse } from 'next/server';
 
-export default async function getPopularMedia(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export const config = {
+  runtime: 'experimental-edge',
+};
+
+export default async function getPopularMedia(req: NextRequest) {
   const data = await fetch(
-    `https://api.themoviedb.org/3/${req.query.type}/popular?api_key=${process.env.API_KEY}&language=en-US&region=US&page=${req.query.page}`
+    `https://api.themoviedb.org/3/${req.headers.get(
+      'mediatype'
+    )}/popular?api_key=${
+      process.env.API_KEY
+    }&language=en-US&region=US&page=${req.headers.get('pagenumber')}`
   ).then((response) => response.json());
-  res.json(data);
+  return NextResponse.json(data);
 }

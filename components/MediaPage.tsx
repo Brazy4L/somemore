@@ -24,9 +24,11 @@ export default function MediaPage({ type }: { type: string }) {
   const [trailer, setTrailer] = useState<trailer>();
   const [crewCredits, setCrewCredits] = useState<Array<any>>([]);
   const fetcher = (url: RequestInfo | URL) =>
-    fetch(url).then((res) => res.json());
+    fetch(url, {
+      headers: { mediatype: `${type}`, idmedia: `${query.id}` },
+    }).then((res) => res.json());
   const { data, error, isLoading } = useSWR(
-    `/api/media?type=${type}&idmedia=${query.id}`,
+    `/api/media?${type}&${query.id}`,
     fetcher,
     {
       onSuccess: (data, key, config) => {
@@ -173,7 +175,7 @@ export default function MediaPage({ type }: { type: string }) {
                 <div className="mx-auto grid w-fit grid-cols-[24px,1fr] grid-rows-2 gap-x-2">
                   {watch ? (
                     <svg
-                      className="row-span-2 textge self-center fill-none stroke-green-600 dark:stroke-[rgb(0,255,140)]"
+                      className="row-span-2 self-center fill-none stroke-green-600 dark:stroke-[rgb(0,255,140)]"
                       width="24"
                       height="24"
                     >
@@ -400,7 +402,7 @@ export default function MediaPage({ type }: { type: string }) {
                       }}
                     >
                       <CustomImage
-                        className="rounded-2xl w-full"
+                        className="w-full rounded-2xl"
                         width={342}
                         height={513}
                         src={`https://image.tmdb.org/t/p/w342${el.profile_path}`}
@@ -445,7 +447,7 @@ export default function MediaPage({ type }: { type: string }) {
                         }}
                       >
                         <CustomImage
-                          className="rounded-2xl w-full"
+                          className="w-full rounded-2xl"
                           width={342}
                           height={513}
                           src={`https://image.tmdb.org/t/p/w342${el.poster_path}`}
@@ -493,7 +495,7 @@ export default function MediaPage({ type }: { type: string }) {
                       }}
                     >
                       <CustomImage
-                        className="rounded-2xl w-full"
+                        className="w-full rounded-2xl"
                         width={342}
                         height={513}
                         src={`https://image.tmdb.org/t/p/w342${el.poster_path}`}

@@ -17,9 +17,11 @@ export default function PersonPage() {
   const [crewCredits, setCrewCredits] = useState<Array<any>>([]);
   const [hidden, setHidden] = useState(true);
   const fetcher = (url: RequestInfo | URL) =>
-    fetch(url).then((res) => res.json());
+    fetch(url, { headers: { idperson: `${query.id}` } }).then((res) =>
+      res.json()
+    );
   const { data, error, isLoading } = useSWR(
-    `/api/person?idperson=${query.id}`,
+    `/api/person?${query.id}`,
     fetcher,
     {
       onSuccess: (data, key, config) => {
@@ -77,6 +79,7 @@ export default function PersonPage() {
       <div className="mx-auto box-content grid max-w-[1280px] gap-8 pb-8 min-[820px]:grid-cols-[minmax(342px,1fr)_10fr]">
         <div className="flex flex-col items-center gap-4 min-[820px]:items-start">
           <CustomImage
+            key={data.profile_path}
             className="aspect-[2/3] w-full max-w-[342px] cursor-pointer rounded-2xl"
             width={342}
             height={513}
