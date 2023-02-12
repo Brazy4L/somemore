@@ -14,7 +14,7 @@ export default function AboutPage() {
         target="_blank"
         rel="noopener"
       >
-        <Image src={tmdb} alt="" />
+        <Image src={tmdb} alt="" priority={true} />
       </Link>
     </div>
   );

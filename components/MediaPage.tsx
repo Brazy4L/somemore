@@ -4,8 +4,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import useSWR from 'swr';
+import ReactPlayer from 'react-player/youtube';
 import { toUrl, getDate, checkPlural } from './utils';
-import Trailer from './Trailer';
 import CustomImage from './CustomImage';
 import questionTall from '../public/question-tall.svg';
 import questionWide from '../public/question-wide.svg';
@@ -14,38 +14,39 @@ import LoadingError from './LoadingError';
 import Rating from './Rating';
 import Carousel from './Carousel';
 
-interface trailer {
-  key: string;
-}
-
 export default function MediaPage({ type }: { type: string }) {
   const { query } = useRouter();
   const [watch, setWatch] = useState(false);
-  const [trailer, setTrailer] = useState<trailer>();
-  const [crewCredits, setCrewCredits] = useState<Array<any>>([]);
   const fetcher = (url: RequestInfo | URL) =>
     fetch(url, {
       headers: { mediatype: `${type}`, idmedia: `${query.id}` },
     }).then((res) => res.json());
-  const { data, error, isLoading } = useSWR(
+  const { data, error, isLoading, mutate } = useSWR(
     `/api/media?${type}&${query.id}`,
     fetcher,
     {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
       onSuccess: (data, key, config) => {
-        setTrailer(
-          data.videos.results.find((el: { type: string }) => {
-            return el.type === 'Trailer';
-          })
-        );
-        setCrewCredits(
-          data.credits.crew
-            .filter(
-              (el: { job: string }) =>
-                el.job === 'Director' || el.job === 'Screenplay'
-            )
-            .sort((a: { job: string }, b: { job: string }) =>
-              a.job.localeCompare(b.job)
-            )
+        mutate(
+          async () => {
+            return {
+              ...data,
+              latest_trailer: data.videos.results.find(
+                (el: { type: string }) => el.type === 'Trailer'
+              ),
+              crew_credits: data.credits.crew
+                .filter(
+                  (el: { job: string }) =>
+                    el.job === 'Director' || el.job === 'Screenplay'
+                )
+                .sort((a: { job: string }, b: { job: string }) =>
+                  a.job.localeCompare(b.job)
+                ),
+            };
+          },
+          { populateCache: true, revalidate: false }
         );
       },
     }
@@ -100,9 +101,8 @@ export default function MediaPage({ type }: { type: string }) {
     }
   };
 
-  const checkProduction = (el: boolean) => {
-    return el ? 'Returning Series' : !el ? 'Ended' : null;
-  };
+  const checkProduction = (el: boolean) =>
+    el ? 'Returning Series' : !el ? 'Ended' : null;
 
   if (error) return <LoadingError />;
   if (isLoading) return <Spinner />;
@@ -158,9 +158,16 @@ export default function MediaPage({ type }: { type: string }) {
             </Link>
           )}
         </div>
-        {trailer && (
+        {data.latest_trailer && (
           <div className="z-10 col-span-2 aspect-video self-center min-[540px]:col-span-1 min-[540px]:col-start-2 min-[540px]:row-start-1 min-[540px]:mr-8 min-[1000px]:mr-32">
-            <Trailer trailerKey={trailer.key} />
+            <ReactPlayer
+              light={true}
+              playing={true}
+              width={'100%'}
+              height={'100%'}
+              controls={true}
+              url={`https://www.youtube.com/watch?v=${data.latest_trailer.key}`}
+            />
           </div>
         )}
         <div className="col-span-2 mx-2 grid gap-4 min-[700px]:grid-flow-col">
@@ -199,7 +206,7 @@ export default function MediaPage({ type }: { type: string }) {
                     </svg>
                   )}
                   <div className="justify-self-start font-bold">
-                    Add to Watchlist
+                    {watch ? <>In</> : <>Add to</>} Watchlist
                   </div>
                   <div className="justify-self-start text-gray-600 dark:text-gray-400">
                     Added by {Math.round(data.popularity)} users
@@ -231,7 +238,7 @@ export default function MediaPage({ type }: { type: string }) {
             data.number_of_episodes ||
             data.vote_count > 1 ||
             (data.created_by && Boolean(data.created_by.length)) ||
-            (crewCredits && Boolean(crewCredits.length)) ||
+            (data.crew_credits && Boolean(data.crew_credits.length)) ||
             (data.keywords.keywords &&
               Boolean(data.keywords.keywords.length)) ||
             (data.keywords.results &&
@@ -294,7 +301,7 @@ export default function MediaPage({ type }: { type: string }) {
                 )}
               </div>
               {((data.created_by && Boolean(data.created_by.length)) ||
-                (crewCredits && Boolean(crewCredits.length))) && (
+                (data.crew_credits && Boolean(data.crew_credits.length))) && (
                 <div className="flex flex-wrap gap-4">
                   {data.created_by && Boolean(data.created_by.length) && (
                     <>
@@ -327,9 +334,9 @@ export default function MediaPage({ type }: { type: string }) {
                       )}
                     </>
                   )}
-                  {crewCredits && Boolean(crewCredits.length) && (
+                  {data.crew_credits && Boolean(data.crew_credits.length) && (
                     <>
-                      {crewCredits.map(
+                      {data.crew_credits.map(
                         (
                           el: {
                             id: number;
@@ -385,16 +392,19 @@ export default function MediaPage({ type }: { type: string }) {
         </div>
         {data.credits.cast && Boolean(data.credits.cast.length) && (
           <>
-            <div className="col-span-2 px-2 text-2xl font-bold">Cast:</div>
+            <div className="col-span-2 px-2 text-2xl font-bold">Cast</div>
             <Carousel>
               {data.credits.cast.map(
-                (el: {
-                  id: number;
-                  name: string;
-                  profile_path: string;
-                  character: string;
-                }) => (
-                  <div key={el.id} className={styles.slide}>
+                (
+                  el: {
+                    id: number;
+                    name: string;
+                    profile_path: string;
+                    character: string;
+                  },
+                  index: number
+                ) => (
+                  <div key={index} className={styles.slide}>
                     <Link
                       href={{
                         pathname: `/person/${el.id}`,
@@ -402,6 +412,7 @@ export default function MediaPage({ type }: { type: string }) {
                       }}
                     >
                       <CustomImage
+                        key={el.profile_path}
                         className="w-full rounded-2xl"
                         width={342}
                         height={513}
@@ -429,7 +440,7 @@ export default function MediaPage({ type }: { type: string }) {
           Boolean(data.recommendations.results.length) && (
             <>
               <div className="col-span-2 px-2 text-2xl font-bold">
-                Recommendations:
+                More like this
               </div>
               <Carousel>
                 {data.recommendations.results.map(
@@ -463,7 +474,7 @@ export default function MediaPage({ type }: { type: string }) {
         {data.similar.results && Boolean(data.similar.results.length) && (
           <>
             <div className="col-span-2 flex gap-2 px-2">
-              <div className="flex-grow text-2xl font-bold">Similar:</div>
+              <div className="flex-grow text-2xl font-bold">Similar</div>
               <div className="group h-[40px] w-[40px] cursor-pointer rounded-2xl bg-gray-200 transition-colors dark:bg-gray-700">
                 <svg
                   className="fill-gray-900 dark:fill-gray-50"

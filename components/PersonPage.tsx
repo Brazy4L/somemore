@@ -13,63 +13,55 @@ import LoadingError from './LoadingError';
 
 export default function PersonPage() {
   const { query } = useRouter();
-  const [castCredits, setCastCredits] = useState<Array<any>>([]);
-  const [crewCredits, setCrewCredits] = useState<Array<any>>([]);
   const [hidden, setHidden] = useState(true);
   const fetcher = (url: RequestInfo | URL) =>
     fetch(url, { headers: { idperson: `${query.id}` } }).then((res) =>
       res.json()
     );
-  const { data, error, isLoading } = useSWR(
+  const { data, error, isLoading, mutate } = useSWR(
     `/api/person?${query.id}`,
     fetcher,
     {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
       onSuccess: (data, key, config) => {
-        let undefinedCastCredits: Array<any> = [];
-        let definedCastCredits: Array<any> = [];
-        data.combined_credits.cast.filter(function (el: {
-          release_date: string;
-          first_air_date: string;
-        }) {
-          el.release_date || el.first_air_date
-            ? definedCastCredits.push(el)
-            : undefinedCastCredits.push(el);
-        });
-        const sortedDefinedCastCredits = definedCastCredits.sort((a, b) => {
-          return (
-            +new Date(b.release_date || b.first_air_date) -
-            +new Date(a.release_date || a.first_air_date)
-          );
-        });
-        setCastCredits(sortedDefinedCastCredits.concat(undefinedCastCredits));
-
-        let undefinedCrewCredits: Array<any> = [];
-        let definedCrewCredits: Array<any> = [];
-        data.combined_credits.crew.filter(function (el: {
-          release_date: string;
-          first_air_date: string;
-        }) {
-          el.release_date || el.first_air_date
-            ? definedCrewCredits.push(el)
-            : undefinedCrewCredits.push(el);
-        });
-        const sortedDefinedCrewCredits = definedCrewCredits.sort((a, b) => {
-          return (
-            +new Date(b.release_date || b.first_air_date) -
-            +new Date(a.release_date || a.first_air_date)
-          );
-        });
-        setCrewCredits(sortedDefinedCrewCredits.concat(undefinedCrewCredits));
+        mutate(
+          async () => {
+            return {
+              ...data,
+              cast_credits: sortCredits(data.combined_credits.cast),
+              crew_credits: sortCredits(data.combined_credits.crew),
+            };
+          },
+          { populateCache: true, revalidate: false }
+        );
       },
     }
   );
 
+  const sortCredits = (arr: Array<any>) => {
+    const undefinedCredits: Array<any> = [];
+    const definedCredits: Array<any> = [];
+    arr.filter((el: { release_date: string; first_air_date: string }) => {
+      el.release_date || el.first_air_date
+        ? definedCredits.push(el)
+        : undefinedCredits.push(el);
+    });
+    const sortedDefinedCredits = definedCredits.sort((a, b) => {
+      return (
+        +new Date(b.release_date || b.first_air_date) -
+        +new Date(a.release_date || a.first_air_date)
+      );
+    });
+    return sortedDefinedCredits.concat(undefinedCredits);
+  };
+
   if (error) return <LoadingError />;
   if (isLoading) return <Spinner />;
 
-  const checkGender = (el: number) => {
-    return el === 1 ? 'Actress:' : el === 2 ? 'Actor:' : 'Credits:';
-  };
+  const checkGender = (el: number) =>
+    el === 1 ? 'Actress' : el === 2 ? 'Actor' : 'Credits';
 
   return (
     <>
@@ -165,18 +157,18 @@ export default function PersonPage() {
           )}
         </div>
         <div className="px-2">
-          {castCredits && Boolean(castCredits.length) && (
+          {data.cast_credits && Boolean(data.cast_credits.length) && (
             <>
               <div className="pb-2 text-2xl font-bold">
                 {checkGender(data.gender)}
               </div>
-              <Credits data={castCredits} />
+              <Credits data={data.cast_credits} />
             </>
           )}
-          {crewCredits && Boolean(crewCredits.length) && (
+          {data.crew_credits && Boolean(data.crew_credits.length) && (
             <>
-              <div className="py-2 text-2xl font-bold">Filmmaking:</div>
-              <Credits data={crewCredits} />
+              <div className="py-2 text-2xl font-bold">Filmmaking</div>
+              <Credits data={data.crew_credits} />
             </>
           )}
         </div>

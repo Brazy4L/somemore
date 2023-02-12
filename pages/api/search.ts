@@ -10,5 +10,10 @@ export default async function getSearch(req: NextRequest) {
       process.env.API_KEY
     }&language=en-US&query=${req.headers.get('searchquery')}&page=1`
   ).then((response) => response.json());
-  return NextResponse.json(data);
+  return NextResponse.json(data, {
+    status: 200,
+    headers: {
+      'Cache-Control': 's-maxage=86400',
+    },
+  });
 }

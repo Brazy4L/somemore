@@ -12,5 +12,10 @@ export default async function getPerson(req: NextRequest) {
       process.env.API_KEY
     }&language=en-US&append_to_response=combined_credits,external_ids,images`
   ).then((response) => response.json());
-  return NextResponse.json(data);
+  return NextResponse.json(data, {
+    status: 200,
+    headers: {
+      'Cache-Control': 's-maxage=86400',
+    },
+  });
 }

@@ -7,11 +7,7 @@ import Rating from './Rating';
 
 export default function Credits(props: any) {
   const { data } = props;
-
-  const checkType = (el: string) => {
-    return el === 'movie' ? 'movie' : 'tv';
-  };
-
+  const checkType = (el: string) => (el === 'movie' ? 'movie' : 'tv');
   if (!data) return null;
   return (
     <div

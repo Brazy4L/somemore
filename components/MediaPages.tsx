@@ -29,6 +29,9 @@ export default function MediaPages({
     `/api/popmedia?${type}&${page}`,
     fetcher,
     {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
       onSuccess: (data, key, config) => {
         let i = data.results.length;
         while (i--) {

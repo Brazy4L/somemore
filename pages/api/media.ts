@@ -12,5 +12,10 @@ export default async function getMovie(req: NextRequest) {
       process.env.API_KEY
     }&language=en-US&append_to_response=credits,keywords,recommendations,similar,videos,external_ids`
   ).then((response) => response.json());
-  return NextResponse.json(data);
+  return NextResponse.json(data, {
+    status: 200,
+    headers: {
+      'Cache-Control': 's-maxage=86400',
+    },
+  });
 }

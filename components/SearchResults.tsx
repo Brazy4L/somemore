@@ -15,14 +15,21 @@ export default function SearchResults() {
     fetch(url, { headers: { searchquery: `${query.id}` } }).then((res) =>
       res.json()
     );
-  const { data, error, isLoading } = useSWR(`/api/search?${query.id}`, fetcher);
+  const { data, error, isLoading } = useSWR(
+    `/api/search?${query.id}`,
+    fetcher,
+    {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    }
+  );
 
   if (error) return <LoadingError />;
   if (isLoading) return <Spinner />;
 
-  const checkType = (el: string) => {
-    return el === 'movie' ? 'movie' : el === 'tv' ? 'tv' : 'person';
-  };
+  const checkType = (el: string) =>
+    el === 'movie' ? 'movie' : el === 'tv' ? 'tv' : 'person';
 
   return (
     <>
