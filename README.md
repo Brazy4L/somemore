@@ -25,7 +25,6 @@ This project uses wonderful [TMDb API](https://www.themoviedb.org/)
    ```sh
    npm install
    ```
-   *this project uses prettier, for the time being it's not listed in `package.json`*
 1. Create `.env.local` file in the root directory:
    ```sh
    API_KEY=<<YOUR_KEY>>
@@ -38,3 +37,5 @@ This project uses wonderful [TMDb API](https://www.themoviedb.org/)
 ## Extra
 
 Standalone pages for Movies, TV Shows and People do not have proper error handling for `status: 404` response from TMDb API
+
+The types are mess and will be refactored later.
