@@ -37,8 +37,4 @@ This project uses wonderful [TMDb API](https://www.themoviedb.org/)
 
 ## Extra
 
-Most of the icons were created by me.
-
-This project uses Edge Functions.
-
 Standalone pages for Movies, TV Shows and People do not have proper error handling for `status: 404` response from TMDb API
