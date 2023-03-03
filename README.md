@@ -34,8 +34,6 @@ This project uses wonderful [TMDb API](https://www.themoviedb.org/)
    npm run dev
    ```
 
-## Extra
+## RU
 
-Standalone pages for Movies, TV Shows and People do not have proper error handling for `status: 404` response from TMDb API
-
-The types are mess and will be refactored later.
+Используйте VPN

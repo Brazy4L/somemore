@@ -11,6 +11,10 @@ export default async function getPerson(req: NextRequest) {
     )}?api_key=${
       process.env.API_KEY
     }&language=en-US&append_to_response=combined_credits,external_ids,images`
-  ).then((response) => response.json());
-  return NextResponse.json(data);
+  ).then((response) =>
+    response.json().then((data) => ({ status: response.status, body: data }))
+  );
+  if (data.status == 200) {
+    return NextResponse.json(data.body);
+  }
 }
