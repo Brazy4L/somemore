@@ -8,8 +8,6 @@
 
 This project uses wonderful [TMDb API](https://www.themoviedb.org/)
 
-# [Live Preview](https://somemore.vercel.app)
-
 ## Features
 
 + Dark and Light themes
